@@ -70,7 +70,7 @@ class Adafruit_MCP230XX(object):
         assert pin >= 0 and pin < self.num_gpios, "Pin number %s is invalid, only 0-%s are valid" % (pin, self.num_gpios)
         #assert self.direction & (1 << pin) == 0, "Pin %s not set to output" % pin
         if not currvalue:
-             currvalue = self.i2c.readU8(port)
+            currvalue = self.i2c.readU8(port)
         newvalue = self._changebit(currvalue, pin, value)
         self.i2c.write8(port, newvalue)
         return newvalue
@@ -207,7 +207,7 @@ if __name__ == '__main__':
     # Python speed test on output 0 toggling at max speed
     print "Starting blinky on pin 0 (CTRL+C to quit)"
     while (True):
-      mcp.output(0, 1)  # Pin 0 High
-      time.sleep(.15);
-      mcp.output(0, 0)  # Pin 0 Low
-      time.sleep(.15);
+        mcp.output(0, 1)  # Pin 0 High
+        time.sleep(.15);
+        mcp.output(0, 0)  # Pin 0 Low
+        time.sleep(.15);
