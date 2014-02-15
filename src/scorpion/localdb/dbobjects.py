@@ -17,12 +17,14 @@ class Producer(base):
     country = Column(String)
     yearfounded = Column(Integer)
     
+
 class Type(base):
     __tablename__ = 'type'
     
     id = Column(Integer, primary_key = True)
     name = Column(String)
     description = Column(String)
+    
 
 class Liquor(base):
     __tablename__ = 'liquor'
@@ -36,9 +38,9 @@ class Liquor(base):
     
     producer_id = Column(Integer, ForeignKey('producer.id'))
     producer = relationship("Producer", backref = backref('liquors', order_by=name))
-
+    
     type_id = Column(Integer, ForeignKey('type.id'))
-    producer = relationship("Type", backref = backref('liquors', order_by=name))
+    type = relationship("Type", backref = backref('liquors', order_by=name))
     
 
 class Extra(base):
@@ -60,7 +62,7 @@ class Drink(base):
     description = Column(String)
     mixinstructions = Column(String)
     
-    
+
 class LiquorIngredient(base):
     __tablename__ = 'liquoringredient'
     
@@ -72,6 +74,7 @@ class LiquorIngredient(base):
     
     drink_id = Column(Integer, ForeignKey('drink.id'))
     drink = relationship("Drink", backref = backref('liquors'))
+    
 
 class ExtraIngredient(base):
     __tablename__ = 'extraingredient'
@@ -84,6 +87,7 @@ class ExtraIngredient(base):
     
     drink_id = Column(Integer, ForeignKey('drink.id'))
     drink = relationship("Drink", backref = backref('extras'))
+    
 
 class LiquorInventory(base):
     __tablename__ = 'liquorinventory'
@@ -94,7 +98,7 @@ class LiquorInventory(base):
     liquor_id = Column(Integer, ForeignKey('liquor.id'))
     liquor = relationship("Liquor", backref = backref('inventory'))
     
-    
+
 class ExtraInventory(base):
     __tablename__ = 'extrainventory'
     
@@ -103,4 +107,6 @@ class ExtraInventory(base):
     extra_id = Column(Integer, ForeignKey('extra.id'))
     extra = relationship("Extra", backref = backref('inventory'))
     
-    
+
+def create_tables(engine):
+    base.metadata.create_all(engine)
