@@ -9,8 +9,8 @@ from sqlalchemy.orm import relationship, backref
 base = declarative_base()
 
 
-class Producer(base):
-    __tablename__ = 'producer'
+class Brand(base):
+    __tablename__ = 'brand'
     
     id = Column(Integer, primary_key = True)
     name = Column(String)
@@ -32,16 +32,25 @@ class Liquor(base):
     id = Column(Integer, primary_key = True)
     name = Column(String)
     abv = Column(Float)
-    bottleweight = Column(Float)
     density = Column(Float)
-    upc = Column(String)
     
-    producer_id = Column(Integer, ForeignKey('producer.id'))
-    producer = relationship("Producer", backref = backref('liquors', order_by=name))
+    brand_id = Column(Integer, ForeignKey('brand.id'))
+    brand = relationship("Brand", backref = backref('liquors', order_by=name))
     
     type_id = Column(Integer, ForeignKey('type.id'))
     type = relationship("Type", backref = backref('liquors', order_by=name))
     
+
+class LiquorSKU(base):
+    __tablename__ = 'liquorsku'
+    
+    id = Column(Integer, primary_key = True)
+    volume = Column(Float)
+    bottleweight = Column(Float)
+    upc = Column(String)
+    
+    liquor_id = Column(Integer, ForeignKey('liquor.id'))
+    liquor = relationship("Liquor", backref = backref('skus'))
 
 class Extra(base):
     __tablename__ = 'extra'
@@ -49,8 +58,8 @@ class Extra(base):
     id = Column(Integer, primary_key = True)
     name = Column(String)
     
-    producer_id = Column(Integer, ForeignKey('producer.id'))
-    producer = relationship("Producer", backref = backref('extras', order_by=name))
+    brand_id = Column(Integer, ForeignKey('brand.id'))
+    brand = relationship("Brand", backref = backref('extras', order_by=name))
     
 
 class Drink(base):
@@ -76,6 +85,19 @@ class LiquorIngredient(base):
     drink = relationship("Drink", backref = backref('liquors'))
     
 
+class GenLiquorIngredient(base):
+    __tablename__ = 'genliquoringredient'
+    
+    id = Column(Integer, primary_key = True)
+    measure = Column(Float)
+    
+    type_id = Column(Integer, ForeignKey('type.id'))
+    type = relationship("Type", backref = backref('drinks'))
+    
+    drink_id = Column(Integer, ForeignKey('drink.id'))
+    drink = relationship("Drink", backref = backref('genliquors'))
+    
+
 class ExtraIngredient(base):
     __tablename__ = 'extraingredient'
     
@@ -95,8 +117,8 @@ class LiquorInventory(base):
     id = Column(Integer, primary_key = True)
     measure = Column(Float)
     
-    liquor_id = Column(Integer, ForeignKey('liquor.id'))
-    liquor = relationship("Liquor", backref = backref('inventory'))
+    liquorsku_id = Column(Integer, ForeignKey('liquorsku.id'))
+    liquorsku = relationship("LiquorSKU", backref = backref('inventory'))
     
 
 class ExtraInventory(base):

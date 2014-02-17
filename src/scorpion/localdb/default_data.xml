@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<root>
+	<Type name="Vodka" description = "It's Vodka"></Type>
+	<Type name="Gin" description = "It's Gin"></Type>
+	<Type name="Whisky" description = "It's Whisky"></Type>
+	<Type name="Bourbon" description = "It's Bourbon"></Type>
+	<Type name="Scotch" description = "It's Scotch"></Type>
+	<Type name="Tequila" description = "It's Tequila"></Type>
+	<Type name="Vermouth" description = "It's Vermouth"></Type>
+	
+	<Brand name="Johnny Walker" country="Scotland" yearfounded="1973"></Brand>
+	<Brand name="Jose Cuervo" country="Mexico" yearfounded="1973"></Brand>
+	<Brand name="McCormick" country="United States" yearfounded="1856"></Brand>
+	<Brand name="Svedka" country="Sweden" yearfounded="1973"></Brand>
+	<Brand name="Seagrams" country="Canada" yearfounded="1857"></Brand>
+	
+	<Liquor name="Johnny Walker Blue" abv="40" density="1" brand="Johnny Walker" type="Scotch"></Liquor>
+	<Liquor name="Johnny Walker Red" abv="40" density="1" brand="Johnny Walker" type="Scotch"></Liquor>
+	<Liquor name="Extra Dry Gin" abv="40" density="1" brand="Seagrams" type="Gin"></Liquor>
+	<Liquor name="Dry Vermouth" abv="16" density="1" brand="Seagrams" type="Vermouth"></Liquor>
+	
+	<Drink name="Martini" glasstype="Martini glass" description="Get Drunk"
+		mixinstructions="Mix it up,baby!"></Drink>
+	<LiquorIngredient measure="2" liquor="Extra Dry Gin" drink="Martini"></LiquorIngredient>
+	<LiquorIngredient measure="1" liquor="Dry Vermouth" drink="Martini"></LiquorIngredient>
+	
+</root>

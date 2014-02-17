@@ -1,5 +1,10 @@
-#!/usr/bin/python
-import Adafruit_MCP230xx as MCP
+'''
+Created on Feb 15, 2014
+
+@author: caleb
+'''
+
+import Adafruit_MCP230xx.Adafruit_MCP230xx as MCP
 
 class Puck:
     address = 0
@@ -8,7 +13,6 @@ class Puck:
     current_weight = 0
     led_state = [0,0,0,0]
     
-
 
 def init_puck(address, caldata):
     mcp = MCP.Adafruit_MCP230XX(address, 16) # MCP23017
