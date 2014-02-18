@@ -14,14 +14,23 @@
 	<Brand name="Svedka" country="Sweden" yearfounded="1973"></Brand>
 	<Brand name="Seagrams" country="Canada" yearfounded="1857"></Brand>
 	
-	<Liquor name="Johnny Walker Blue" abv="40" density="1" brand="Johnny Walker" type="Scotch"></Liquor>
-	<Liquor name="Johnny Walker Red" abv="40" density="1" brand="Johnny Walker" type="Scotch"></Liquor>
+	<Liquor name="Blue Label" abv="40" density="1" brand="Johnny Walker" type="Scotch"></Liquor>
+	<LiquorSKU liquor="Johnny Walker|Blue Label" volume="750" bottleweight="50" UPC="0011223344"></LiquorSKU>
+	<LiquorSKU liquor="Johnny Walker|Blue Label" volume="1750" bottleweight="80" UPC="0011223345"></LiquorSKU>
+	<Liquor name="Red Label" abv="40" density="1" brand="Johnny Walker" type="Scotch"></Liquor>
+	<LiquorSKU liquor="Johnny Walker|Red Label" volume="750" bottleweight="50" UPC="0011223346"></LiquorSKU>
 	<Liquor name="Extra Dry Gin" abv="40" density="1" brand="Seagrams" type="Gin"></Liquor>
+	<LiquorSKU liquor="Seagrams|Extra Dry Gin" volume="750" bottleweight="50" UPC="0011223347"></LiquorSKU>
 	<Liquor name="Dry Vermouth" abv="16" density="1" brand="Seagrams" type="Vermouth"></Liquor>
+	<LiquorSKU liquor="Seagrams|Dry Vermouth" volume="750" bottleweight="50" UPC="0011223348"></LiquorSKU>
 	
 	<Drink name="Martini" glasstype="Martini glass" description="Get Drunk"
 		mixinstructions="Mix it up,baby!"></Drink>
-	<LiquorIngredient measure="2" liquor="Extra Dry Gin" drink="Martini"></LiquorIngredient>
-	<LiquorIngredient measure="1" liquor="Dry Vermouth" drink="Martini"></LiquorIngredient>
+	<LiquorIngredient measure="2" liquor="Seagrams|Extra Dry Gin" drink="Martini"></LiquorIngredient>
+	<LiquorIngredient measure="1" liquor="Seagrams|Dry Vermouth" drink="Martini"></LiquorIngredient>
 	
+	<Drink name="GenMartini" glasstype="Martini glass" description="Get Drunk"
+		mixinstructions="Mix it up,baby!"></Drink>
+	<GenLiquorIngredient measure="2" type="Gin" drink="GenMartini"></GenLiquorIngredient>
+	<GenLiquorIngredient measure="1" type="Vermouth" drink="GenMartini"></GenLiquorIngredient>
 </root>
