@@ -10,13 +10,18 @@ import multiprocessing as mp
 from scorpion.localdb import db
 from scorpion.hal.scanner import read_scanner
 
+scanner_data = None
+
 def main_loop():
     
-    time.sleep(0.2)
-
+    while True:
+        time.sleep(0.2)
+        if not scanner_data.empty():
+            print scanner_data.get()
 
 
 def init_scorpion():
+    global scanner_data
     scanner_data = mp.Queue()
     scanner = mp.Process(target=read_scanner, args = [scanner_data])
     scanner.start()
@@ -26,3 +31,4 @@ def init_scorpion():
 
 if __name__ == '__main__':
     init_scorpion()
+    main_loop()
