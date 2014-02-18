@@ -11,6 +11,7 @@ from scorpion.localdb import db
 from scorpion.hal.scanner import read_scanner
 
 def main_loop():
+    
     time.sleep(0.2)
 
 
