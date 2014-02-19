@@ -6,12 +6,14 @@ Created on Feb 15, 2014
 import struct
 import os
 import re
+from Queue import Queue
 
 from scorpion.config import scanner_path
 
 FORMAT = 'llHHI'
 EVENT_SIZE = struct.calcsize(FORMAT)
 
+scanner_data = Queue()
 
 _mapping = {11: '0', 2 : '1', 3 : '2',
            4 : '3', 5 : '4', 6 : '5',
@@ -30,7 +32,8 @@ def init_scanner():
     os.system("xinput float " + event_id)
     _scanner = open(scanner_path, "rb")
 
-def read_scanner(outqueue):
+def start_scanner():
+    global scanner_data
     if _scanner == None: init_scanner()
     while True:
         reading = []
@@ -41,5 +44,5 @@ def read_scanner(outqueue):
                 if _mapping[code] == '\0': break
                 reading.append(_mapping[code])
             event = _scanner.read(EVENT_SIZE)
-        outqueue.put(''.join(reading))
+        scanner_data.put(''.join(reading))
 

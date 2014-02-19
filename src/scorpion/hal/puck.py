@@ -5,8 +5,10 @@ Created on Feb 15, 2014
 '''
 
 import Adafruit_MCP230xx.Adafruit_MCP230xx as MCP
+import scorpion.config as config
+pucks = {}
 
-class Puck:
+class _Puck:
     address = 0
     mcp = None
     caldata = {}
@@ -14,44 +16,49 @@ class Puck:
     led_state = [0,0,0,0]
     
 
-def init_puck(address, caldata):
-    mcp = MCP.Adafruit_MCP230XX(address, 16) # MCP23017
-    
-    for i in range(0,4): mcp.config(i,mcp.OUTPUT); mcp.output(i,0)
-    for i in range(5,8): mcp.config(i,mcp.OUTPUT); mcp.output(i,1)
-    for i in range(8,16): mcp.config(i,mcp.INPUT)
-    
-    puck = Puck()
-    puck.mcp = mcp
-    puck.address = address
-    puck.caldata = caldata
-    return puck
+def init_pucks():
+    global pucks
+    for address in config.pucks.keys():
+        mcp = MCP.Adafruit_MCP230XX(address, 16) # MCP23017
+        
+        for i in range(0,4): mcp.config(i,mcp.OUTPUT); mcp.output(i,0)
+        for i in range(4,7): mcp.config(i,mcp.OUTPUT); mcp.output(i,1)
+        for i in range(8,16): mcp.config(i,mcp.INPUT)
+        
+        puck = _Puck()
+        pucks[address] = puck
+        puck.mcp = mcp
+        puck.address = address
+        puck.caldata = config.pucks[address]
+        puck.current_weight = get_weight(address)
 
 def _pole_adc(mcp):
-    mcp.output(7,0)
-    mcp.output(7,1)
-    mcp.output(6,0)
+    mcp.output(4,0)
+    mcp.output(4,1)
     mcp.output(5,0)
+    mcp.output(6,0)
     #8 MSBs should be available on pins 8-15
     result = mcp.inputU8(1);
 
-    mcp.output(5,1)
     mcp.output(6,1)
+    mcp.output(5,1)
 
-    mcp.output(6,0)
     mcp.output(5,0)
+    mcp.output(6,0)
     #2 LSBs should be available on pins 14-15
 
     lsbs = mcp.inputU8(1);
     result = (result << 2) | (lsbs >> 6)
 
-    mcp.output(5,1)
     mcp.output(6,1)
+    mcp.output(5,1)
 
     return result
 
-
-def get_weight(puck):
+def get_weight(address, read = True):
+    global pucks
+    puck = pucks[address]
+    if not read: return puck.current_weight
     adc_value = _pole_adc(puck.mcp)
     offset = puck.caldata['offset']
     empty = puck.caldata['empty']
@@ -60,7 +67,9 @@ def get_weight(puck):
     puck.current_weight = weight
     return weight
 
-def set_leds(puck, red, green, blue, white):
+def set_leds(address, red, green, blue, white):
+    global pucks
+    puck = pucks[address]
     data = [red,green,blue,white]
     if(data != puck.led_state):
         puck.mcp.output(0,blue)

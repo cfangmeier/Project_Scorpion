@@ -116,6 +116,7 @@ class LiquorInventory(base):
     
     id = Column(Integer, primary_key = True)
     measure = Column(Float)
+    puck_address = Column(Integer)
     
     liquorsku_id = Column(Integer, ForeignKey('liquorsku.id'))
     liquorsku = relationship("LiquorSKU", backref = backref('inventory'))
