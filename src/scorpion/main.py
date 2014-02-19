@@ -22,6 +22,7 @@ def init_scorpion():
     init_db()
     init_pucks()
     scanner = threading.Thread(target=start_scanner)
+
     scanner.start()
 
 def close_scorpion():
@@ -32,3 +33,4 @@ if __name__ == '__main__':
     init_scorpion()
     main_loop()
     close_scorpion()
+
