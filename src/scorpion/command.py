@@ -10,8 +10,10 @@ import scorpion.localdb.db as db
 
 def show_inventory(args):
     (liquor, extra) = db.get_inventory()
+    print "===Liquors==="
     for l in liquor:
         print l.liquorsku.liquor.name, l.measure
+    print "===Extras==="
     for e in extra:
         print e.extra.name
 
@@ -30,13 +32,54 @@ def light_show(args):
         time.sleep(0.05)
 
 def list_drinks_available(args):
-    print 'list drinks'
+    drinks = db.get_drinks_mixable()
+    print "You can mix these drinks. Congratulations!"
+    for d in drinks:
+        print "===="+d.name+"===="
+        for i in d.liquors:
+            print "-->",i.liquor.name, i.measure
+        for i in d.genliquors:
+            print "-->",i.type.name, i.measure
+        for i in d.extras:
+            print "-->",i.extra.name, i.measure
 
 def list_drinks_all(args):
-    print 'list drinks all'
+    drinks = db.get_drinks()
+    print "I have these drinks in my database."
+    for d in drinks:
+        print "===="+d.name+"===="
+        for i in d.liquors:
+            print "-->",i.liquor.name, i.measure
+        for i in d.genliquors:
+            print "-->",i.type.name, i.measure
+        for i in d.extras:
+            print "-->",i.extra.name, i.measure
 
 def mix_drink(args):
-    print 'mixing a drink'
+    drink = db.get_drink(' '.join(args))
+    if drink == None: 
+        print "I don't know what that is..."
+        return
+    (mixable, mix) = db.get_drink_mix(drink)
+    if not mixable:
+        print "You don't got what it takes."
+        print "You are missing:"
+        for miss in mix['mis_liquors']: print miss.liquor.name
+        for miss in mix['mis_genliquors']: print miss.type.name
+        for miss in mix['mis_extras']: print miss.extra.name
+        return
+    
+    #TODO: allow choice when multiple matches
+    puck.kill_lights()
+    for l in mix['ingr_liquors']:
+        address = l[1][0].address
+        puck.set_leds(address, False, False, False, True)
+        print "BEHOLD!! : ",l[0].liquor.name; time.sleep(0.3)
+    for l in mix['ingr_genliquors']:
+        address = l[1][0].address
+        puck.set_leds(address, False, False, False, True)
+        print "BEHOLD!! : ",l[0].type.name; time.sleep(0.3)
+    
 
 def process_command(command):
     words = command.split()
