@@ -88,6 +88,26 @@ def build_genliquoringredient(attrs):
     gli.type = [t for t in objects if type(t) == dbo.Type and t.name == attrs['type']][0]
     objects.append(gli)
 
+def build_extra(attrs):
+    global objects
+    e = dbo.Extra()
+    e.name = attrs['name']
+    objects.append(e)
+    
+def build_extraingredient(attrs):
+    global objects
+    ei = dbo.ExtraIngredient()
+    ei.measure = attrs['measure']
+    ei.drink = [d for d in objects if type(d) == dbo.Drink and d.name == attrs['drink']][0]
+    ei.extra = [e for e in objects if type(e) == dbo.Extra and e.name == attrs['extra']][0]
+    objects.append(ei)
+
+def build_extrainventory(attrs):
+    global objects
+    ei = dbo.ExtraInventory()
+    ei.extra = [e for e in objects if type(e) == dbo.Extra and e.name == attrs['extra']]
+    objects.append(ei)
+
 def start_element(name, attrs):
     print name, attrs
     if name == "Type":
@@ -106,6 +126,12 @@ def start_element(name, attrs):
         build_liquorsku(attrs)
     elif name == 'LiquorInventory':
         build_liquorinventory(attrs)
+    elif name == 'Extra':
+        build_extra(attrs)
+    elif name == 'ExtraIngredient':
+        build_extraingredient(attrs)
+    elif name == 'ExtraInventory':
+        build_extrainventory(attrs)
 
 
 def get_objects(path = xml_path):
@@ -114,7 +140,7 @@ def get_objects(path = xml_path):
     f = open(path,'r')
     data = f.read()
     f.close()
-    parser = expat.ParserCreate()
+    parser = expat.ParserCreate()  # @UndefinedVariable
     parser.StartElementHandler = start_element
     parser.Parse(data)
     

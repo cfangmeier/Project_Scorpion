@@ -4,7 +4,7 @@ Created on Feb 15, 2014
 @author: caleb
 '''
 
-import Adafruit_MCP230xx.Adafruit_MCP230xx as MCP
+import adafruit.Adafruit_MCP230xx as MCP
 import scorpion.config as config
 pucks = {}
 

@@ -4,10 +4,9 @@ Created on Feb 7, 2014
 @author: caleb
 '''
 
-import threading
 import sys
 
-from scorpion.hal.scanner import start_scanner, stop_scanner
+from scorpion.hal.scanner import init_scanner, stop_scanner
 from scorpion.hal.puck import init_pucks
 from scorpion.command import process_command
 from scorpion.localdb.db import init_db
@@ -24,13 +23,11 @@ def main_loop():
 def init_scorpion():
     global scanner_thread;
     init_db(True)
-    init_pucks()
-    scanner_thread = threading.Thread(target=start_scanner)
-    scanner_thread.start()
+    #init_pucks()
+    #init_scanner()
 
 def close_scorpion():
     stop_scanner()
-    scanner_thread.join()
 
 
 if __name__ == '__main__':

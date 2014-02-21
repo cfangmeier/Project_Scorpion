@@ -50,7 +50,7 @@ def get_drink_mix(drink, liquor_inventory = None, extra_inventory = None):
     for i in drink.genliquors:
         items = [gl for gl in liquor_inventory if gl.liquorsku.liquor.type == i.type]
         if len(items) == 0:
-            mix['mis_genliquors'].append[i]; mixable = False
+            mix['mis_genliquors'].append(i); mixable = False
         else:
             mix['ingr_genliquors'].append((i,items))
     

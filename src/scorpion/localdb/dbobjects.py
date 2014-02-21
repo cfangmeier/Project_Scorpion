@@ -58,9 +58,6 @@ class Extra(base):
     id = Column(Integer, primary_key = True)
     name = Column(String)
     
-    brand_id = Column(Integer, ForeignKey('brand.id'))
-    brand = relationship("Brand", backref = backref('extras', order_by=name))
-    
 
 class Drink(base):
     __tablename__ = 'drink'

@@ -22,13 +22,13 @@ def check_scanner(args):
 
 def light_show(args):
     for _ in range(100):
-        puck.set_leds('20', False, False, False, True)
+        puck.set_leds(32, False, False, False, True)
         time.sleep(0.05)
-        puck.set_leds('20', False, False, True, False)
+        puck.set_leds(32, False, False, True, False)
         time.sleep(0.05)
-        puck.set_leds('20', False, True, False, False)
+        puck.set_leds(32, False, True, False, False)
         time.sleep(0.05)
-        puck.set_leds('20', True, False, False, False)
+        puck.set_leds(32, True, False, False, False)
         time.sleep(0.05)
 
 def list_drinks_available(args):

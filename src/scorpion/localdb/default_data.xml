@@ -24,6 +24,14 @@
 	<Liquor name="Dry Vermouth" abv="16" density="1" brand="Seagrams" type="Vermouth"></Liquor>
 	<LiquorSKU liquor="Seagrams|Dry Vermouth" volume="750" bottleweight="50" UPC="0011223348"></LiquorSKU>
 	
+	<Extra name="Orange Juice"></Extra>
+	<Extra name="Lime Juice"></Extra>
+	<Extra name="Salt"></Extra>
+	<Extra name="Ice"></Extra>
+	<Extra name="Cranberry Juice"></Extra>
+	
+	
+	
 	<Drink name="Martini" glasstype="Martini glass" description="Get Drunk"
 		mixinstructions="Mix it up,baby!"></Drink>
 	<LiquorIngredient measure="2" liquor="Seagrams|Extra Dry Gin" drink="Martini"></LiquorIngredient>
@@ -33,6 +41,12 @@
 		mixinstructions="Mix it up,baby!"></Drink>
 	<GenLiquorIngredient measure="2" type="Gin" drink="GenMartini"></GenLiquorIngredient>
 	<GenLiquorIngredient measure="1" type="Vermouth" drink="GenMartini"></GenLiquorIngredient>
+	
+	<Drink name="Screwdriver" glasstype="Your mouth" description="It's like acid." 
+		mixinstructions="Mix all together... or else."></Drink>
+	<GenLiquorIngredient measure="1" type="Vodka" drink="Screwdriver"></GenLiquorIngredient>
+	<ExtraIngredient measure="2" extra="Orange Juice" drink="Screwdriver"></ExtraIngredient>
+	
 	
 	<LiquorInventory liquorsku="0011223347" measure="150" puck_address="36"></LiquorInventory>
 	<LiquorInventory liquorsku="0011223348" measure="150" puck_address="37"></LiquorInventory>
