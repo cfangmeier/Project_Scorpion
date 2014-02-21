@@ -72,11 +72,11 @@ def mix_drink(args):
     #TODO: allow choice when multiple matches
     puck.kill_lights()
     for l in mix['ingr_liquors']:
-        address = l[1][0].address
+        address = l[1][0].puck_address
         puck.set_leds(address, False, False, False, True)
         print "BEHOLD!! : ",l[0].liquor.name; time.sleep(0.3)
     for l in mix['ingr_genliquors']:
-        address = l[1][0].address
+        address = l[1][0].puck_address
         puck.set_leds(address, False, False, False, True)
         print "BEHOLD!! : ",l[0].type.name; time.sleep(0.3)
     
@@ -90,4 +90,4 @@ def process_command(command):
     if l.has_key(cmd):
         l[cmd](args)
     else:
-        print "Command " + cmd + "not found.:("
+        print "Command " + cmd + " not found.:("

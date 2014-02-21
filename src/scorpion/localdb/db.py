@@ -47,7 +47,7 @@ def get_drink_mix(drink, liquor_inventory = None, extra_inventory = None):
         else:
             mix['ingr_liquors'].append((i,items))
             
-    for i in drink.genliquor:
+    for i in drink.genliquors:
         items = [gl for gl in liquor_inventory if gl.liquorsku.liquor.type == i.type]
         if len(items) == 0:
             mix['mis_genliquors'].append[i]; mixable = False
@@ -72,6 +72,10 @@ def get_drinks_mixable():
         if(get_drink_mix(d,li,ei)[0]): available.append(d)
     return available
 
+def get_with_upc(upc):
+    return session.query(dbo.LiquorSKU).filter(dbo.LiquorSKU.upc == upc).all()
+    
+
 def put_some_data(session):
     objects = xmlparser.get_objects()
     session.add_all(objects)
@@ -81,7 +85,7 @@ def init_db(reset = False):
     if reset and os.path.exists(config.local_db):
         os.remove(config.local_db)
         print 'removed old db'
-    engine = sql.create_engine('sqlite:///'+config.local_db, echo = True)
+    engine = sql.create_engine('sqlite:///'+config.local_db, echo = False)
     dbo.create_tables(engine)
     Session = orm.sessionmaker(bind=engine)
     session = Session()

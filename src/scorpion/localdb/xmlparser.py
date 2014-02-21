@@ -39,13 +39,26 @@ def build_liquor(attrs):
 
 def build_liquorsku(attrs):
     global objects
-    l = dbo.LiquorSKU()
-    l.bottleweight = float(attrs["bottleweight"])
-    l.volume = float(attrs['volume'])
-    l.upc = attrs['upc']
+    lsku = dbo.LiquorSKU()
+    lsku.bottleweight = float(attrs["bottleweight"])
+    lsku.volume = float(attrs['volume'])
+    lsku.upc = attrs['UPC']
     (brand,liquor) = attrs['liquor'].split('|')
-    l.liquor = [l for l in objects 
+    lsku.liquor = [l for l in objects 
                 if type(l) == dbo.Liquor and l.name == liquor and l.brand.name == brand][0]
+    objects.append(lsku)
+
+def build_liquorinventory(attrs):
+    global objects
+    l = dbo.LiquorInventory()
+    for lsku in objects:
+        print type(lsku)
+        if type(lsku) != dbo.LiquorSKU: continue
+        print lsku.upc,attrs['liquorsku']
+    l.liquorsku = [lsku for lsku in objects
+                   if type(lsku) == dbo.LiquorSKU and lsku.upc == attrs['liquorsku']][0]
+    l.measure = float(attrs['measure'])
+    l.puck_address = int(attrs['puck_address'])
     objects.append(l)
 
 def build_drink(attrs):
@@ -76,7 +89,7 @@ def build_genliquoringredient(attrs):
     objects.append(gli)
 
 def start_element(name, attrs):
-    
+    print name, attrs
     if name == "Type":
         build_type(attrs)
     elif name == "Brand":
@@ -89,6 +102,10 @@ def start_element(name, attrs):
         build_liquoringredient(attrs)
     elif name == "GenLiquorIngredient":
         build_genliquoringredient(attrs)
+    elif name == 'LiquorSKU':
+        build_liquorsku(attrs)
+    elif name == 'LiquorInventory':
+        build_liquorinventory(attrs)
 
 
 def get_objects(path = xml_path):

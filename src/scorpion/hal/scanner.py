@@ -6,6 +6,7 @@ Created on Feb 15, 2014
 import struct
 import os
 import re
+import select
 from Queue import Queue
 
 from scorpion.config import scanner_path
@@ -20,7 +21,7 @@ _mapping = {11: '0', 2 : '1', 3 : '2',
            7 : '6', 8 : '7', 9 : '8',
            10: '9', 28: '\0'}
 _scanner = None
-
+kill_scanner_thread = False
 
 def init_scanner():
     global _scanner
@@ -36,6 +37,10 @@ def start_scanner():
     global scanner_data
     if _scanner == None: init_scanner()
     while True:
+        if kill_scanner_thread: return
+        #print kill_scanner_thread
+        (rlist,_,_) = select.select([_scanner],[],[],0.5)
+        if len(rlist) == 0: continue
         reading = []
         event = _scanner.read(EVENT_SIZE)
         while event:
@@ -46,3 +51,6 @@ def start_scanner():
             event = _scanner.read(EVENT_SIZE)
         scanner_data.put(''.join(reading))
 
+def stop_scanner():
+    global kill_scanner_thread
+    kill_scanner_thread = True

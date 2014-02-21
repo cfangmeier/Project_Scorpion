@@ -7,10 +7,13 @@ Created on Feb 7, 2014
 import threading
 import sys
 
-from scorpion.hal.scanner import start_scanner
+from scorpion.hal.scanner import start_scanner, stop_scanner
 from scorpion.hal.puck import init_pucks
 from scorpion.command import process_command
 from scorpion.localdb.db import init_db
+
+scanner_thread = None
+
 def main_loop():
     while True:
         sys.stdout.write('-->')
@@ -19,14 +22,15 @@ def main_loop():
         process_command(cmd)
 
 def init_scorpion():
-    init_db()
+    global scanner_thread;
+    init_db(True)
     init_pucks()
-    scanner = threading.Thread(target=start_scanner)
-
-    scanner.start()
+    scanner_thread = threading.Thread(target=start_scanner)
+    scanner_thread.start()
 
 def close_scorpion():
-    pass
+    stop_scanner()
+    scanner_thread.join()
 
 
 if __name__ == '__main__':

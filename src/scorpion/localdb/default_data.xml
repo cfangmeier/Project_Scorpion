@@ -33,4 +33,8 @@
 		mixinstructions="Mix it up,baby!"></Drink>
 	<GenLiquorIngredient measure="2" type="Gin" drink="GenMartini"></GenLiquorIngredient>
 	<GenLiquorIngredient measure="1" type="Vermouth" drink="GenMartini"></GenLiquorIngredient>
+	
+	<LiquorInventory liquorsku="0011223347" measure="150" puck_address="36"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223348" measure="150" puck_address="37"></LiquorInventory>
+	
 </root>
