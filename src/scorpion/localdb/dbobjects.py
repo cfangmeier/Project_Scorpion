@@ -15,7 +15,6 @@ class Brand(base):
     id = Column(Integer, primary_key = True)
     name = Column(String)
     country = Column(String)
-    yearfounded = Column(Integer)
     
 
 class Type(base):
@@ -47,7 +46,7 @@ class LiquorSKU(base):
     id = Column(Integer, primary_key = True)
     volume = Column(Float)
     bottleweight = Column(Float)
-    upc = Column(String)
+    upc = Column(String, unique=True)
     
     liquor_id = Column(Integer, ForeignKey('liquor.id'))
     liquor = relationship("Liquor", backref = backref('skus'))

@@ -48,7 +48,10 @@ def _run():
         while event:
             (_, _, type_, code, value) = struct.unpack(FORMAT, event)
             if type_ == 1 and value == 1:
-                if _mapping[code] == '\0': break
+                if _mapping[code] == '\0':
+                    _scanner_file.read(EVENT_SIZE)
+                    _scanner_file.read(EVENT_SIZE)
+                    break
                 reading.append(_mapping[code])
             event = _scanner_file.read(EVENT_SIZE)
         scanner_data.put(''.join(reading))

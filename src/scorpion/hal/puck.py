@@ -67,6 +67,9 @@ def get_weight(address, read = True):
     puck.current_weight = weight
     return weight
 
+def get_available_address():
+    return 0
+
 def kill_lights():
     global pucks
     for puck in pucks.values():

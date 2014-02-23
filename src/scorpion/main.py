@@ -9,7 +9,7 @@ import sys
 from scorpion.hal.scanner import init_scanner, stop_scanner
 from scorpion.hal.puck import init_pucks
 from scorpion.command import process_command
-from scorpion.localdb.db import init_db
+from scorpion.localdb.db import init_db, commit_db
 
 scanner_thread = None
 
@@ -22,12 +22,13 @@ def main_loop():
 
 def init_scorpion():
     global scanner_thread;
-    init_db(True)
-    init_pucks()
-    #init_scanner()
+    init_db()
+    #init_pucks()
+    init_scanner()
 
 def close_scorpion():
     stop_scanner()
+    commit_db()
 
 
 if __name__ == '__main__':

@@ -8,11 +8,11 @@
 	<Type name="Tequila" description = "It's Tequila"></Type>
 	<Type name="Vermouth" description = "It's Vermouth"></Type>
 	
-	<Brand name="Johnny Walker" country="Scotland" yearfounded="1973"></Brand>
-	<Brand name="Jose Cuervo" country="Mexico" yearfounded="1973"></Brand>
-	<Brand name="McCormick" country="United States" yearfounded="1856"></Brand>
-	<Brand name="Svedka" country="Sweden" yearfounded="1973"></Brand>
-	<Brand name="Seagrams" country="Canada" yearfounded="1857"></Brand>
+	<Brand name="Johnny Walker" country="Scotland"></Brand>
+	<Brand name="Jose Cuervo" country="Mexico"></Brand>
+	<Brand name="McCormick" country="United States"></Brand>
+	<Brand name="Svedka" country="Sweden"></Brand>
+	<Brand name="Seagrams" country="Canada"></Brand>
 	
 	<Liquor name="Blue Label" abv="40" density="1" brand="Johnny Walker" type="Scotch"></Liquor>
 	<LiquorSKU liquor="Johnny Walker|Blue Label" volume="750" bottleweight="50" UPC="0011223344"></LiquorSKU>

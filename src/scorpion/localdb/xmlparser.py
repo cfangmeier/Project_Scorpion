@@ -22,7 +22,6 @@ def build_brand(attrs):
     b = dbo.Brand()
     b.name = attrs['name']
     b.country = attrs['country']
-    b.yearfounded = int(attrs['yearfounded'])
     objects.append(b)
 
 def build_liquor(attrs):

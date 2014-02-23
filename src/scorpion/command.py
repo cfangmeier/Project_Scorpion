@@ -4,21 +4,89 @@ Created on Feb 18, 2014
 @author: caleb
 '''
 import time
-
+import sys
 import scorpion.hal.puck as puck
+import scorpion.hal.scanner as scanner
 import scorpion.localdb.db as db
-
+write = sys.stdout.write
 def show_inventory(args):
     (liquor, extra) = db.get_inventory()
     print "===Liquors==="
     for l in liquor:
-        print l.liquorsku.liquor.name, l.measure
+        print l.liquorsku.liquor.brand.name,l.liquorsku.liquor.name, l.measure, l.puck_address
     print "===Extras==="
     for e in extra:
         print e.extra.name
 
 def check_scanner(args):
-    print 'checking scanner'
+    upc = None
+    if scanner.scanner_data.empty():
+        print "scan something now! skipping in 5s"
+        upc = scanner.scanner_data.get(True, 5)
+        if upc == None: return
+    else:
+        upc = scanner.scanner_data.get_nowait()
+    print "Scanned UPC: " + upc
+    liquorsku = db.get_with_upc(upc)
+    if liquorsku == None:
+        print "Congratulations! This is a new liquor type. Please provide some info for our records."
+        print "What brand is this liquor?"
+        brands = db.get_brands()
+        for i,b in enumerate(brands):
+            print"{0}: {1}".format(i, b.name)
+        print"{0}: Something else...".format(len(brands))
+        print"selection(0-{0}):".format(len(brands))
+        selection = int(raw_input())
+        if selection == len(brands):
+            print "Please enter some information about the brand of this liquor."
+            write("Name: ")
+            name = raw_input()
+            write("Country: ")
+            country = raw_input()
+            brand = db.create_new_brand(name, country)
+        else:
+            brand = brands[selection]
+        
+        print "What type is this liquor?"
+        types = db.get_types()
+        for i,t in enumerate(types):
+            print"{0}: {1}".format(i, t.name)
+        print"{0}: Something else...".format(len(types))
+        print"selection(0-{0}):".format(len(types))
+        selection = int(raw_input())
+        if selection == len(types):
+            print "What is the type of this liquor?"
+            write("Type: ")
+            name = raw_input()
+            type_ = db.create_new_type(name)
+        else:
+            type_ = types[selection]
+        
+        print "Is it one of these?"
+        liquors = db.get_liquors(brand, type_)
+        for i,l in  enumerate(liquors):
+            print str(i)+")"+l.brand.name+" | "+l.name
+        print "{0}: None of these".format(len(liquors))
+        print"selection(0-{0}):".format(len(liquors))
+        selection = int(raw_input())
+        if selection != len(liquors):
+            liquor = liquors[selection]
+        else:
+            print "Name of liquor?"
+            write("Name: ")
+            name = raw_input()
+            print "Alcohol by volume?(ABV) eg. .40"
+            write("ABV: ")
+            abv = float(raw_input())
+            liquor = db.create_new_liquor(type_,brand,name,abv)
+        
+        print "What is the volume of the bottle in mL. eg. 750 or 1750"
+        volume = float(raw_input())
+        liquorsku = db.create_new_liquorsku(liquor, volume, upc)
+        
+    db.create_new_liquorinventory(liquorsku, volume, puck.get_available_address())
+    print "New item added to inventory! Hurrah!"
+    db.commit_db()
 
 def light_show(args):
     for _ in range(100):
@@ -80,6 +148,8 @@ def mix_drink(args):
         address = l[1][0].puck_address
         puck.set_leds(address, False, False, False, True)
         print "BEHOLD!! : ",l[0].type.name; time.sleep(0.3)
+    time.sleep(2)
+    puck.kill_lights()
     
 
 def process_command(command):
