@@ -72,7 +72,7 @@ def kill_lights():
     for puck in pucks.values():
         set_leds(puck.address,False,False,False,False)
 
-def set_leds(address, red, green, blue, white):
+def _set_leds(address, red, green, blue, white):
     global pucks
     if not pucks.has_key(address):
         print "Not a valid puck address:",address
@@ -85,3 +85,9 @@ def set_leds(address, red, green, blue, white):
         puck.mcp.output(2,red)
         puck.mcp.output(3,white)
         puck.led_state = data
+
+def set_leds(address, red, green, blue, white):
+    if address == -1:
+        for puck in pucks.keys(): _set_leds(puck, red, green, blue, white)
+    else:
+        _set_leds(address,red,green,blue,white)

@@ -48,7 +48,7 @@
 	<ExtraIngredient measure="2" extra="Orange Juice" drink="Screwdriver"></ExtraIngredient>
 	
 	
-	<LiquorInventory liquorsku="0011223347" measure="150" puck_address="36"></LiquorInventory>
-	<LiquorInventory liquorsku="0011223348" measure="150" puck_address="37"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223347" measure="150" puck_address="32"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223348" measure="150" puck_address="33"></LiquorInventory>
 	
 </root>

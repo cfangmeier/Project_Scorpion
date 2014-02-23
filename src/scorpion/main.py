@@ -23,7 +23,7 @@ def main_loop():
 def init_scorpion():
     global scanner_thread;
     init_db(True)
-    #init_pucks()
+    init_pucks()
     #init_scanner()
 
 def close_scorpion():
