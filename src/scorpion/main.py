@@ -1,10 +1,11 @@
+#!/usr/bin/env python
 '''
 Created on Feb 7, 2014
 
 @author: caleb
 '''
 
-import sys
+from __future__ import print_function
 
 from scorpion.hal.scanner import init_scanner, stop_scanner
 from scorpion.hal.puck import init_pucks
@@ -15,7 +16,7 @@ scanner_thread = None
 
 def main_loop():
     while True:
-        sys.stdout.write('-->')
+        print('-->',end='')
         cmd = raw_input()
         if cmd == "exit": return
         process_command(cmd)
@@ -24,7 +25,7 @@ def init_scorpion():
     global scanner_thread;
     init_db()
     #init_pucks()
-    init_scanner()
+    #init_scanner()
 
 def close_scorpion():
     stop_scanner()
