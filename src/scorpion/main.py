@@ -5,8 +5,6 @@ Created on Feb 7, 2014
 @author: caleb
 '''
 
-from __future__ import print_function
-
 from scorpion.hal.scanner import init_scanner, stop_scanner
 from scorpion.hal.puck import init_pucks
 from scorpion.command import process_command
@@ -17,7 +15,7 @@ scanner_thread = None
 def main_loop():
     while True:
         print('-->',end='')
-        cmd = raw_input()
+        cmd = input()
         if cmd == "exit": return
         process_command(cmd)
 
@@ -33,6 +31,7 @@ def close_scorpion():
 
 
 if __name__ == '__main__':
+    
     init_scorpion()
     main_loop()
     close_scorpion()

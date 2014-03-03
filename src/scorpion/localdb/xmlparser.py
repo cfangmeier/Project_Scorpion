@@ -7,7 +7,7 @@ import os
 import xml.parsers.expat as expat
 
 from scorpion.config import xml_path
-import dbobjects as dbo
+import scorpion.localdb.dbobjects as dbo
 objects = []
 
 def build_type(attrs):
@@ -51,9 +51,9 @@ def build_liquorinventory(attrs):
     global objects
     l = dbo.LiquorInventory()
     for lsku in objects:
-        print type(lsku)
+        print(type(lsku))
         if type(lsku) != dbo.LiquorSKU: continue
-        print lsku.upc,attrs['liquorsku']
+        print(lsku.upc,attrs['liquorsku'])
     l.liquorsku = [lsku for lsku in objects
                    if type(lsku) == dbo.LiquorSKU and lsku.upc == attrs['liquorsku']][0]
     l.measure = float(attrs['measure'])
@@ -108,7 +108,7 @@ def build_extrainventory(attrs):
     objects.append(ei)
 
 def start_element(name, attrs):
-    print name, attrs
+    print(name, attrs)
     if name == "Type":
         build_type(attrs)
     elif name == "Brand":
@@ -148,4 +148,4 @@ def get_objects(path = xml_path):
     return ret
     
 if __name__ == "__main__":
-    print get_objects()
+    print(get_objects())

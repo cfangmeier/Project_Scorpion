@@ -3,8 +3,12 @@ Created on Feb 15, 2014
 
 @author: caleb
 '''
-
-import adafruit.Adafruit_MCP230xx as MCP
+try:
+    import adafruit.Adafruit_MCP230xx as MCP
+    virtual_pucks = False
+except ImportError:
+    print("Could not import adafruit code. Likely not actually running on raspi.")
+    virtual_pucks = True
 import scorpion.config as config
 pucks = {}
 
@@ -19,11 +23,13 @@ class _Puck:
 def init_pucks():
     global pucks
     for address in config.pucks.keys():
-        mcp = MCP.Adafruit_MCP230XX(address, 16) # MCP23017
-        
-        for i in range(0,4): mcp.config(i,mcp.OUTPUT); mcp.output(i,0)
-        for i in range(4,7): mcp.config(i,mcp.OUTPUT); mcp.output(i,1)
-        for i in range(8,16): mcp.config(i,mcp.INPUT)
+        if not virtual_pucks:
+            mcp = MCP.Adafruit_MCP230XX(address, 16) # MCP23017
+            
+            for i in range(0,4): mcp.config(i,mcp.OUTPUT); mcp.output(i,0)
+            for i in range(4,7): mcp.config(i,mcp.OUTPUT); mcp.output(i,1)
+            for i in range(8,16): mcp.config(i,mcp.INPUT)
+        else: mcp = None
         
         puck = _Puck()
         pucks[address] = puck
@@ -33,6 +39,7 @@ def init_pucks():
         puck.current_weight = get_weight(address)
 
 def _pole_adc(mcp):
+    if virtual_pucks: return 0
     mcp.output(4,0)
     mcp.output(4,1)
     mcp.output(5,0)
@@ -77,16 +84,17 @@ def kill_lights():
 
 def _set_leds(address, red, green, blue, white):
     global pucks
-    if not pucks.has_key(address):
-        print "Not a valid puck address:",address
+    if address not in pucks.keys():
+        print("Not a valid puck address:",address)
         return
     puck = pucks[address]
     data = [red,green,blue,white]
     if(data != puck.led_state):
-        puck.mcp.output(0,blue)
-        puck.mcp.output(1,green)
-        puck.mcp.output(2,red)
-        puck.mcp.output(3,white)
+        if not virtual_pucks:
+            puck.mcp.output(0,blue)
+            puck.mcp.output(1,green)
+            puck.mcp.output(2,red)
+            puck.mcp.output(3,white)
         puck.led_state = data
 
 def set_leds(address, red, green, blue, white):

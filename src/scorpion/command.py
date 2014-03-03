@@ -158,7 +158,7 @@ def process_command(command):
     if cmd == 'process_command': return
     args = words[1:]
     l = globals()
-    if l.has_key(cmd):
+    if cmd in l.keys():
         l[cmd](args)
     else:
         print("Command " + cmd + " not found.:(")
