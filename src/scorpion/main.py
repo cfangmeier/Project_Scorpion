@@ -17,7 +17,7 @@ scanner_thread = None
 def main_loop():
     while True:
         print('-->',end='')
-        cmd = raw_input()
+        cmd = input()
         if cmd == "exit": return
         process_command(cmd)
 

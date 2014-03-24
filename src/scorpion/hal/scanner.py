@@ -8,7 +8,7 @@ import os
 import re
 import select
 import threading
-from Queue import Queue
+from queue import Queue
 
 from scorpion.config import scanner_path
 
@@ -28,7 +28,7 @@ kill_flag = False
 def init_scanner():
     global _scanner_file, _scanner_thread
     if(not os.path.exists(scanner_path)):
-        print "ERROR: barcode scanner not found"
+        print("ERROR: barcode scanner not found")
         return
     event_path = os.readlink(scanner_path)
     event_id = re.findall('[0-9]+$',event_path)[-1]

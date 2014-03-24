@@ -9,8 +9,8 @@ import sqlalchemy as sql
 import sqlalchemy.orm as orm
 
 import scorpion.config as config
-import dbobjects as dbo
-import xmlparser
+import scorpion.localdb.dbobjects as dbo
+import scorpion.localdb.xmlparser as xmlparser
 
 session = None
 
@@ -137,7 +137,7 @@ def init_db(reset = False):
     global session
     if reset and os.path.exists(config.local_db):
         os.remove(config.local_db)
-        print 'removed old db'
+        print('removed old db')
     engine = sql.create_engine('sqlite:///'+config.local_db, echo = False)
     dbo.create_tables(engine)
     Session = orm.sessionmaker(bind=engine)

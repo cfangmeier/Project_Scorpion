@@ -78,7 +78,7 @@ def kill_lights():
 def _set_leds(address, red, green, blue, white):
     global pucks
     if not pucks.has_key(address):
-        print "Not a valid puck address:",address
+        print("Not a valid puck address:",address)
         return
     puck = pucks[address]
     data = [red,green,blue,white]
