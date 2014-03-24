@@ -3,7 +3,6 @@ Created on Feb 18, 2014
 
 @author: caleb
 '''
-from __future__ import print_function
 import time
 
 import scorpion.hal.puck as puck
@@ -37,13 +36,13 @@ def check_scanner(args):
             print("{0}: {1}".format(i, b.name))
         print("{0}: Something else...".format(len(brands)))
         print("selection(0-{0}):".format(len(brands)))
-        selection = int(raw_input())
+        selection = int(input())
         if selection == len(brands):
             print("Please enter some information about the brand of this liquor.")
             print("Name: ",end='')
-            name = raw_input()
+            name = input()
             print("Country: ",end='')
-            country = raw_input()
+            country = input()
             brand = db.create_new_brand(name, country)
         else:
             brand = brands[selection]
@@ -54,11 +53,11 @@ def check_scanner(args):
             print("{0}: {1}".format(i, t.name))
         print("{0}: Something else...".format(len(types)))
         print("selection(0-{0}):".format(len(types)))
-        selection = int(raw_input())
+        selection = int(input())
         if selection == len(types):
             print("What is the type of this liquor?")
             print("Type: ",end='')
-            name = raw_input()
+            name = input()
             type_ = db.create_new_type(name)
         else:
             type_ = types[selection]
@@ -69,20 +68,20 @@ def check_scanner(args):
             print(str(i)+")"+l.brand.name+" | "+l.name)
         print("{0}: None of these".format(len(liquors)))
         print("selection(0-{0}):".format(len(liquors)))
-        selection = int(raw_input())
+        selection = int(input())
         if selection != len(liquors):
             liquor = liquors[selection]
         else:
             print("Name of liquor?")
             print("Name: ",end='')
-            name = raw_input()
+            name = input()
             print("Alcohol by volume?(ABV) eg. .40")
             print("ABV: ",end='')
-            abv = float(raw_input())
+            abv = float(input())
             liquor = db.create_new_liquor(type_,brand,name,abv)
         
         print("What is the volume of the bottle in mL. eg. 750 or 1750")
-        volume = float(raw_input())
+        volume = float(input())
         liquorsku = db.create_new_liquorsku(liquor, volume, upc)
         
     db.create_new_liquorinventory(liquorsku, volume, puck.get_available_address())
