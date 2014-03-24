@@ -84,7 +84,7 @@ def check_scanner(args):
         volume = float(input())
         liquorsku = db.create_new_liquorsku(liquor, volume, upc)
         
-    db.create_new_liquorinventory(liquorsku, volume, puck.get_available_address())
+    db.create_new_liquorinventory(liquorsku, liquorsku.volume, puck.get_available_address())
     print("New item added to inventory! Hurrah!")
     db.commit_db()
 

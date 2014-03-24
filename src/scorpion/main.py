@@ -22,8 +22,8 @@ def main_loop():
 def init_scorpion():
     global scanner_thread;
     init_db()
-    #init_pucks()
-    #init_scanner()
+    init_pucks()
+    init_scanner()
 
 def close_scorpion():
     stop_scanner()

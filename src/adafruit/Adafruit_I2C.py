@@ -10,16 +10,16 @@ class Adafruit_I2C :
 
     @staticmethod
     def getPiRevision():
-            "Gets the version number of the Raspberry Pi board"
-    # Courtesy quick2wire-python-api
-    # https://github.com/quick2wire/quick2wire-python-api
-    try:
-        with open('/proc/cpuinfo','r') as f:
-            for line in f:
-                if line.startswith('Revision'):
-                    return 1 if line.rstrip()[-1] in ['1','2'] else 2
-    except:
-        return 0
+        "Gets the version number of the Raspberry Pi board"
+        # Courtesy quick2wire-python-api
+        # https://github.com/quick2wire/quick2wire-python-api
+        try:
+            with open('/proc/cpuinfo','r') as f:
+                for line in f:
+                    if line.startswith('Revision'):
+                        return 1 if line.rstrip()[-1] in ['1','2'] else 2
+        except:
+            return 0
 
     @staticmethod
     def getPiI2CBusNumber():
