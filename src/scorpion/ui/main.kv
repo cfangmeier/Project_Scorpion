@@ -1,0 +1,41 @@
+#:kivy 1.8.0
+
+
+<ScrollButton>:
+  size_hint_x: None
+  width: '5cm'
+
+<StartScreen>:
+  icon_container: icon_container
+  name: 'startscreen'
+  BoxLayout:
+    orientation: 'vertical'
+    ScrollView:
+      do_scroll_y: False
+      do_scroll_x: True
+      GridLayout:
+        id: icon_container
+        padding: 20
+        spacing: 10
+        rows: 1
+        size_hint_x: None
+        width: self.minimum_width
+        ScrollButton:
+          text: 'hello'
+    Button:
+      text: 'hello'
+      on_release: app.root.current = 'screen2'
+
+
+ScreenManager:
+  id: sm
+  Screen:
+    name: 'screen2'
+    BoxLayout:
+      orientation: 'horizontal'
+      Button:
+        text: 'hello'
+        on_release: sm.current = 'startscreen'
+      Button:
+        text: 'goodbye again'
+  StartScreen:
