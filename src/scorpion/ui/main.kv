@@ -1,98 +1,110 @@
 #:kivy 1.8.0
 
 
-<ScrollButton>:
+<StartScreen_LiquorView>:
+  size_hint_x: None
+  width: '5cm'
+
+<StartScreen_DrinkView>:
   size_hint_x: None
   width: '5cm'
 
 <StartScreen>:
-  icon_container: icon_container
+  liquor_list: liquor_list
   name: 'startscreen'
   BoxLayout:
     orientation: 'vertical'
     ScrollView:
       do_scroll_y: False
       GridLayout:
-        id: icon_container
+        id: liquor_list
         padding: 20
         spacing: 10
         rows: 1
         size_hint_x: None
         width: self.minimum_width
-        ScrollButton:
-          text: 'hello'
     Button:
-      text: 'hello'
-      on_release: app.root.current = 'liquorscreen'
+      text: 'Mix a Drink!'
+      on_release: app.root.current = 'mixingscreen'
+
+<LiquorScreen_LiquorView>:
+  size_hint_x: None
+  width: '5cm'
+  
 
 <LiquorScreen>:
   #icon_container: icon_container
   name: 'liquorscreen'
   BoxLayout:
-    orientation: 'horizontal'
+    orientation: 'vertical'
     BoxLayout:
-      size_hint_x: 0.4
-      orientation: 'vertical'
-      Button:
-        text: 'Liquor Picture'
-      Label:
-        text: 'Something about the liquor'
-        size_hint_y: None
-        size_y: '0.5in'
-      Label:
-        text: 'Something else about the liquor'
-        size_hint_y: None
-        size_y: '0.5in'
-    BoxLayout:
-      orientation: 'vertical'
-      Label:
-        size_hint_y: 0.3
-        text: 'Liquor & Distillery Information'
-      ScrollView:
-        do_scroll_y: False
-        GridLayout:
-          padding: 20
-          spacing: 10
-          rows: 1
-          size_hint_x: None
-          width: self.minimum_width
-          ScrollButton:
-            text: 'drink me'
-          ScrollButton:
-            text: 'no! drink me!'
-          ScrollButton:
-            text: 'no, me!'
-          ScrollButton:
-            text: "eh, I'm fine."
-      Label:
-        size_hint_y: 0.3
-        text: 'This is how much of this you drank! dude!'
-
+      orientation: 'horizontal'
+      BoxLayout:
+        size_hint_x: 0.4
+        orientation: 'vertical'
+        Button:
+          text: 'Liquor Picture'
+        Label:
+          text: 'Something about the liquor'
+          size_hint_y: None
+          size_y: '0.5in'
+        Label:
+          text: 'Something else about the liquor'
+          size_hint_y: None
+          size_y: '0.5in'
+      BoxLayout:
+        orientation: 'vertical'
+        Label:
+          size_hint_y: 0.3
+          text: 'Liquor & Distillery Information'
+        ScrollView:
+          do_scroll_y: False
+          GridLayout:
+            padding: 20
+            spacing: 10
+            rows: 1
+            size_hint_x: None
+            width: self.minimum_width
+            LiquorScreen_LiquorView:
+              text: 'drink me'
+            LiquorScreen_LiquorView:
+              text: 'no! drink me!'
+            LiquorScreen_LiquorView:
+              text: 'no, me!'
+            LiquorScreen_LiquorView:
+              text: "eh, I'm fine."
+        Label:
+          size_hint_y: 0.3
+          text: 'This is how much of this you drank! dude!'
+    Button:
+      size_hint_y: 0.1
+      text: 'back to start'
+      on_release: app.root.current = 'startscreen'
 <MixingScreen>:
   name: 'mixingscreen'
   BoxLayout:
-    orientation: 'horizontal'
+    orientation: 'vertical'
     BoxLayout:
-      orientation: 'vertical'
-      Label:
-        text: 'name'
-      Button:
-        text: "I'm a drink!"
-      Label: 
-        text: 'I describe the drink'
-    BoxLayout:
-      orientation: 'vertical'
-      Label:
-        text: "I'm some instructions"
+      orientation: 'horizontal'
       BoxLayout:
-        orientation: 'horizontal'
+        orientation: 'vertical'
+        Label:
+          text: 'name'
         Button:
-          text: 'Ingredient 1'
-        Button:
-          text: 'Ingredient 2'
-
-ScreenManager:
-  id: sm
-  MixingScreen:
-  LiquorScreen:
-  StartScreen:
+          text: "I'm a drink!"
+        Label: 
+          text: 'I describe the drink'
+      BoxLayout:
+        orientation: 'vertical'
+        Label:
+          text: "I'm some instructions"
+        BoxLayout:
+          orientation: 'horizontal'
+          Button:
+            text: 'Ingredient 1'
+          Button:
+            text: 'Ingredient 2'
+    Button:
+      size_hint_y: 0.1
+      text: 'back to start'
+      on_release: app.root.current = 'startscreen'

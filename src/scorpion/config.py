@@ -7,8 +7,10 @@ For anything that may be sensitive(eg. passwords), just commit an empty string.
 @author: caleb
 '''
 
-local_db = "project_scorpion.db"
-xml_path = "localdb/default_data.xml"
+project_root = '/'.join(__file__.split('/')[:-3])
+
+local_db = '/'.join([project_root,'data/db',"project_scorpion.sqlite3"])
+xml_path = '/'.join([project_root,'data/db','default_data.xml'])
 scanner_path = "/dev/input/by-id/usb-HID_Keyboard_Device_HID_Keyboard_Device_Keyboard_Device-event-kbd"
 
 
