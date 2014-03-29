@@ -67,6 +67,11 @@ def get_drink(name):
     drink = session.query(dbo.Drink).filter(dbo.Drink.name == name).first()
     return drink
 
+def get_drinks_using_liquor(liquor):
+    drinks = set([d.drink for d in liquor.drinks])
+    drinks.update(set([d.drink for d in liquor.type.drinks]))
+    return list(drinks)
+
 def get_drink_mix(drink, liquor_inventory = None, extra_inventory = None):
     if liquor_inventory == None:
         liquor_inventory = session.query(dbo.LiquorInventory).all()

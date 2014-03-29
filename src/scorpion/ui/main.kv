@@ -30,10 +30,13 @@
 <LiquorScreen_LiquorView>:
   size_hint_x: None
   width: '5cm'
-  
+
+<LiquorScreen_DrinkView>:
+  size_hint_x: None
+  width: '5cm'
 
 <LiquorScreen>:
-  #icon_container: icon_container
+  drink_list: drink_list
   name: 'liquorscreen'
   BoxLayout:
     orientation: 'vertical'
@@ -60,19 +63,12 @@
         ScrollView:
           do_scroll_y: False
           GridLayout:
+            id: drink_list
             padding: 20
             spacing: 10
             rows: 1
             size_hint_x: None
             width: self.minimum_width
-            LiquorScreen_LiquorView:
-              text: 'drink me'
-            LiquorScreen_LiquorView:
-              text: 'no! drink me!'
-            LiquorScreen_LiquorView:
-              text: 'no, me!'
-            LiquorScreen_LiquorView:
-              text: "eh, I'm fine."
         Label:
           size_hint_y: 0.3
           text: 'This is how much of this you drank! dude!'
@@ -80,6 +76,7 @@
       size_hint_y: 0.1
       text: 'back to start'
       on_release: app.root.current = 'startscreen'
+
 <MixingScreen>:
   name: 'mixingscreen'
   BoxLayout:

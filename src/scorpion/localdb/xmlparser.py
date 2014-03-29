@@ -4,6 +4,7 @@ Created on Feb 17, 2014
 @author: caleb
 '''
 import os
+import datetime
 import xml.parsers.expat as expat
 
 from scorpion.config import xml_path
@@ -56,6 +57,7 @@ def build_liquorinventory(attrs):
                    if type(lsku) == dbo.LiquorSKU and lsku.upc == attrs['liquorsku']][0]
     l.measure = float(attrs['measure'])
     l.puck_address = int(attrs['puck_address'])
+    l.date_added = datetime.datetime.now()
     objects.append(l)
 
 def build_drink(attrs):

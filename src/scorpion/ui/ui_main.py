@@ -14,13 +14,17 @@ import scorpion.localdb.db as db
 _sm = None
 
 class StartScreen_LiquorView(Button):
-    def __init__(self, **kwargs):
+    def __init__(self, liquor_inv, **kwargs):
         super(StartScreen_LiquorView, self).__init__(**kwargs)
+        self.liquor_inv = liquor_inv
+        l = liquor_inv.liquorsku.liquor
+        self.text = l.brand.name + ' ' + l.name
+        
         
     def on_release(self, *args):
         Button.on_release(self, *args)
+        _sm.get_screen('liquorscreen').current_liquor = self.liquor_inv
         _sm.current = 'liquorscreen'
-    
 
 class StartScreen(Screen):
     liquor_list = ObjectProperty(None)
@@ -33,16 +37,28 @@ class StartScreen(Screen):
         self.liquor_list.clear_widgets()
         (inv, _) = db.get_inventory()
         for liquor_inv in inv:
-            liquor = liquor_inv.liquorsku.liquor
-            sslv = StartScreen_LiquorView()
-            sslv.text = liquor.brand.name +', '+liquor.name
+            sslv = StartScreen_LiquorView(liquor_inv)
             self.liquor_list.add_widget(sslv)
 
 class LiquorScreen_LiquorView(Button):
     pass
 
-class LiquorScreen(Screen):
+class LiquorScreen_DrinkView(Button):
     pass
+
+class LiquorScreen(Screen):
+    drink_list = ObjectProperty(None)
+    def __init__(self, **kwargs):
+        super(LiquorScreen,self).__init__(**kwargs)
+        self.current_liquor = None
+    
+    def on_pre_enter(self, *args):
+        
+        self.drink_list.clear_widgets()
+        for d in db.get_drinks_using_liquor(self.current_liquor.liquorsku.liquor):
+            lsdv = LiquorScreen_DrinkView(text = d.name)
+            self.drink_list.add_widget(lsdv)
+        
 
 class MixingScreen(Screen):
     pass

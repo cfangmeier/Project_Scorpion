@@ -4,7 +4,7 @@ Created on Feb 12, 2014
 @author: caleb
 '''
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, ForeignKey, Integer, Float, String
+from sqlalchemy import Column, ForeignKey, Integer, Float, String, DateTime
 from sqlalchemy.orm import relationship, backref
 base = declarative_base()
 
@@ -113,6 +113,7 @@ class LiquorInventory(base):
     id = Column(Integer, primary_key = True)
     measure = Column(Float)
     puck_address = Column(Integer)
+    date_added = Column(DateTime)
     
     liquorsku_id = Column(Integer, ForeignKey('liquorsku.id'))
     liquorsku = relationship("LiquorSKU", backref = backref('inventory'))
