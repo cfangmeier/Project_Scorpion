@@ -11,7 +11,7 @@ from kivy.uix.button import Button
 
 import scorpion.localdb.db as db
 
-_sm = None
+_app = None
 
 class StartScreen_LiquorView(Button):
     def __init__(self, liquor_inv, **kwargs):
@@ -23,14 +23,13 @@ class StartScreen_LiquorView(Button):
         
     def on_release(self, *args):
         Button.on_release(self, *args)
-        _sm.get_screen('liquorscreen').current_liquor = self.liquor_inv
-        _sm.current = 'liquorscreen'
+        _app.get_screen('liquorscreen').current_liquor = self.liquor_inv
+        _app.set_screen('liquorscreen')
 
 class StartScreen(Screen):
     liquor_list = ObjectProperty(None)
     def __init__(self, **kwargs):
         super(StartScreen, self).__init__(**kwargs)
-        self.n = 1
     
     def on_pre_enter(self, *args):
         Screen.on_pre_enter(self, *args)
@@ -41,10 +40,10 @@ class StartScreen(Screen):
             self.liquor_list.add_widget(sslv)
 
 class LiquorScreen_LiquorView(Button):
-    pass
+    liquor = None
 
 class LiquorScreen_DrinkView(Button):
-    pass
+    drink = None
 
 class LiquorScreen(Screen):
     drink_list = ObjectProperty(None)
@@ -61,7 +60,7 @@ class LiquorScreen(Screen):
         
 
 class MixingScreen(Screen):
-    pass
+    drink = None
 
 class MainApp(App):
     def __init__(self, **kwargs):
@@ -76,9 +75,18 @@ class MainApp(App):
         _sm = self.sm
         return self.sm
     
-    def on_pause(self):
-        return True
+    def set_screen(self, screen):
+        if type(screen) is str:
+            self.sm.current = screen
+        else:
+            self.sm.current_screen = screen
+    def get_screen(self, screen = None):
+        if screen is None:
+            return self.sm.current_screen
+        else:
+            return self.sm.get_screen(screen)
 
 def run_ui():
-    m = MainApp()
-    m.run()
+    global _app
+    _app = MainApp()
+    _app.run()

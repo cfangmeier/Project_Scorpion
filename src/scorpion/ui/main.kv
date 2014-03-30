@@ -79,6 +79,9 @@
 
 <MixingScreen>:
   name: 'mixingscreen'
+  drink_name: drink_name
+  drink_image: drink_image
+  drink_descr: drink_descr
   BoxLayout:
     orientation: 'vertical'
     BoxLayout:
@@ -86,21 +89,19 @@
       BoxLayout:
         orientation: 'vertical'
         Label:
-          text: 'name'
-        Button:
-          text: "I'm a drink!"
-        Label: 
-          text: 'I describe the drink'
+          id: drink_name
+        AsyncImage:
+          id: drink_image
+        RstDocument: 
+          id: drink_descr
       BoxLayout:
         orientation: 'vertical'
-        Label:
-          text: "I'm some instructions"
+        RstDocument:
+          id: drink_instructions
+          text: 'These are the **drink** *instructions*!'
         BoxLayout:
+          id: drink_ingr
           orientation: 'horizontal'
-          Button:
-            text: 'Ingredient 1'
-          Button:
-            text: 'Ingredient 2'
     Button:
       size_hint_y: 0.1
       text: 'back to start'

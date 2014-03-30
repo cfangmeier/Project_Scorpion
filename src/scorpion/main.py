@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Created on Feb 7, 2014
 
@@ -11,8 +11,6 @@ from scorpion.command import process_command
 from scorpion.localdb.db import init_db, commit_db
 from scorpion.ui.ui_main import run_ui
 
-scanner_thread = None
-
 def main_loop():
     while True:
         print('-->',end='')
@@ -21,7 +19,6 @@ def main_loop():
         process_command(cmd)
 
 def init_scorpion():
-    global scanner_thread;
     init_db()
     init_pucks()
     init_scanner()
