@@ -77,11 +77,17 @@
       text: 'back to start'
       on_release: app.root.current = 'startscreen'
 
+<MixingScreen_IngrView>:
+  size_hint_x: None
+  width: '5cm'
+
 <MixingScreen>:
   name: 'mixingscreen'
   drink_name: drink_name
   drink_image: drink_image
   drink_descr: drink_descr
+  drink_ingr_list: drink_ingr_list
+  drink_instr: drink_instr
   BoxLayout:
     orientation: 'vertical'
     BoxLayout:
@@ -97,10 +103,10 @@
       BoxLayout:
         orientation: 'vertical'
         RstDocument:
-          id: drink_instructions
+          id: drink_instr
           text: 'These are the **drink** *instructions*!'
         BoxLayout:
-          id: drink_ingr
+          id: drink_ingr_list
           orientation: 'horizontal'
     Button:
       size_hint_y: 0.1

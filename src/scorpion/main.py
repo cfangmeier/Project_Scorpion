@@ -19,7 +19,7 @@ def main_loop():
         process_command(cmd)
 
 def init_scorpion():
-    init_db()
+    init_db(True)
     init_pucks()
     init_scanner()
 
@@ -32,4 +32,3 @@ if __name__ == '__main__':
     init_scorpion()
     run_ui()
     close_scorpion()
-

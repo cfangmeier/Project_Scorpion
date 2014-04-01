@@ -65,7 +65,7 @@ def build_drink(attrs):
     d = dbo.Drink()
     d.name = attrs['name']
     d.description = attrs['description']
-    d.mixinstructions = attrs['mixinstructions']
+    d.instructions = attrs['instructions']
     d.glasstype = attrs['glasstype']
     objects.append(d)
     

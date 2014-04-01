@@ -43,6 +43,11 @@ class LiquorScreen_LiquorView(Button):
 
 class LiquorScreen_DrinkView(Button):
     drink = None
+    
+    def on_release(self, *args, **kwargs):
+        super().on_release(*args, **kwargs)
+        _app.get_screen('mixingscreen').drink = self.drink
+        _app.set_screen('mixingscreen')
 
 class LiquorScreen(Screen):
     drink_list = ObjectProperty(None)
@@ -55,17 +60,43 @@ class LiquorScreen(Screen):
         self.drink_list.clear_widgets()
         for d in db.get_drinks_using_liquor(self.current_liquor.liquorsku.liquor):
             lsdv = LiquorScreen_DrinkView(text = d.name)
+            lsdv.drink = d
             self.drink_list.add_widget(lsdv)
         
 
+class MixingScreen_IngrView(Button):
+    pass
+
 class MixingScreen(Screen):
     drink = None
+    
     drink_name = ObjectProperty(None)
+    drink_image = ObjectProperty(None)
+    drink_descr = ObjectProperty(None)
+    drink_instr = ObjectProperty(None)
+    drink_ingr_list = ObjectProperty(None)
     
     
     def on_pre_enter(self, *args, **kwargs):
         super().on_pre_enter(*args, **kwargs)
         self.drink_name.text = self.drink.name
+        self.drink_descr.text = self.drink.description
+        self.drink_instr.text = self.drink.instructions
+        self.drink_ingr_list.clear_widgets()
+        for li in self.drink.liquors:
+            msiv = MixingScreen_IngrView()
+            l = li.liquor
+            msiv.text = ' '.join((l.brand.name, l.name))
+            self.drink_ingr_list.add_widget(msiv)
+        for gl in self.drink.genliquors:
+            msiv = MixingScreen_IngrView()
+            t = gl.type
+            msiv.text = t.name
+            self.drink_ingr_list.add_widget(msiv)
+        for e in self.drink.extras:
+            msiv = MixingScreen_IngrView()
+            msiv.text = e.extra.name
+            self.drink_ingr_list.add_widget(msiv)
 
 
 class DrinkSelectScreen_DrinkView(Button):
@@ -84,7 +115,7 @@ class DrinkSelectScreen(Screen):
     def on_pre_enter(self, *args, **kwargs):
         super().on_pre_enter(*args, **kwargs)
         self.drink_list.clear_widgets()
-        for drink in db.get_drinks_mixable():
+        for drink in db.get_drinks():
             dssdv = DrinkSelectScreen_DrinkView()
             dssdv.text = drink.name
             dssdv.drink = drink

@@ -33,17 +33,17 @@
 	
 	
 	<Drink name="Martini" glasstype="Martini glass" description="Get Drunk"
-		mixinstructions="Mix it up,baby!"></Drink>
+		instructions="Mix it up,baby!"></Drink>
 	<LiquorIngredient measure="2" liquor="Seagrams|Extra Dry Gin" drink="Martini"></LiquorIngredient>
 	<LiquorIngredient measure="1" liquor="Seagrams|Dry Vermouth" drink="Martini"></LiquorIngredient>
 	
 	<Drink name="GenMartini" glasstype="Martini glass" description="Get Drunk"
-		mixinstructions="Mix it up,baby!"></Drink>
+		instructions="Mix it up,baby!"></Drink>
 	<GenLiquorIngredient measure="2" type="Gin" drink="GenMartini"></GenLiquorIngredient>
 	<GenLiquorIngredient measure="1" type="Vermouth" drink="GenMartini"></GenLiquorIngredient>
 	
 	<Drink name="Screwdriver" glasstype="Your mouth" description="It's like acid." 
-		mixinstructions="Mix all together... or else."></Drink>
+		instructions="Mix all together... **or else**."></Drink>
 	<GenLiquorIngredient measure="1" type="Vodka" drink="Screwdriver"></GenLiquorIngredient>
 	<ExtraIngredient measure="2" extra="Orange Juice" drink="Screwdriver"></ExtraIngredient>
 	

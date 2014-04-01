@@ -65,7 +65,7 @@ class Drink(base):
     name = Column(String)
     glasstype = Column(String)
     description = Column(String)
-    mixinstructions = Column(String)
+    instructions = Column(String)
     
 
 class LiquorIngredient(base):
