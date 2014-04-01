@@ -15,11 +15,10 @@ _app = None
 
 class StartScreen_LiquorView(Button):
     def __init__(self, liquor_inv, **kwargs):
-        super(StartScreen_LiquorView, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.liquor_inv = liquor_inv
         l = liquor_inv.liquorsku.liquor
         self.text = l.brand.name + ' ' + l.name
-        
         
     def on_release(self, *args):
         Button.on_release(self, *args)
@@ -29,10 +28,10 @@ class StartScreen_LiquorView(Button):
 class StartScreen(Screen):
     liquor_list = ObjectProperty(None)
     def __init__(self, **kwargs):
-        super(StartScreen, self).__init__(**kwargs)
+        super().__init__(**kwargs)
     
-    def on_pre_enter(self, *args):
-        Screen.on_pre_enter(self, *args)
+    def on_pre_enter(self, *args, **kwargs):
+        super().on_pre_enter(*args, **kwargs)
         self.liquor_list.clear_widgets()
         (inv, _) = db.get_inventory()
         for liquor_inv in inv:
@@ -47,12 +46,12 @@ class LiquorScreen_DrinkView(Button):
 
 class LiquorScreen(Screen):
     drink_list = ObjectProperty(None)
-    def __init__(self, **kwargs):
-        super(LiquorScreen,self).__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.current_liquor = None
     
-    def on_pre_enter(self, *args):
-        
+    def on_pre_enter(self, *args, **kwargs):
+        super().on_pre_enter(*args, **kwargs)
         self.drink_list.clear_widgets()
         for d in db.get_drinks_using_liquor(self.current_liquor.liquorsku.liquor):
             lsdv = LiquorScreen_DrinkView(text = d.name)
@@ -61,10 +60,39 @@ class LiquorScreen(Screen):
 
 class MixingScreen(Screen):
     drink = None
+    drink_name = ObjectProperty(None)
+    
+    
+    def on_pre_enter(self, *args, **kwargs):
+        super().on_pre_enter(*args, **kwargs)
+        self.drink_name.text = self.drink.name
+
+
+class DrinkSelectScreen_DrinkView(Button):
+    drink = None
+    
+    def on_release(self, *args, **kwargs):
+        super().on_release(*args, **kwargs)
+        _app.get_screen('mixingscreen').drink = self.drink
+        _app.set_screen('mixingscreen')
+
+class DrinkSelectScreen(Screen):
+    drink_list = ObjectProperty(None)
+    def __init__(self, **kwargs):
+        super(DrinkSelectScreen, self).__init__(**kwargs)
+    
+    def on_pre_enter(self, *args, **kwargs):
+        super().on_pre_enter(*args, **kwargs)
+        self.drink_list.clear_widgets()
+        for drink in db.get_drinks_mixable():
+            dssdv = DrinkSelectScreen_DrinkView()
+            dssdv.text = drink.name
+            dssdv.drink = drink
+            self.drink_list.add_widget(dssdv)
 
 class MainApp(App):
-    def __init__(self, **kwargs):
-        super(MainApp,self).__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
     
     def build(self):
         global _sm
@@ -72,6 +100,7 @@ class MainApp(App):
         self.sm.add_widget(StartScreen())
         self.sm.add_widget(LiquorScreen())
         self.sm.add_widget(MixingScreen())
+        self.sm.add_widget(DrinkSelectScreen())
         _sm = self.sm
         return self.sm
     
@@ -85,6 +114,7 @@ class MainApp(App):
             return self.sm.current_screen
         else:
             return self.sm.get_screen(screen)
+
 
 def run_ui():
     global _app

@@ -29,7 +29,6 @@ def close_scorpion():
 
 
 if __name__ == '__main__':
-    
     init_scorpion()
     run_ui()
     close_scorpion()

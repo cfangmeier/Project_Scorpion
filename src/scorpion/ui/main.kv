@@ -25,7 +25,7 @@
         width: self.minimum_width
     Button:
       text: 'Mix a Drink!'
-      on_release: app.root.current = 'mixingscreen'
+      on_release: app.root.current = 'drinkselectscreen'
 
 <LiquorScreen_LiquorView>:
   size_hint_x: None
@@ -102,6 +102,29 @@
         BoxLayout:
           id: drink_ingr
           orientation: 'horizontal'
+    Button:
+      size_hint_y: 0.1
+      text: 'back to start'
+      on_release: app.root.current = 'startscreen'
+
+<DrinkSelectScreen_DrinkView>:
+  size_hint_x: None
+  width: '5cm'
+
+<DrinkSelectScreen>:
+  name: 'drinkselectscreen'
+  drink_list: drink_list
+  BoxLayout:
+    orientation: 'vertical'
+    ScrollView:
+      do_scroll_y: False
+      GridLayout:
+        id: drink_list
+        padding: 20
+        spacing: 10
+        rows: 1
+        size_hint_x: None
+        width: self.minimum_width
     Button:
       size_hint_y: 0.1
       text: 'back to start'
