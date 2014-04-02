@@ -72,7 +72,8 @@ def build_drink(attrs):
 def build_liquoringredient(attrs):
     global objects
     li = dbo.LiquorIngredient()
-    li.measure = float(attrs['measure'])
+    (measure, li.measure_unit) = attrs['measure'].split()
+    li.measure = float(measure)
     li.drink = [d for d in objects if type(d) == dbo.Drink and d.name == attrs['drink']][0]
     (brand,liquor) = attrs['liquor'].split('|')
     li.liquor = [l for l in objects 
@@ -82,7 +83,8 @@ def build_liquoringredient(attrs):
 def build_genliquoringredient(attrs):
     global objects
     gli = dbo.GenLiquorIngredient()
-    gli.measure = float(attrs['measure'])
+    (measure, gli.measure_unit) = attrs['measure'].split()
+    gli.measure = float(measure)
     gli.drink = [d for d in objects if type(d) == dbo.Drink and d.name == attrs['drink']][0]
     gli.type = [t for t in objects if type(t) == dbo.Type and t.name == attrs['type']][0]
     objects.append(gli)
@@ -96,7 +98,8 @@ def build_extra(attrs):
 def build_extraingredient(attrs):
     global objects
     ei = dbo.ExtraIngredient()
-    ei.measure = attrs['measure']
+    (measure, ei.measure_unit) = attrs['measure'].split()
+    ei.measure = float(measure)
     ei.drink = [d for d in objects if type(d) == dbo.Drink and d.name == attrs['drink']][0]
     ei.extra = [e for e in objects if type(e) == dbo.Extra and e.name == attrs['extra']][0]
     objects.append(ei)

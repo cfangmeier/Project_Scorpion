@@ -3,6 +3,7 @@ Created on Mar 24, 2014
 
 @author: caleb
 '''
+import os
 
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
@@ -10,7 +11,7 @@ from kivy.properties import ObjectProperty
 from kivy.uix.button import Button
 
 import scorpion.localdb.db as db
-
+import scorpion.config as config
 _app = None
 
 class StartScreen_LiquorView(Button):
@@ -82,6 +83,12 @@ class MixingScreen(Screen):
         self.drink_name.text = self.drink.name
         self.drink_descr.text = self.drink.description
         self.drink_instr.text = self.drink.instructions
+        img_path = os.path.join(config.drink_image_path,
+                                self.drink.name.lower().replace(' ','_')+'.jpg')
+        if os.path.isfile(img_path):
+            self.drink_image.source = img_path
+        else:
+            self.drink_image.source = ""
         self.drink_ingr_list.clear_widgets()
         for li in self.drink.liquors:
             msiv = MixingScreen_IngrView()

@@ -47,6 +47,7 @@ class LiquorSKU(base):
     volume = Column(Float)
     bottleweight = Column(Float)
     upc = Column(String, unique=True)
+    image = Column(String)
     
     liquor_id = Column(Integer, ForeignKey('liquor.id'))
     liquor = relationship("Liquor", backref = backref('skus'))
@@ -66,13 +67,14 @@ class Drink(base):
     glasstype = Column(String)
     description = Column(String)
     instructions = Column(String)
-    
+    image = Column(String)
 
 class LiquorIngredient(base):
     __tablename__ = 'liquoringredient'
     
     id = Column(Integer, primary_key = True)
     measure = Column(Float)
+    measure_unit = Column(String)
     
     liquor_id = Column(Integer, ForeignKey('liquor.id'))
     liquor = relationship("Liquor", backref = backref('drinks'))
@@ -86,6 +88,7 @@ class GenLiquorIngredient(base):
     
     id = Column(Integer, primary_key = True)
     measure = Column(Float)
+    measure_unit = Column(String)
     
     type_id = Column(Integer, ForeignKey('type.id'))
     type = relationship("Type", backref = backref('drinks'))
@@ -99,6 +102,7 @@ class ExtraIngredient(base):
     
     id = Column(Integer, primary_key = True)
     measure = Column(Float)
+    measure_unit = Column(String)
     
     extra_id = Column(Integer, ForeignKey('extra.id'))
     extra = relationship("Extra", backref = backref('drinks'))
@@ -112,7 +116,7 @@ class LiquorInventory(base):
     
     id = Column(Integer, primary_key = True)
     measure = Column(Float)
-    puck_address = Column(Integer)
+    puck_address = Column(Integer, unique = True)
     date_added = Column(DateTime)
     
     liquorsku_id = Column(Integer, ForeignKey('liquorsku.id'))

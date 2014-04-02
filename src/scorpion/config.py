@@ -6,11 +6,17 @@ For anything that may be sensitive(eg. passwords), just commit an empty string.
 
 @author: caleb
 '''
+import os
+path_sep = os.path.sep
 
-project_root = '/'.join(__file__.split('/')[:-3])
+project_root = path_sep.join(__file__.split(path_sep)[:-3])
+drink_image_path = path_sep.join([project_root,'data','images','drinks'])
+liquor_image_path = path_sep.join([project_root,'data','images','liquor'])
+ingredient_image_path = path_sep.join([project_root,'data','images','ingredients'])
 
-local_db = '/'.join([project_root,'data/db',"project_scorpion.sqlite3"])
-xml_path = '/'.join([project_root,'data/db','default_data.xml'])
+
+local_db = path_sep.join([project_root,'data','db','project_scorpion.sqlite3'])
+xml_path = path_sep.join([project_root,'data','db','default_data.xml'])
 scanner_path = "/dev/input/by-id/usb-HID_Keyboard_Device_HID_Keyboard_Device_Keyboard_Device-event-kbd"
 
 
