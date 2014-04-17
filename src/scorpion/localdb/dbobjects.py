@@ -13,30 +13,30 @@ class Brand(base):
     __tablename__ = 'brand'
     
     id = Column(Integer, primary_key = True)
-    name = Column(String)
-    country = Column(String)
+    name = Column(String, nullable = False)
+    country = Column(String, nullable = False)
     
 
 class Type(base):
     __tablename__ = 'type'
     
     id = Column(Integer, primary_key = True)
-    name = Column(String)
-    description = Column(String)
+    name = Column(String, nullable = False)
+    description = Column(String, nullable = False)
     
 
 class Liquor(base):
     __tablename__ = 'liquor'
     
     id = Column(Integer, primary_key = True)
-    name = Column(String)
-    abv = Column(Float)
-    density = Column(Float)
+    name = Column(String, nullable = False)
+    abv = Column(Float, nullable = False)
+    density = Column(Float, nullable = False)
     
-    brand_id = Column(Integer, ForeignKey('brand.id'))
+    brand_id = Column(Integer, ForeignKey('brand.id'), nullable = False)
     brand = relationship("Brand", backref = backref('liquors', order_by=name))
     
-    type_id = Column(Integer, ForeignKey('type.id'))
+    type_id = Column(Integer, ForeignKey('type.id'), nullable = False)
     type = relationship("Type", backref = backref('liquors', order_by=name))
     
 
@@ -44,9 +44,9 @@ class LiquorSKU(base):
     __tablename__ = 'liquorsku'
     
     id = Column(Integer, primary_key = True)
-    volume = Column(Float)
-    bottleweight = Column(Float)
-    upc = Column(String, unique=True)
+    volume = Column(Float, nullable = False)
+    bottleweight = Column(Float, nullable = False)
+    upc = Column(String, unique=True, nullable = False)
     image = Column(String)
     
     liquor_id = Column(Integer, ForeignKey('liquor.id'))
@@ -115,7 +115,7 @@ class LiquorInventory(base):
     __tablename__ = 'liquorinventory'
     
     id = Column(Integer, primary_key = True)
-    measure = Column(Float)
+    measure = Column(Float) #mL
     puck_address = Column(Integer, unique = True)
     date_added = Column(DateTime)
     

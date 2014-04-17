@@ -5,6 +5,8 @@ Created on Feb 7, 2014
 '''
 
 import os
+import datetime
+
 import sqlalchemy as sql
 import sqlalchemy.orm as orm
 
@@ -12,6 +14,7 @@ import scorpion.config as config
 import scorpion.localdb.dbobjects as dbo
 import scorpion.localdb.xmlparser as xmlparser
 
+from scorpion.hal.puck import get_available_address, set_leds
 session = None
 
 def create_new_brand(name, country):
@@ -134,8 +137,21 @@ def get_liquors(brand = None, type_ = None):
 
 def get_with_upc(upc):
     match = session.query(dbo.LiquorSKU).filter(dbo.LiquorSKU.upc == upc).all()
-    if len(match) == 0: return None
-    else: return match[0]
+    if len(match) == 0: return None 
+    else: return match[0] #upc required to be unique by db
+
+def add_to_inventory(liquor):
+    if type(liquor) is str: #contains upc
+        liquor = get_with_upc(liquor)
+    liquor_inv = dbo.LiquorInventory()
+    liquor_inv.date_added = datetime.datetime.now()
+    liquor_inv.liquorsku = liquor
+    liquor_inv.puck_address = get_available_address()
+    #measure and set bottle fullness later
+    session.add(liquor_inv)
+    session.commit()
+    set_leds(liquor_inv.puck_address, white = True)
+    
     
 
 def init_db(reset = False):

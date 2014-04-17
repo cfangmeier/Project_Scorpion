@@ -25,7 +25,12 @@
         width: self.minimum_width
     Button:
       text: 'Mix a Drink!'
+      size_hint_y: 0.3
       on_release: app.root.current = 'drinkselectscreen'
+    Button:
+      text: 'Add a drink to inventory'
+      size_hint_y: 0.2
+      on_release: app.get_upc()
 
 <LiquorScreen_LiquorView>:
   size_hint_x: None
@@ -135,3 +140,109 @@
       size_hint_y: 0.1
       text: 'back to start'
       on_release: app.root.current = 'startscreen'
+
+<UPCGetPopupContent>:
+  text_input: text_input
+  orientation: 'vertical'
+  size_hint_y: 0.4
+  pos_hint: {'top':1}
+  Label:
+    text: 'Scan barcode or enter here.'
+    size_hint: (1,0.2)
+  TextInput:
+    id: text_input
+    size_hint: (0.7,0.2) 
+    pos_hint: {'center_x':0.5}
+    font_size: (self.height * 2) // 3
+    multiline: False
+  Button:
+    text: 'done'
+    size_hint: (0.6,0.2) 
+    pos_hint: {'center_x':0.5}
+    on_release: root.upc = text_input.text; root.popup.dismiss()
+    
+#################################
+#Screens for entering new bottles
+#################################
+<BrandSelectionScreen>
+  name: 'brandselectionscreen'
+  brand_list: brand_list
+  done_button: done_button
+  BoxLayout:
+    orientation: 'vertical'
+    Label:
+      size_hint_y: 0.1
+      text: 'Select the brand of your bottle from the list.'
+    ScrollView:
+      size_hint_y: 0.8
+      do_scroll_x: False
+      GridLayout:
+        id: brand_list
+        padding: 20
+        spacing: 10
+        cols: 1
+        size_hint_y: None
+        height: self.minimum_height
+    BoxLayout:
+      orientation: 'horizontal'
+      size_hint_y: 0.1
+      Button:
+        id: done_button
+        text: 'Done'
+        disabled: True
+        on_press: self.use_brand()
+      Button:
+        text: 'None of these'
+        on_press: self.create_new_brand()
+
+<NewBrandScreen>:
+  BoxLayout:
+    orientation: 'vertical'
+    size_hint_y: 0.5
+    pos_hint: {'center_y':0.5}
+    Label: 
+      text: 'Please share some info about this brand.'
+    GridLayout:
+      size_hint_y: 0.5
+      rows: 2
+      cols: 2
+      Label:
+        text: 'Brand Name'
+      TextInput:
+        multiline: False
+      Label:
+        text: 'Country of Origin'
+      TextInput:
+        multiline: False
+
+<TypeSelectionScreen>
+  name: 'typeselectionscreen'
+  brand_list: type_list
+  done_button: done_button
+  BoxLayout:
+    orientation: 'vertical'
+    Label:
+      size_hint_y: 0.1
+      text: 'Select the type of your liquor from the list.'
+    ScrollView:
+      size_hint_y: 0.8
+      do_scroll_x: False
+      GridLayout:
+        id: type_list
+        padding: 20
+        spacing: 10
+        cols: 1
+        size_hint_y: None
+        height: self.minimum_height
+    BoxLayout:
+      orientation: 'horizontal'
+      size_hint_y: 0.1
+      Button:
+        id: done_button
+        text: 'Done'
+        disabled: True
+        on_press: root.use_brand()
+      Button:
+        text: 'None of these'
+        on_press: root.create_new_brand()
+

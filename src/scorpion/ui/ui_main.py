@@ -9,6 +9,10 @@ from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import ObjectProperty
 from kivy.uix.button import Button
+from kivy.uix.popup import Popup
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.togglebutton import ToggleButton
+from kivy.properties import StringProperty
 
 import scorpion.localdb.db as db
 import scorpion.config as config
@@ -128,18 +132,59 @@ class DrinkSelectScreen(Screen):
             dssdv.drink = drink
             self.drink_list.add_widget(dssdv)
 
+class UPCGetPopupContent(BoxLayout):
+    upc = ''
+
+class BrandSelectionScreen(Screen):
+    brand_list = ObjectProperty(None)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    
+    def on_pre_enter(self, *args, **kwargs):
+        super().on_pre_enter(*args, **kwargs)
+        self.brand_list.clear_widgets()
+        for b in sorted(db.get_brands(),key = lambda x: x.name):
+            tb = ToggleButton(text = b.name,
+                              group = 'brand_sel_group',
+                              size_hint_y=None,
+                              size_y='30')
+            def enable_done(*args): self.done_button.disabled = False
+            tb.bind(on_press=enable_done)
+            self.brand_list.add_widget(tb)
+
+class TypeSelectionScreen(Screen):
+    type_list = ObjectProperty(None)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    
+    def create_new_brand(self):
+        pass
+    def use_brand(self):
+        pass
+    
+    def on_pre_enter(self, *args, **kwargs):
+        super().on_pre_enter(*args, **kwargs)
+        self.type_list.clear_widgets()
+        for t in sorted(db.get_types(),key = lambda x: x.name):
+            tb = ToggleButton(text = t.name,
+                              group = 'type_sel_group',
+                              size_hint_y=None,
+                              size_y='30')
+            def enable_done(*args): self.done_button.disabled = False
+            tb.bind(on_press=enable_done)
+            self.type_list.add_widget(tb)
+
 class MainApp(App):
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
     def build(self):
-        global _sm
         self.sm = ScreenManager()
         self.sm.add_widget(StartScreen())
         self.sm.add_widget(LiquorScreen())
         self.sm.add_widget(MixingScreen())
         self.sm.add_widget(DrinkSelectScreen())
-        _sm = self.sm
         return self.sm
     
     def set_screen(self, screen):
@@ -152,7 +197,32 @@ class MainApp(App):
             return self.sm.current_screen
         else:
             return self.sm.get_screen(screen)
+    
+    def check_upc(self, popup):
+        upc = popup.content.upc
+        liquorsku = db.get_with_upc(upc)
+        if liquorsku is not None:
+            db.add_to_inventory(liquorsku)
+            return
+        content = ScreenManager()
+        content.add_widget(BrandSelectionScreen())
+        popup = Popup(title='Add New Liquor',
+                      content = content,
+                      auto_dismiss = False,
+                      size_hint=(0.7,0.9))
+        content.popup = popup
+        popup.open()
 
+    def get_upc(self):
+        content = UPCGetPopupContent()
+        popup = Popup(title='Input UPC',
+                      content=content,
+                      auto_dismiss = False,
+                      size_hint=(0.8, 0.8))
+        content.popup = popup
+        popup.bind(on_dismiss = self.check_upc)
+        popup.open()
+    
 
 def run_ui():
     global _app

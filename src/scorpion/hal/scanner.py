@@ -30,6 +30,8 @@ def init_scanner():
     if(not os.path.exists(scanner_path)):
         print("ERROR: barcode scanner not found")
         return
+    #disconnect scanner from x-input so scans
+    #aren't fed to wherever the cursor is
     event_path = os.readlink(scanner_path)
     event_id = re.findall('[0-9]+$',event_path)[-1]
     os.system("xinput float " + event_id)

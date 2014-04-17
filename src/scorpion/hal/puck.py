@@ -12,12 +12,16 @@ except ImportError:
 import scorpion.config as config
 pucks = {}
 
+class PucksFullException(Exception):
+    pass
+
 class _Puck:
     address = 0
     mcp = None
     caldata = {}
     current_weight = 0
     led_state = [0,0,0,0]
+    occupied = False
     
 
 def init_pucks():
@@ -75,7 +79,10 @@ def get_weight(address, read = True):
     return weight
 
 def get_available_address():
-    return 0
+    for puck in pucks.values:
+        if not puck.occupied:
+            return puck.address
+    raise PucksFullException()
 
 def kill_lights():
     global pucks
@@ -97,7 +104,7 @@ def _set_leds(address, red, green, blue, white):
             puck.mcp.output(3,white)
         puck.led_state = data
 
-def set_leds(address, red, green, blue, white):
+def set_leds(address, red = False, green = False, blue = False, white = False):
     if address == -1:
         for puck in pucks.keys(): _set_leds(puck, red, green, blue, white)
     else:
