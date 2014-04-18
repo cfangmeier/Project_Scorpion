@@ -79,7 +79,7 @@ def get_weight(address, read = True):
     return weight
 
 def get_available_address():
-    for puck in pucks.values:
+    for puck in pucks.values():
         if not puck.occupied:
             return puck.address
     raise PucksFullException()

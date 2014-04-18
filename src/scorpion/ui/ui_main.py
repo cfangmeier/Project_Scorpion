@@ -7,12 +7,11 @@ import os
 
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, BooleanProperty, StringProperty
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
-from kivy.properties import StringProperty
 
 import scorpion.localdb.db as db
 import scorpion.config as config
@@ -35,13 +34,16 @@ class StartScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
     
-    def on_pre_enter(self, *args, **kwargs):
-        super().on_pre_enter(*args, **kwargs)
+    def update(self):
         self.liquor_list.clear_widgets()
         (inv, _) = db.get_inventory()
         for liquor_inv in inv:
             sslv = StartScreen_LiquorView(liquor_inv)
             self.liquor_list.add_widget(sslv)
+    
+    def on_pre_enter(self, *args, **kwargs):
+        super().on_pre_enter(*args, **kwargs)
+        self.update()
 
 class LiquorScreen_LiquorView(Button):
     liquor = None
@@ -135,44 +137,93 @@ class DrinkSelectScreen(Screen):
 class UPCGetPopupContent(BoxLayout):
     upc = ''
 
-class BrandSelectionScreen(Screen):
-    brand_list = ObjectProperty(None)
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-    
+class ListSelectionScreen(Screen):
+    list_ = ObjectProperty(None)
+    top_text = StringProperty("")
+    done_disabled = BooleanProperty(True)
+    items = None
+    selection = None
     def on_pre_enter(self, *args, **kwargs):
         super().on_pre_enter(*args, **kwargs)
-        self.brand_list.clear_widgets()
-        for b in sorted(db.get_brands(),key = lambda x: x.name):
-            tb = ToggleButton(text = b.name,
-                              group = 'brand_sel_group',
+        if len(self.ids.list_.children) != 0: return
+        for item in sorted(self.items,key=lambda x: x.name):
+            tb = ToggleButton(text = self.get_item_name(item),
+                              group = self.name+'button_group',
                               size_hint_y=None,
                               size_y='30')
-            def enable_done(*args): self.done_button.disabled = False
-            tb.bind(on_press=enable_done)
-            self.brand_list.add_widget(tb)
+            tb.item = item
+            def enable_done(button): 
+                self.done_disabled = False
+                self.selection = button.item
+                print(self.selection)
+            tb.bind(on_release=enable_done)
+            self.ids.list_.add_widget(tb)
+    def get_item_name(self,item):
+        return item.name
 
-class TypeSelectionScreen(Screen):
-    type_list = ObjectProperty(None)
+class BrandSelectionScreen(ListSelectionScreen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.name = 'brandselectionscreen'
+        self.top_text = 'Please select the brand of your liquor.'
+        self.items = db.get_brands()
+    def done(self):
+        self.parent.brand = self.selection
+        self.parent.current = 'typeselectionscreen'
+    def none(self):
+        self.parent.current = 'brandcreationscreen'
+        
+
+class TypeSelectionScreen(ListSelectionScreen):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.name = 'typeselectionscreen'
+        self.top_text = 'Please select the type of your liquor'
+        self.items = db.get_types()
+    def done(self):
+        _app.find_potential_matches(self.parent.brand, self.selection)
+    def none(self):
+        self.parent.current = 'typecreationscreen'
+
+class LiquorSelectionScreen(ListSelectionScreen):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.name = 'liquorselectionscreen'
+        self.top_text = "Is it one of these?"
+    def get_item_name(self,item):
+        return item.brand.name+" "+item.name
+    def done(self):
+        self.parent.liquor = self.selection
+        self.parent.current = 'liquorskuselectionscreen'
+    def none(self):
+        self.parent.current = 'liquorcreationscreen'
     
-    def create_new_brand(self):
-        pass
-    def use_brand(self):
-        pass
-    
-    def on_pre_enter(self, *args, **kwargs):
-        super().on_pre_enter(*args, **kwargs)
-        self.type_list.clear_widgets()
-        for t in sorted(db.get_types(),key = lambda x: x.name):
-            tb = ToggleButton(text = t.name,
-                              group = 'type_sel_group',
-                              size_hint_y=None,
-                              size_y='30')
-            def enable_done(*args): self.done_button.disabled = False
-            tb.bind(on_press=enable_done)
-            self.type_list.add_widget(tb)
+
+class LiquorSkuSelectionScreen(ListSelectionScreen):
+    pass
+
+
+class BrandCreationScreen(Screen):
+    def create_brand(self,*args):
+        name = self.ids.name_input.text
+        country = self.ids.country_input.text
+        b = db.create_new_brand(name, country)
+        self.parent.brand = b
+        self.parent.current = 'typeselectionscreen'
+        
+
+class TypeCreationScreen(Screen):
+    def create_brand(self,*args):
+        name = self.ids.name_input.text
+        description = self.ids.description_input.text
+        t = db.create_new_type(name, description)
+        _app.find_potential_matches(self.parent.brand, t)
+
+class LiquorCreationScreen(Screen):
+    pass
+
+class LiquorSkuCreationScreen(Screen):
+    pass
 
 class MainApp(App):
     
@@ -203,15 +254,20 @@ class MainApp(App):
         liquorsku = db.get_with_upc(upc)
         if liquorsku is not None:
             db.add_to_inventory(liquorsku)
+            self.sm.get_screen('startscreen').update()
             return
+        
         content = ScreenManager()
-        content.add_widget(BrandSelectionScreen())
-        popup = Popup(title='Add New Liquor',
-                      content = content,
-                      auto_dismiss = False,
-                      size_hint=(0.7,0.9))
-        content.popup = popup
-        popup.open()
+        [content.add_widget(w) for w in (BrandSelectionScreen(),TypeSelectionScreen(),
+                                         LiquorSelectionScreen(), LiquorSkuSelectionScreen(),
+                                         BrandCreationScreen(),TypeCreationScreen(),
+                                         LiquorCreationScreen(),LiquorSkuCreationScreen())]
+        self.popup = Popup(title='Add New Liquor',
+                           content = content,
+                           auto_dismiss = False,
+                           size_hint=(0.7,0.9))
+        self.popup.sm = content
+        self.popup.open()
 
     def get_upc(self):
         content = UPCGetPopupContent()
@@ -223,6 +279,13 @@ class MainApp(App):
         popup.bind(on_dismiss = self.check_upc)
         popup.open()
     
+    def find_potential_matches(self,brand, type_):
+        matches = db.get_liquors(brand, type_)
+        if len(matches) == 0:
+            self.popup.sm.current = 'liquorcreationscreen'
+        else:
+            self.popup.sm.get_screen('liquorselectionscreen').items = matches
+            self.popup.sm.current = 'liquorselectionscreen'
 
 def run_ui():
     global _app
