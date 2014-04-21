@@ -61,13 +61,13 @@
 	<ExtraIngredient measure = "2 dash" extra="Bitters" drink="Old Fashioned"></ExtraIngredient>
 	<ExtraIngredient measure = "1 dash" extra="Soda Water" drink="Old Fashioned"></ExtraIngredient>
 	
-	<LiquorInventory liquorsku="0011223347" measure="150" puck_address="1"></LiquorInventory>
-	<LiquorInventory liquorsku="0011223348" measure="150" puck_address="2"></LiquorInventory>
-	<LiquorInventory liquorsku="0011223344" measure="150" puck_address="3"></LiquorInventory>
-	<LiquorInventory liquorsku="0011223345" measure="150" puck_address="4"></LiquorInventory>
-	<LiquorInventory liquorsku="0011223346" measure="150" puck_address="5"></LiquorInventory>
-	<LiquorInventory liquorsku="0011223349" measure="150" puck_address="6"></LiquorInventory>
-	<LiquorInventory liquorsku="0011223350" measure="150" puck_address="7"></LiquorInventory>
-	<LiquorInventory liquorsku="0011223351" measure="150" puck_address="8"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223347" measure="150" puck_address="0x0"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223348" measure="150" puck_address="0x1"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223344" measure="150" puck_address="0x2"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223345" measure="150" puck_address="0x3"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223346" measure="150" puck_address="0x4"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223349" measure="150" puck_address="0x5"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223350" measure="150" puck_address="0x6"></LiquorInventory>
+	<LiquorInventory liquorsku="0011223351" measure="150" puck_address="0x7"></LiquorInventory>
 	
 </root>

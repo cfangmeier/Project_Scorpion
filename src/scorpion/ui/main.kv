@@ -30,7 +30,7 @@
     Button:
       text: 'Add a drink to inventory'
       size_hint_y: 0.2
-      on_release: app.get_upc()
+      on_release: app.start_add_new_bottle()
 
 <LiquorScreen_LiquorView>:
   size_hint_x: None
@@ -141,29 +141,38 @@
       text: 'back to start'
       on_release: app.root.current = 'startscreen'
 
-<UPCGetPopupContent>:
-  text_input: text_input
-  orientation: 'vertical'
-  size_hint_y: 0.4
-  pos_hint: {'top':1}
-  Label:
-    text: 'Scan barcode or enter here.'
-    size_hint: (1,0.2)
-  TextInput:
-    id: text_input
-    size_hint: (0.7,0.2) 
-    pos_hint: {'center_x':0.5}
-    font_size: (self.height * 2) // 3
-    multiline: False
-  Button:
-    text: 'done'
-    size_hint: (0.6,0.2) 
-    pos_hint: {'center_x':0.5}
-    on_release: root.upc = text_input.text; root.popup.dismiss()
-    
 #################################
 #Screens for entering new bottles
 #################################
+
+<UPCGetScreen>:
+  name: 'upcgetscreen'
+  BoxLayout:
+    size_hint_y: 0.4
+    orientation: 'vertical' 
+    pos_hint: {'top':1}
+    Label:
+      text: 'Scan barcode or enter here.'
+      size_hint: (1,0.2)
+    IntegerInput:
+      id: upc_input
+      size_hint: (0.7,0.2) 
+      pos_hint: {'center_x':0.5}
+      font_size: (self.height * 2) // 3
+      multiline: False
+      on_text: self.on_text(self,self.text); root.on_text(self,self.text)
+    BoxLayout:
+      orientation: 'horizontal'
+      size_hint: (0.8,0.2) 
+      pos_hint: {'center_x': 0.5}
+      Button:
+        id: done_button
+        text: 'Done'
+        disabled: True
+        on_release: root.done()
+      Button:
+        text: 'Back'
+        on_release: app.popup.dismiss()
 
 <ListSelectionScreen>:
   BoxLayout:
@@ -191,12 +200,15 @@
       Button:
         text: 'None of These'
         on_release: root.none()
+      Button:
+        text: 'Back'
+        on_release: root.back()
         
 <BrandCreationScreen>:
   name: 'brandcreationscreen'
   BoxLayout:
     orientation: 'vertical'
-    size_hint_y: 0.3
+    size_hint_y: 0.5
     pos_hint: {'top':1}
     spacing: 10
     Label: 
@@ -220,10 +232,16 @@
         id: country_input
         font_size: (self.height*2) // 3
         multiline: False
-    Button:
+    BoxLayout:
+      pos_hint: {'center_x':0.5}
       size_hint_y: 0.25
-      text: 'Done'
-      on_release: root.create_brand()
+      Button:
+        text: 'Done'
+        on_release: root.create_brand()
+      Button:
+        text: 'Back'
+        on_release: root.back()
+      
 
 <TypeCreationScreen>:
   name: 'typecreationscreen'
@@ -250,10 +268,15 @@
         text: 'Short Description'
       TextInput:
         id: description_input
-    Button:
-      size_hint_y: 0.2
-      text: 'Done'
-      on_release: root.create_brand()
+    BoxLayout:
+      pos_hint: {'center_x':0.5}
+      size_hint_y: 0.25
+      Button:
+        text: 'Done'
+        on_release: root.create_type()
+      Button:
+        text: 'Back'
+        on_release: root.back()
       
 <LiquorCreationScreen>:
   name: 'liquorcreationscreen'
@@ -277,10 +300,46 @@
       orientation: 'horizontal'
       size_hint_y: 0.3
       Label:
-        text: 'abv'
-      TextInput:
+        text: 'ABV(eg. 40)'
+      IntegerInput:
         id: abv_input
-    Button:
+        multiline: False
+    BoxLayout:
+      orientation: 'horizontal'
+      pos_hint: {'center_x': 0.5}
       size_hint_y: 0.2
-      text: 'Done'
-      on_release: root.create_brand()
+      Button:
+        text: 'Done'
+        on_release: root.create_liquor()
+      Button:
+        text: 'Back'
+        on_release: root.back()
+      
+<LiquorSKUCreationScreen>:
+  name: 'liquorskucreationscreen'
+  BoxLayout:
+    orientation: 'vertical'
+    size_hint_y: 0.3
+    pos_hint: {'top':1}
+    spacing: 10
+    Label: 
+      size_hint_y: 0.2
+      text: 'Please provide some info about new liquor.'
+    BoxLayout:
+      size_hint_y: 0.3
+      orientation: 'horizontal'
+      Label:
+        text: 'Volume of bottle(mL)'
+      FloatInput:
+        id: volume_input
+        multiline: False
+    BoxLayout:
+      orientation: 'horizontal'
+      pos_hint: {'center_x': 0.5}
+      size_hint_y: 0.2
+      Button:
+        text: 'Done'
+        on_release: root.create_liquorSKU()
+      Button:
+        text: 'Back'
+        on_release: root.back()

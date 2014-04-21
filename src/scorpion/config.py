@@ -19,7 +19,21 @@ local_db = path_sep.join([project_root,'data','db','project_scorpion.sqlite3'])
 xml_path = path_sep.join([project_root,'data','db','default_data.xml'])
 scanner_path = "/dev/input/by-id/usb-HID_Keyboard_Device_HID_Keyboard_Device_Keyboard_Device-event-kbd"
 
-
-pucks = {0x20:{'offset':0,'empty':0,'ratio':1},
-         0x21:{'offset':0,'empty':0,'ratio':1}
+#a setup with 16 pucks 0x20
+pucks = {0x0:{'offset':0,'empty':0,'ratio':1},
+         0x1:{'offset':0,'empty':0,'ratio':1},
+         0x2:{'offset':0,'empty':0,'ratio':1},
+         0x3:{'offset':0,'empty':0,'ratio':1},
+         0x4:{'offset':0,'empty':0,'ratio':1},
+         0x5:{'offset':0,'empty':0,'ratio':1},
+         0x6:{'offset':0,'empty':0,'ratio':1},
+         0x7:{'offset':0,'empty':0,'ratio':1},
+         0x8:{'offset':0,'empty':0,'ratio':1},
+         0x9:{'offset':0,'empty':0,'ratio':1},
+         0xA:{'offset':0,'empty':0,'ratio':1},
+         0xB:{'offset':0,'empty':0,'ratio':1},
+         0xC:{'offset':0,'empty':0,'ratio':1},
+         0xD:{'offset':0,'empty':0,'ratio':1},
+         0xE:{'offset':0,'empty':0,'ratio':1},
+         0xF:{'offset':0,'empty':0,'ratio':1}
         }

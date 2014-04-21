@@ -30,7 +30,7 @@ def build_liquor(attrs):
     l = dbo.Liquor()
     l.name = attrs['name']
     l.density = float(attrs['density'])
-    l.abv = float(attrs['abv'])
+    l.abv = int(attrs['abv'])
     l.type = [t for t in objects 
               if type(t) == dbo.Type and t.name == attrs['type']][0]
     l.brand = [b for b in objects
@@ -56,7 +56,7 @@ def build_liquorinventory(attrs):
     l.liquorsku = [lsku for lsku in objects
                    if type(lsku) == dbo.LiquorSKU and lsku.upc == attrs['liquorsku']][0]
     l.measure = float(attrs['measure'])
-    l.puck_address = int(attrs['puck_address'])
+    l.puck_address = int(attrs['puck_address'], base=16)
     l.date_added = datetime.datetime.now()
     objects.append(l)
 

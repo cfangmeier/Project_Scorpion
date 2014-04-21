@@ -14,47 +14,56 @@ import scorpion.config as config
 import scorpion.localdb.dbobjects as dbo
 import scorpion.localdb.xmlparser as xmlparser
 
-from scorpion.hal.puck import get_available_address, set_leds
+import scorpion.hal.puck as puck
+#from scorpion.hal.puck import get_available_address, set_leds
 session = None
 
-def create_new_brand(name, country):
+def add_object_to_session(o):
+    session.add(o)
+
+def create_new_brand(name, country, add_to_session = True):
     brand = dbo.Brand()
     brand.name = name
     brand.country = country
-    session.add(brand)
+    if add_to_session:
+        session.add(brand)
     return brand
 
-def create_new_type(name):
+def create_new_type(name, add_to_session = True):
     type_ = dbo.Type()
     type_.name = name
-    session.add(type_)
+    if add_to_session:
+        session.add(type_)
     return type_
 
-def create_new_liquor(type_, brand, name, abv):
+def create_new_liquor(type_, brand, name, abv, add_to_session = True):
     l = dbo.Liquor()
     l.abv = abv
     l.density = 1.
     l.brand = brand
     l.name = name
     l.type = type_
-    session.add(l)
+    if add_to_session:
+        session.add(l)
     return l
 
-def create_new_liquorsku(liquor, volume, upc):
+def create_new_liquorsku(liquor, volume, upc, add_to_session = True):
     lsku = dbo.LiquorSKU()
     lsku.liquor = liquor
     lsku.upc = upc
     lsku.volume = volume
-    lsku.bottleweight = None
-    session.add(lsku)
+    lsku.bottleweight = 50 #TODO: update this
+    if add_to_session:
+        session.add(lsku)
     return lsku
 
-def create_new_liquorinventory(liquorsku, measure, puck_address):
+def create_new_liquorinventory(liquorsku, measure, puck_address, add_to_session = True):
     li = dbo.LiquorInventory()
     li.liquorsku = liquorsku
     li.measure = measure
     li.puck_address = puck_address
-    session.add(li)
+    if add_to_session:
+        session.add(li)
     return li
 
 def get_inventory():
@@ -146,11 +155,17 @@ def add_to_inventory(liquor):
     liquor_inv = dbo.LiquorInventory()
     liquor_inv.date_added = datetime.datetime.now()
     liquor_inv.liquorsku = liquor
-    liquor_inv.puck_address = get_available_address()
+    puck_address = puck.get_available_address()
+    if puck_address is None:
+        print("ERROR: Pucks Full. :(")
+        return
+    liquor_inv.puck_address = puck_address
+    puck.assign_liquor(liquor_inv.puck_address, liquor_inv)
     #measure and set bottle fullness later
+    liquor_inv.measure = 0
     session.add(liquor_inv)
     session.commit()
-    set_leds(liquor_inv.puck_address, white = True)
+    puck.set_leds(liquor_inv.puck_address, white = True)
     
     
 

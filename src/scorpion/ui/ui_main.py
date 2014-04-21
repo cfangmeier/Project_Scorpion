@@ -4,13 +4,14 @@ Created on Mar 24, 2014
 @author: caleb
 '''
 import os
+import re
 
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import ObjectProperty, BooleanProperty, StringProperty
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
 
 import scorpion.localdb.db as db
@@ -134,8 +135,33 @@ class DrinkSelectScreen(Screen):
             dssdv.drink = drink
             self.drink_list.add_widget(dssdv)
 
-class UPCGetPopupContent(BoxLayout):
-    upc = ''
+class UPCGetScreen(Screen):
+    
+    def on_text(self, inst, text):
+        if len(text) == 0:
+            self.ids.done_button.disabled = True
+        else:
+            self.ids.done_button.disabled = False
+    
+    def done(self):
+        upc = self.ids.upc_input.text
+        liquorSKU = db.get_with_upc(upc)
+        if liquorSKU is not None:
+            _app.add_new_bottle(liquorSKU)
+            return
+        self.parent.upc = upc #save upc in screenmanager
+        self.parent.current = 'brandselectionscreen'
+
+class IntegerInput(TextInput):
+    def on_text(self, inst, value):
+        self.text = ''.join(re.findall('[0-9]+',value))
+class FloatInput(TextInput):
+    def on_text(self, inst, value):
+        if value.count('.') > 1:
+            i = value.find('.')
+            value = value.replace('.','')
+            value = value[:i]+'.'+value[i:]
+        self.text = ''.join(re.findall('[0-9.]+',value))
 
 class ListSelectionScreen(Screen):
     list_ = ObjectProperty(None)
@@ -172,6 +198,8 @@ class BrandSelectionScreen(ListSelectionScreen):
         self.parent.current = 'typeselectionscreen'
     def none(self):
         self.parent.current = 'brandcreationscreen'
+    def back(self):
+        self.parent.current = 'upcgetscreen'
         
 
 class TypeSelectionScreen(ListSelectionScreen):
@@ -181,9 +209,12 @@ class TypeSelectionScreen(ListSelectionScreen):
         self.top_text = 'Please select the type of your liquor'
         self.items = db.get_types()
     def done(self):
-        _app.find_potential_matches(self.parent.brand, self.selection)
+        self.parent.type = self.selection
+        _app.find_potential_matches()
     def none(self):
         self.parent.current = 'typecreationscreen'
+    def back(self):
+        self.parent.current = 'brandselectionscreen'
 
 class LiquorSelectionScreen(ListSelectionScreen):
     def __init__(self, *args, **kwargs):
@@ -194,36 +225,54 @@ class LiquorSelectionScreen(ListSelectionScreen):
         return item.brand.name+" "+item.name
     def done(self):
         self.parent.liquor = self.selection
-        self.parent.current = 'liquorskuselectionscreen'
+        self.parent.current = 'liquorskucreationscreen'
     def none(self):
+        lcs = self.parent.get_screen('liquorcreationscreen')
+        lcs.back_link = self.parent.current
         self.parent.current = 'liquorcreationscreen'
+    def back(self):
+        self.parent.current = 'typeselectionscreen'
     
-
-class LiquorSkuSelectionScreen(ListSelectionScreen):
-    pass
-
 
 class BrandCreationScreen(Screen):
     def create_brand(self,*args):
         name = self.ids.name_input.text
         country = self.ids.country_input.text
-        b = db.create_new_brand(name, country)
-        self.parent.brand = b
+        brand = db.create_new_brand(name, country, add_to_session=False)
+        self.parent.brand = brand
         self.parent.current = 'typeselectionscreen'
-        
+    def back(self):
+        self.parent.current = 'brandselectionscreen'
 
 class TypeCreationScreen(Screen):
-    def create_brand(self,*args):
+    def create_type(self,*args):
         name = self.ids.name_input.text
         description = self.ids.description_input.text
-        t = db.create_new_type(name, description)
-        _app.find_potential_matches(self.parent.brand, t)
+        type_ = db.create_new_type(name, description, add_to_session=False)
+        self.parent.type = type_
+        _app.find_potential_matches()
+    def back(self):
+        self.parent.current = 'typeselectionscreen'
 
 class LiquorCreationScreen(Screen):
-    pass
+    def create_liquor(self, *args):
+        name = self.ids.name_input.text
+        abv = int(self.ids.abv_input.text)
+        l = db.create_new_liquor(self.parent.type, self.parent.brand,
+                                 name, abv, add_to_session=False)
+        self.parent.liquor = l
+        self.parent.current = 'liquorskucreationscreen'
+    def back(self):
+        self.parent.current = self.back_link
 
-class LiquorSkuCreationScreen(Screen):
-    pass
+class LiquorSKUCreationScreen(Screen):
+    def create_liquorSKU(self, *args):
+        volume = float(self.ids.volume_input.text)
+        lsku = db.create_new_liquorsku(self.parent.liquor, 
+                                       volume, self.parent.upc, add_to_session=False)
+        for o in [lsku.liquor.brand, lsku.liquor.type, lsku.liquor, lsku]:
+            db.add_object_to_session(o)
+        _app.add_new_bottle(lsku)
 
 class MainApp(App):
     
@@ -238,50 +287,41 @@ class MainApp(App):
         self.sm.add_widget(DrinkSelectScreen())
         return self.sm
     
-    def set_screen(self, screen):
-        if type(screen) is str:
-            self.sm.current = screen
-        else:
-            self.sm.current_screen = screen
+    def set_screen(self, screen_name):
+        self.sm.current = screen_name
     def get_screen(self, screen = None):
         if screen is None:
             return self.sm.current_screen
         else:
             return self.sm.get_screen(screen)
     
-    def check_upc(self, popup):
-        upc = popup.content.upc
-        liquorsku = db.get_with_upc(upc)
-        if liquorsku is not None:
-            db.add_to_inventory(liquorsku)
-            self.sm.get_screen('startscreen').update()
-            return
-        
+    def start_add_new_bottle(self):
         content = ScreenManager()
-        [content.add_widget(w) for w in (BrandSelectionScreen(),TypeSelectionScreen(),
-                                         LiquorSelectionScreen(), LiquorSkuSelectionScreen(),
+        [content.add_widget(w) for w in (UPCGetScreen(),
+                                         BrandSelectionScreen(),TypeSelectionScreen(),
+                                         LiquorSelectionScreen(),
                                          BrandCreationScreen(),TypeCreationScreen(),
-                                         LiquorCreationScreen(),LiquorSkuCreationScreen())]
+                                         LiquorCreationScreen(),LiquorSKUCreationScreen())]
         self.popup = Popup(title='Add New Liquor',
                            content = content,
                            auto_dismiss = False,
                            size_hint=(0.7,0.9))
         self.popup.sm = content
         self.popup.open()
-
-    def get_upc(self):
-        content = UPCGetPopupContent()
-        popup = Popup(title='Input UPC',
-                      content=content,
-                      auto_dismiss = False,
-                      size_hint=(0.8, 0.8))
-        content.popup = popup
-        popup.bind(on_dismiss = self.check_upc)
-        popup.open()
-    
-    def find_potential_matches(self,brand, type_):
+        
+    def add_new_bottle(self,liquorSKU):
+        db.add_to_inventory(liquorSKU)
+        self.get_screen('startscreen').update()
+        self.popup.dismiss()
+        
+        
+    def find_potential_matches(self):
+        brand = self.popup.sm.brand
+        type_ = self.popup.sm.type
         matches = db.get_liquors(brand, type_)
         if len(matches) == 0:
+            lcs = self.popup.sm.get_screen('liquorcreationscreen')
+            lcs.back_link = self.popup.sm.current
             self.popup.sm.current = 'liquorcreationscreen'
         else:
             self.popup.sm.get_screen('liquorselectionscreen').items = matches

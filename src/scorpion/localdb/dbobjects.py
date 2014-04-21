@@ -30,7 +30,7 @@ class Liquor(base):
     
     id = Column(Integer, primary_key = True)
     name = Column(String, nullable = False)
-    abv = Column(Float, nullable = False)
+    abv = Column(Integer, nullable = False) #0<=x<=100
     density = Column(Float, nullable = False)
     
     brand_id = Column(Integer, ForeignKey('brand.id'), nullable = False)
@@ -56,25 +56,25 @@ class Extra(base):
     __tablename__ = 'extra'
     
     id = Column(Integer, primary_key = True)
-    name = Column(String)
+    name = Column(String, nullable = False)
     
 
 class Drink(base):
     __tablename__ = 'drink'
     
     id = Column(Integer, primary_key = True)
-    name = Column(String)
-    glasstype = Column(String)
-    description = Column(String)
-    instructions = Column(String)
+    name = Column(String, nullable = False)
+    glasstype = Column(String, nullable = False)
+    description = Column(String, nullable = False)
+    instructions = Column(String, nullable = False)
     image = Column(String)
 
 class LiquorIngredient(base):
     __tablename__ = 'liquoringredient'
     
     id = Column(Integer, primary_key = True)
-    measure = Column(Float)
-    measure_unit = Column(String)
+    measure = Column(Float, nullable = False)
+    measure_unit = Column(String, nullable = False)
     
     liquor_id = Column(Integer, ForeignKey('liquor.id'))
     liquor = relationship("Liquor", backref = backref('drinks'))
@@ -87,8 +87,8 @@ class GenLiquorIngredient(base):
     __tablename__ = 'genliquoringredient'
     
     id = Column(Integer, primary_key = True)
-    measure = Column(Float)
-    measure_unit = Column(String)
+    measure = Column(Float, nullable = False)
+    measure_unit = Column(String, nullable = False)
     
     type_id = Column(Integer, ForeignKey('type.id'))
     type = relationship("Type", backref = backref('drinks'))
@@ -101,8 +101,8 @@ class ExtraIngredient(base):
     __tablename__ = 'extraingredient'
     
     id = Column(Integer, primary_key = True)
-    measure = Column(Float)
-    measure_unit = Column(String)
+    measure = Column(Float, nullable = False)
+    measure_unit = Column(String, nullable = False)
     
     extra_id = Column(Integer, ForeignKey('extra.id'))
     extra = relationship("Extra", backref = backref('drinks'))
@@ -115,9 +115,9 @@ class LiquorInventory(base):
     __tablename__ = 'liquorinventory'
     
     id = Column(Integer, primary_key = True)
-    measure = Column(Float) #mL
-    puck_address = Column(Integer, unique = True)
-    date_added = Column(DateTime)
+    measure = Column(Float, nullable = False) #mL
+    puck_address = Column(Integer, unique = True, nullable = False)
+    date_added = Column(DateTime, nullable = False)
     
     liquorsku_id = Column(Integer, ForeignKey('liquorsku.id'))
     liquorsku = relationship("LiquorSKU", backref = backref('inventory'))

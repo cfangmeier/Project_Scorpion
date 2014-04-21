@@ -12,20 +12,20 @@ except ImportError:
 import scorpion.config as config
 pucks = {}
 
-class PucksFullException(Exception):
-    pass
-
 class _Puck:
     address = 0
     mcp = None
     caldata = {}
     current_weight = 0
     led_state = [0,0,0,0]
-    occupied = False
+    liquor = None
     
 
 def init_pucks():
+    from scorpion.localdb.db import get_inventory
     global pucks
+    inv, _ = get_inventory()
+    inv = {li.puck_address: li for li in inv}
     for address in config.pucks.keys():
         if not virtual_pucks:
             mcp = MCP.Adafruit_MCP230XX(address, 16) # MCP23017
@@ -39,6 +39,8 @@ def init_pucks():
         pucks[address] = puck
         puck.mcp = mcp
         puck.address = address
+        if address in inv.keys():
+            puck.liquor = inv[address]
         puck.caldata = config.pucks[address]
         puck.current_weight = get_weight(address)
 
@@ -80,9 +82,12 @@ def get_weight(address, read = True):
 
 def get_available_address():
     for puck in pucks.values():
-        if not puck.occupied:
+        if puck.liquor is None:
             return puck.address
-    raise PucksFullException()
+    return None
+
+def assign_liquor(address, liquor):
+    pucks[address].liquor = liquor
 
 def kill_lights():
     global pucks
