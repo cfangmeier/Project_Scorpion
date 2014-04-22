@@ -8,6 +8,7 @@ For anything that may be sensitive(eg. passwords), just commit an empty string.
 '''
 import os
 path_sep = os.path.sep
+use_gui = True
 
 project_root = path_sep.join(__file__.split(path_sep)[:-3])
 drink_image_path = path_sep.join([project_root,'data','images','drinks'])

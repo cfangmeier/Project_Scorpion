@@ -10,7 +10,8 @@ import select
 import threading
 from queue import Queue
 
-from scorpion.config import scanner_path
+from scorpion.config import scanner_path, use_gui
+import scorpion.ui.ui_main
 
 FORMAT = 'llHHI'
 EVENT_SIZE = struct.calcsize(FORMAT)
@@ -57,6 +58,8 @@ def _run():
                 reading.append(_mapping[code])
             event = _scanner_file.read(EVENT_SIZE)
         scanner_data.put(''.join(reading))
+        if use_gui:
+            scorpion.ui.ui_main.add_upc(scanner_data.get())
 
 def stop_scanner():
     global kill_flag, _scanner_thread

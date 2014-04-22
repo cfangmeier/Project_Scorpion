@@ -18,6 +18,13 @@ import scorpion.localdb.db as db
 import scorpion.config as config
 _app = None
 
+
+def add_upc(upc):
+    if _app is not None:
+        _app.scanned_upc = upc
+        if _app.popup is not None:
+            _app.popup.sm.get_screen('upcgetscreen').scanned_upc = upc
+
 class StartScreen_LiquorView(Button):
     def __init__(self, liquor_inv, **kwargs):
         super().__init__(**kwargs)
@@ -136,6 +143,14 @@ class DrinkSelectScreen(Screen):
             self.drink_list.add_widget(dssdv)
 
 class UPCGetScreen(Screen):
+    scanned_upc = StringProperty('')
+    def __init__(self, upc, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.bind(scanned_upc=self.set_upc)
+        self.scanned_upc = upc
+    
+    def set_upc(self, inst, value):
+        self.ids.upc_input.text = self.scanned_upc
     
     def on_text(self, inst, text):
         if len(text) == 0:
@@ -275,9 +290,10 @@ class LiquorSKUCreationScreen(Screen):
         _app.add_new_bottle(lsku)
 
 class MainApp(App):
-    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.popup = None
+        self.scanned_upc = ''
     
     def build(self):
         self.sm = ScreenManager()
@@ -297,7 +313,7 @@ class MainApp(App):
     
     def start_add_new_bottle(self):
         content = ScreenManager()
-        [content.add_widget(w) for w in (UPCGetScreen(),
+        [content.add_widget(w) for w in (UPCGetScreen(self.scanned_upc),
                                          BrandSelectionScreen(),TypeSelectionScreen(),
                                          LiquorSelectionScreen(),
                                          BrandCreationScreen(),TypeCreationScreen(),
@@ -313,6 +329,7 @@ class MainApp(App):
         db.add_to_inventory(liquorSKU)
         self.get_screen('startscreen').update()
         self.popup.dismiss()
+        self.popup = None
         
         
     def find_potential_matches(self):
