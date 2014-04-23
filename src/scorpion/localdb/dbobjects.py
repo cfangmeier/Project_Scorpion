@@ -47,7 +47,6 @@ class LiquorSKU(base):
     volume = Column(Float, nullable = False)
     bottleweight = Column(Float, nullable = False)
     upc = Column(String, unique=True, nullable = False)
-    image = Column(String)
     
     liquor_id = Column(Integer, ForeignKey('liquor.id'))
     liquor = relationship("Liquor", backref = backref('skus'))
@@ -67,7 +66,14 @@ class Drink(base):
     glasstype = Column(String, nullable = False)
     description = Column(String, nullable = False)
     instructions = Column(String, nullable = False)
-    image = Column(String)
+    
+    def __init__(self):
+        super().__init__()
+        self.name = ''
+        self.glasstype = ''
+        self.description = ''
+        self.instructions = ''
+        self.image = ''
 
 class LiquorIngredient(base):
     __tablename__ = 'liquoringredient'
@@ -82,6 +88,8 @@ class LiquorIngredient(base):
     drink_id = Column(Integer, ForeignKey('drink.id'))
     drink = relationship("Drink", backref = backref('liquors'))
     
+    def __str__(self):
+        return self.liquor.brand.name+' '+self.liquor.name
 
 class GenLiquorIngredient(base):
     __tablename__ = 'genliquoringredient'
@@ -96,6 +104,8 @@ class GenLiquorIngredient(base):
     drink_id = Column(Integer, ForeignKey('drink.id'))
     drink = relationship("Drink", backref = backref('genliquors'))
     
+    def __str__(self):
+        return self.type.name
 
 class ExtraIngredient(base):
     __tablename__ = 'extraingredient'
@@ -110,12 +120,14 @@ class ExtraIngredient(base):
     drink_id = Column(Integer, ForeignKey('drink.id'))
     drink = relationship("Drink", backref = backref('extras'))
     
+    def __str__(self):
+        return self.extra.name
 
 class LiquorInventory(base):
     __tablename__ = 'liquorinventory'
     
     id = Column(Integer, primary_key = True)
-    measure = Column(Float, nullable = False) #mL
+    volume_left = Column(Float, nullable = False) #mL
     puck_address = Column(Integer, unique = True, nullable = False)
     date_added = Column(DateTime, nullable = False)
     

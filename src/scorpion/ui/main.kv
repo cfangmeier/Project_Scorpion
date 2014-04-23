@@ -37,11 +37,16 @@
   width: '5cm'
 
 <LiquorScreen_DrinkView>:
+  orientation: 'vertical'
   size_hint_x: None
   width: '5cm'
+  AsyncImage:
+    id: drink_image
+  Label:
+    size_hint_y: 0.2
+    id: drink_name
 
 <LiquorScreen>:
-  drink_list: drink_list
   name: 'liquorscreen'
   BoxLayout:
     orientation: 'vertical'
@@ -50,21 +55,19 @@
       BoxLayout:
         size_hint_x: 0.4
         orientation: 'vertical'
-        Button:
-          text: 'Liquor Picture'
+        AsyncImage:
+          id: liquor_image
         Label:
-          text: 'Something about the liquor'
-          size_hint_y: None
-          size_y: '0.5in'
+          id: date_added
+          size_hint_y: 0.1
         Label:
-          text: 'Something else about the liquor'
-          size_hint_y: None
-          size_y: '0.5in'
+          id: volume
+          size_hint_y: 0.1
       BoxLayout:
         orientation: 'vertical'
         Label:
           size_hint_y: 0.3
-          text: 'Liquor & Distillery Information'
+          id: brand_info
         ScrollView:
           do_scroll_y: False
           GridLayout:
@@ -76,7 +79,7 @@
             width: self.minimum_width
         Label:
           size_hint_y: 0.3
-          text: 'This is how much of this you drank! dude!'
+          text: 'Liquor history not yet implemented'
     Button:
       size_hint_y: 0.1
       text: 'back to start'
@@ -88,11 +91,6 @@
 
 <MixingScreen>:
   name: 'mixingscreen'
-  drink_name: drink_name
-  drink_image: drink_image
-  drink_descr: drink_descr
-  drink_ingr_list: drink_ingr_list
-  drink_instr: drink_instr
   BoxLayout:
     orientation: 'vertical'
     BoxLayout:
@@ -109,13 +107,12 @@
         orientation: 'vertical'
         RstDocument:
           id: drink_instr
-          text: 'These are the **drink** *instructions*!'
         BoxLayout:
           id: drink_ingr_list
           orientation: 'horizontal'
     Button:
       size_hint_y: 0.1
-      text: 'back to start'
+      text: 'Back to start'
       on_release: app.root.current = 'startscreen'
 
 <DrinkSelectScreen_DrinkView>:

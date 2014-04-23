@@ -55,7 +55,7 @@ def build_liquorinventory(attrs):
         if type(lsku) != dbo.LiquorSKU: continue
     l.liquorsku = [lsku for lsku in objects
                    if type(lsku) == dbo.LiquorSKU and lsku.upc == attrs['liquorsku']][0]
-    l.measure = float(attrs['measure'])
+    l.volume_left = float(attrs['volume_left'])
     l.puck_address = int(attrs['puck_address'], base=16)
     l.date_added = datetime.datetime.now()
     objects.append(l)

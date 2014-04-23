@@ -59,7 +59,7 @@ def _run():
             event = _scanner_file.read(EVENT_SIZE)
         scanner_data.put(''.join(reading))
         if use_gui:
-            scorpion.ui.ui_main.add_upc(scanner_data.get())
+            scorpion.ui.ui_main.set_upc_from_scanner(scanner_data.get())
 
 def stop_scanner():
     global kill_flag, _scanner_thread

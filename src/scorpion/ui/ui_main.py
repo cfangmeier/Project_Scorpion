@@ -9,21 +9,20 @@ import re
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import ObjectProperty, BooleanProperty, StringProperty
-from kivy.uix.button import Button
+from kivy.uix.button import Button, ButtonBehavior
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.boxlayout import BoxLayout
 
 import scorpion.localdb.db as db
-import scorpion.config as config
+import scorpion.localdb.dbobjects as dbo
+import scorpion.utils as utils
 _app = None
 
-
-def add_upc(upc):
+def set_upc_from_scanner(upc):
     if _app is not None:
         _app.scanned_upc = upc
-        if _app.popup is not None:
-            _app.popup.sm.get_screen('upcgetscreen').scanned_upc = upc
 
 class StartScreen_LiquorView(Button):
     def __init__(self, liquor_inv, **kwargs):
@@ -34,7 +33,7 @@ class StartScreen_LiquorView(Button):
         
     def on_release(self, *args):
         Button.on_release(self, *args)
-        _app.get_screen('liquorscreen').current_liquor = self.liquor_inv
+        _app.get_screen('liquorscreen').liquor_inv = self.liquor_inv
         _app.set_screen('liquorscreen')
 
 class StartScreen(Screen):
@@ -56,8 +55,15 @@ class StartScreen(Screen):
 class LiquorScreen_LiquorView(Button):
     liquor = None
 
-class LiquorScreen_DrinkView(Button):
-    drink = None
+class LiquorScreen_DrinkView(ButtonBehavior, BoxLayout):
+    drink = ObjectProperty(dbo.Drink())
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.bind(drink=self.update)
+    def update(self, inst, value):
+        self.ids.drink_name.text = self.drink.name
+        self.ids.drink_image.source = utils.get_drink_image_path(self.drink)
     
     def on_release(self, *args, **kwargs):
         super().on_release(*args, **kwargs)
@@ -65,60 +71,53 @@ class LiquorScreen_DrinkView(Button):
         _app.set_screen('mixingscreen')
 
 class LiquorScreen(Screen):
-    drink_list = ObjectProperty(None)
+    liquor_inv = ObjectProperty(dbo.LiquorInventory())
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.current_liquor = None
+        self.bind(liquor_inv=self.update)
     
-    def on_pre_enter(self, *args, **kwargs):
-        super().on_pre_enter(*args, **kwargs)
-        self.drink_list.clear_widgets()
-        for d in db.get_drinks_using_liquor(self.current_liquor.liquorsku.liquor):
-            lsdv = LiquorScreen_DrinkView(text = d.name)
+    def update(self, inst, value):
+        self.ids.liquor_image.source = utils.get_liquor_image_path(self.liquor_inv.liquorsku.liquor)
+        d = self.liquor_inv.date_added
+        self.ids.date_added.text = "Date Added: "+'/'.join(map(str,[d.month,d.day,d.year]))
+        self.ids.volume.text = str(self.liquor_inv.volume_left)+' mL Remaining'
+        self.ids.brand_info.text = "Distilled By: "+self.liquor_inv.liquorsku.liquor.brand.name
+        
+        self.ids.drink_list.clear_widgets()
+        for d in db.get_drinks_using_liquor(self.liquor_inv.liquorsku.liquor):
+            lsdv = LiquorScreen_DrinkView()
             lsdv.drink = d
-            self.drink_list.add_widget(lsdv)
+            self.ids.drink_list.add_widget(lsdv)
         
 
 class MixingScreen_IngrView(Button):
-    pass
+    ingredient = ObjectProperty(None)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.bind(ingredient=self.update)
+    def update(self, *args):
+        print('mixing: ',args)
+        self.text = str(self.ingredient)
 
 class MixingScreen(Screen):
-    drink = None
+    drink = ObjectProperty(dbo.Drink())
     
-    drink_name = ObjectProperty(None)
-    drink_image = ObjectProperty(None)
-    drink_descr = ObjectProperty(None)
-    drink_instr = ObjectProperty(None)
-    drink_ingr_list = ObjectProperty(None)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.bind(drink=self.update)
     
+    def update(self, inst, value):
+        self.ids.drink_name.text = self.drink.name
+        self.ids.drink_descr.text = self.drink.description
+        self.ids.drink_instr.text = self.drink.instructions
+        self.ids.drink_image.source = utils.get_drink_image_path(self.drink)
+        
+        self.ids.drink_ingr_list.clear_widgets()
+        for ing in self.drink.liquors + self.drink.genliquors + self.drink.extras:
+            msiv = MixingScreen_IngrView()
+            msiv.ingredient = ing
+            self.ids.drink_ingr_list.add_widget(msiv)
     
-    def on_pre_enter(self, *args, **kwargs):
-        super().on_pre_enter(*args, **kwargs)
-        self.drink_name.text = self.drink.name
-        self.drink_descr.text = self.drink.description
-        self.drink_instr.text = self.drink.instructions
-        img_path = os.path.join(config.drink_image_path,
-                                self.drink.name.lower().replace(' ','_')+'.jpg')
-        if os.path.isfile(img_path):
-            self.drink_image.source = img_path
-        else:
-            self.drink_image.source = ""
-        self.drink_ingr_list.clear_widgets()
-        for li in self.drink.liquors:
-            msiv = MixingScreen_IngrView()
-            l = li.liquor
-            msiv.text = ' '.join((l.brand.name, l.name))
-            self.drink_ingr_list.add_widget(msiv)
-        for gl in self.drink.genliquors:
-            msiv = MixingScreen_IngrView()
-            t = gl.type
-            msiv.text = t.name
-            self.drink_ingr_list.add_widget(msiv)
-        for e in self.drink.extras:
-            msiv = MixingScreen_IngrView()
-            msiv.text = e.extra.name
-            self.drink_ingr_list.add_widget(msiv)
-
 
 class DrinkSelectScreen_DrinkView(Button):
     drink = None
@@ -160,6 +159,7 @@ class UPCGetScreen(Screen):
     
     def done(self):
         upc = self.ids.upc_input.text
+        self.ids.upc_input.text = ''
         liquorSKU = db.get_with_upc(upc)
         if liquorSKU is not None:
             _app.add_new_bottle(liquorSKU)
@@ -290,10 +290,13 @@ class LiquorSKUCreationScreen(Screen):
         _app.add_new_bottle(lsku)
 
 class MainApp(App):
+    show_add_bottle_popup = BooleanProperty(False)
+    show_add_drink_popup = BooleanProperty(False)
+    scanned_upc = StringProperty('')
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.popup = None
-        self.scanned_upc = ''
+        #self.bind(show_add_bottle_popup=self.add_bottle_popup)
     
     def build(self):
         self.sm = ScreenManager()
