@@ -14,6 +14,7 @@ project_root = path_sep.join(__file__.split(path_sep)[:-3])
 drink_image_path = path_sep.join([project_root,'data','images','drinks'])
 liquor_image_path = path_sep.join([project_root,'data','images','liquor'])
 ingredient_image_path = path_sep.join([project_root,'data','images','ingredients'])
+misc_image_path = path_sep.join([project_root,'data','images','misc'])
 
 
 local_db = path_sep.join([project_root,'data','db','project_scorpion.sqlite3'])

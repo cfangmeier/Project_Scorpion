@@ -166,6 +166,7 @@ def add_to_inventory(liquor):
     session.add(liquor_inv)
     session.commit()
     puck.set_leds(liquor_inv.puck_address, white = True)
+    return liquor_inv
     
     
 

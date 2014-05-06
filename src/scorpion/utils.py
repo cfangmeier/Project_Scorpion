@@ -21,3 +21,10 @@ def get_liquor_image_path(liquor):
         return img_path
     else:
         return ""
+    
+def get_misc_image_path(misc):
+    img_path = os.path.join(config.misc_image_path,misc)
+    if os.path.isfile(img_path):
+        return img_path
+    else:
+        return ""

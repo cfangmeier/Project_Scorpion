@@ -1,23 +1,37 @@
 #:kivy 1.8.0
-
+#:import utils scorpion.utils
 
 <StartScreen_LiquorView>:
+  canvas.before:
+    Color: 
+      rgba: 0.5, 0.2, 0.5, 1
+    BorderImage:
+      source: utils.get_misc_image_path("round.png")
+      pos: self.pos
+      size: self.size
+  orientation: 'vertical'
   size_hint_x: None
   width: '5cm'
-
-<StartScreen_DrinkView>:
-  size_hint_x: None
-  width: '5cm'
+  AsyncImage:
+    id: display_image
+  Label:
+    id: display_name
+    size_hint_y: 0.2
 
 <StartScreen>:
-  liquor_list: liquor_list
+  canvas.before:
+    Color:
+      rgba: 1, 0, 0, 1
+    Rectangle:
+      pos: self.pos
+      size: self.size
   name: 'startscreen'
   BoxLayout:
     orientation: 'vertical'
     ScrollView:
       do_scroll_y: False
       GridLayout:
-        id: liquor_list
+        id: liquor_holder
         padding: 20
         spacing: 10
         rows: 1
@@ -37,6 +51,13 @@
   width: '5cm'
 
 <LiquorScreen_DrinkView>:
+  canvas.before:
+    Color: 
+      rgba: 0.5, 0.2, 0.5, 1
+    BorderImage:
+      source: utils.get_misc_image_path("round.png")
+      pos: self.pos
+      size: self.size
   orientation: 'vertical'
   size_hint_x: None
   width: '5cm'
