@@ -1,0 +1,160 @@
+#:kivy 1.8.0
+#:import utils scorpion.utils
+
+<StartScreen_LiquorView>:
+  canvas.before:
+    Color: 
+      rgba: 0.5, 0.2, 0.5, 1
+    BorderImage:
+      source: utils.get_misc_image_path("round.png")
+      pos: self.pos
+      size: self.size
+  orientation: 'vertical'
+  size_hint_x: None
+  width: '5cm'
+  AsyncImage:
+    id: display_image
+  Label:
+    id: display_name
+    size_hint_y: 0.2
+
+<StartScreen>:
+  canvas.before:
+    Color:
+      rgba: 1, 0, 0, 1
+    Rectangle:
+      pos: self.pos
+      size: self.size
+  name: 'startscreen'
+  BoxLayout:
+    orientation: 'vertical'
+    ScrollView:
+      do_scroll_y: False
+      GridLayout:
+        id: liquor_holder
+        padding: 20
+        spacing: 10
+        rows: 1
+        size_hint_x: None
+        width: self.minimum_width
+    Button:
+      text: 'Mix a Drink!'
+      size_hint_y: 0.3
+      on_release: app.root.current = 'drinkselectscreen'
+    Button:
+      text: 'Add a drink to inventory'
+      size_hint_y: 0.2
+      on_release: app.start_add_new_bottle()
+
+<LiquorScreen_LiquorView>:
+  size_hint_x: None
+  width: '5cm'
+
+<LiquorScreen_DrinkView>:
+  canvas.before:
+    Color: 
+      rgba: 0.5, 0.2, 0.5, 1
+    BorderImage:
+      source: utils.get_misc_image_path("round.png")
+      pos: self.pos
+      size: self.size
+  orientation: 'vertical'
+  size_hint_x: None
+  width: '5cm'
+  AsyncImage:
+    id: drink_image
+  Label:
+    size_hint_y: 0.2
+    id: drink_name
+
+<LiquorScreen>:
+  name: 'liquorscreen'
+  BoxLayout:
+    orientation: 'vertical'
+    BoxLayout:
+      orientation: 'horizontal'
+      BoxLayout:
+        size_hint_x: 0.4
+        orientation: 'vertical'
+        AsyncImage:
+          id: liquor_image
+        Label:
+          id: date_added
+          size_hint_y: 0.1
+        Label:
+          id: volume
+          size_hint_y: 0.1
+      BoxLayout:
+        orientation: 'vertical'
+        Label:
+          size_hint_y: 0.3
+          id: brand_info
+        ScrollView:
+          do_scroll_y: False
+          GridLayout:
+            id: drink_list
+            padding: 20
+            spacing: 10
+            rows: 1
+            size_hint_x: None
+            width: self.minimum_width
+        Label:
+          size_hint_y: 0.3
+          text: 'Liquor history not yet implemented'
+    Button:
+      size_hint_y: 0.1
+      text: 'back to start'
+      on_release: app.root.current = 'startscreen'
+
+<MixingScreen_IngrView>:
+  size_hint_x: None
+  width: '5cm'
+
+<MixingScreen>:
+  name: 'mixingscreen'
+  BoxLayout:
+    orientation: 'vertical'
+    BoxLayout:
+      orientation: 'horizontal'
+      BoxLayout:
+        orientation: 'vertical'
+        Label:
+          id: drink_name
+        AsyncImage:
+          id: drink_image
+        RstDocument: 
+          id: drink_descr
+      BoxLayout:
+        orientation: 'vertical'
+        RstDocument:
+          id: drink_instr
+        BoxLayout:
+          id: drink_ingr_list
+          orientation: 'horizontal'
+    Button:
+      size_hint_y: 0.1
+      text: 'Back to start'
+      on_release: app.root.current = 'startscreen'
+
+<DrinkSelectScreen_DrinkView>:
+  size_hint_x: None
+  width: '5cm'
+
+<DrinkSelectScreen>:
+  name: 'drinkselectscreen'
+  drink_list: drink_list
+  BoxLayout:
+    orientation: 'vertical'
+    ScrollView:
+      do_scroll_y: False
+      GridLayout:
+        id: drink_list
+        padding: 20
+        spacing: 10
+        rows: 1
+        size_hint_x: None
+        width: self.minimum_width
+    Button:
+      size_hint_y: 0.1
+      text: 'back to start'
+      on_release: app.root.current = 'startscreen'
