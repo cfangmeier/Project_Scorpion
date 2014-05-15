@@ -1,4 +1,6 @@
 #:kivy 1.8.0
+#:import IntegerInput scorpion.ui.misc.IntegerInput
+#:import FloatInput scorpion.ui.misc.FloatInput
 #################################
 #Screens for entering new bottles
 #################################
@@ -30,7 +32,7 @@
         on_release: root.done()
       Button:
         text: 'Back'
-        on_release: app.popup.dismiss()
+        on_release: app.bottle_adder.dismiss()
 
 <ListSelectionScreen>:
   BoxLayout:

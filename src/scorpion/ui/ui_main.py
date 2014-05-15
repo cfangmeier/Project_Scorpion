@@ -3,7 +3,6 @@ Created on Mar 24, 2014
 
 @author: caleb
 '''
-import re
 
 from kivy.app import App
 from kivy.properties import (ObjectProperty, BooleanProperty, 
@@ -16,17 +15,15 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 import scorpion.localdb.db as db
 import scorpion.localdb.dbobjects as dbo
 import scorpion.utils as utils
-from scorpion.ui.add_bottle import AddBottlePopup, add_bottle_popup_open
-
-_app = None
+from scorpion.ui.add_bottle import BottleAdder
 
 Builder.load_file('./ui/main_screens.kv')
 Builder.load_file('./ui/add_drink_screens.kv')
 Builder.load_file('./ui/add_bottle_screens.kv')
 
 def set_upc(upc):
-    if _app is not None:
-        _app.scanned_upc = upc
+    if app is not None:
+        app.scanned_upc = upc
 
 class StartScreen_LiquorView(ButtonBehavior, BoxLayout):
     liquor_inv = ObjectProperty(None)
@@ -41,8 +38,8 @@ class StartScreen_LiquorView(ButtonBehavior, BoxLayout):
         self.ids.display_image.source = utils.get_liquor_image_path(l)
     
     def on_release(self, *args):
-        _app.get_screen('liquorscreen').liquor_inv = self.liquor_inv
-        _app.set_screen('liquorscreen')
+        app.get_screen('liquorscreen').liquor_inv = self.liquor_inv
+        app.set_screen('liquorscreen')
 
 class StartScreen(Screen):
     liquor_list = ListProperty([])
@@ -73,8 +70,8 @@ class LiquorScreen_DrinkView(ButtonBehavior, BoxLayout):
     
     def on_release(self, *args, **kwargs):
         super().on_release(*args, **kwargs)
-        _app.get_screen('mixingscreen').drink = self.drink
-        _app.set_screen('mixingscreen')
+        app.get_screen('mixingscreen').drink = self.drink
+        app.set_screen('mixingscreen')
 
 class LiquorScreen(Screen):
     liquor_inv = ObjectProperty(dbo.LiquorInventory())
@@ -130,8 +127,8 @@ class DrinkSelectScreen_DrinkView(Button):
     
     def on_release(self, *args, **kwargs):
         super().on_release(*args, **kwargs)
-        _app.get_screen('mixingscreen').drink = self.drink
-        _app.set_screen('mixingscreen')
+        app.get_screen('mixingscreen').drink = self.drink
+        app.set_screen('mixingscreen')
 
 class DrinkSelectScreen(Screen):
     drink_list = ObjectProperty(None)
@@ -148,13 +145,13 @@ class DrinkSelectScreen(Screen):
             self.drink_list.add_widget(dssdv)
 
 
+app = None #Singleton
 class MainApp(App):
     show_add_bottle_popup = BooleanProperty(False)
-    show_add_drink_popup = BooleanProperty(False)
     scanned_upc = StringProperty("")
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.popup = None
+        self.bottle_adder = BottleAdder()
         self.bind(scanned_upc=self.add_new_bottle)
     
     def build(self):
@@ -173,33 +170,13 @@ class MainApp(App):
         else:
             return self.sm.get_screen(screen)
     
-    def add_new_bottle(self):
-        if not add_bottle_popup_open
-        self.add_bottle_popup.
-        
-        
-        
-#     def add_new_bottle(self,liquorSKU):
-#         l_inv = db.add_to_inventory(liquorSKU)
-#         self.get_screen('startscreen').liquor_list.append(l_inv)
-#         
-#         self.popup.dismiss()
-#         self.popup = None
-#         
-#         
-#     def find_potential_matches(self):
-#         brand = self.popup.sm.brand
-#         type_ = self.popup.sm.type
-#         matches = db.get_liquors(brand, type_)
-#         if len(matches) == 0:
-#             lcs = self.popup.sm.get_screen('liquorcreationscreen')
-#             lcs.back_link = self.popup.sm.current
-#             self.popup.sm.current = 'liquorcreationscreen'
-#         else:
-#             self.popup.sm.get_screen('liquorselectionscreen').items = matches
-#             self.popup.sm.current = 'liquorselectionscreen'
+    def add_new_bottle(self, inst, value):
+        print("inst: ",inst," value: ",value)
+        if value == "" and inst != None: return
+        self.bottle_adder.open(value)
+        self.scanned_upc = ""
 
 def run_ui():
-    global _app
-    _app = MainApp()
-    _app.run()
+    global app
+    app = MainApp()
+    app.run()

@@ -162,7 +162,7 @@ def add_to_inventory(liquor):
     liquor_inv.puck_address = puck_address
     puck.assign_liquor(liquor_inv.puck_address, liquor_inv)
     #measure and set bottle fullness later
-    liquor_inv.measure = 0
+    liquor_inv.volume_left = 0
     session.add(liquor_inv)
     session.commit()
     puck.set_leds(liquor_inv.puck_address, white = True)
