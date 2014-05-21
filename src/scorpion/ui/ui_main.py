@@ -171,7 +171,6 @@ class MainApp(App):
             return self.sm.get_screen(screen)
     
     def add_new_bottle(self, inst, value):
-        print("inst: ",inst," value: ",value)
         if value == "" and inst != None: return
         self.bottle_adder.open(value)
         self.scanned_upc = ""

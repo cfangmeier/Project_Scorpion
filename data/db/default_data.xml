@@ -41,10 +41,11 @@
 	<Extra name="Cranberry Juice"></Extra>
 	<Extra name="Bitters"></Extra>
 	<Extra name="Soda Water"></Extra>
-	
+<!--
 	<Drink name="Martini" glasstype="Martini Glass" description="Get Drunk" instructions="Mix it up,baby!"></Drink>
 	<LiquorIngredient measure="2 oz" liquor="Seagrams|Extra Dry Gin" drink="Martini"></LiquorIngredient>
 	<LiquorIngredient measure="1 oz" liquor="Seagrams|Dry Vermouth" drink="Martini"></LiquorIngredient>
+	
 	
 	<Drink name="GenMartini" glasstype="Martini glass" description="Get Drunk"
 		instructions="Mix it up,baby!"></Drink>
@@ -60,6 +61,19 @@
 	<GenLiquorIngredient measure="2 oz" type="Bourbon" drink="Old Fashioned"></GenLiquorIngredient>
 	<ExtraIngredient measure = "2 dash" extra="Bitters" drink="Old Fashioned"></ExtraIngredient>
 	<ExtraIngredient measure = "1 dash" extra="Soda Water" drink="Old Fashioned"></ExtraIngredient>
+-->
+	<Drink name="Amaretto Sour" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Black Russian" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Cosmopolitan" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Dark and Stormy" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Gin and Tonic" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Kamikaze" glasstype="" description="" instructions=""></Drink>
+	
 	
 	<LiquorInventory liquorsku="0011223347" volume_left="150" puck_address="0x0"></LiquorInventory>
 	<LiquorInventory liquorsku="0011223348" volume_left="150" puck_address="0x1"></LiquorInventory>

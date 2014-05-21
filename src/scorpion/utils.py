@@ -7,7 +7,7 @@ import os
 import scorpion.config as config
 
 def get_drink_image_path(drink):
-    img_name = drink.name.lower().replace(' ','_')+'.jpg'
+    img_name = drink.name.lower().replace(' ','_')+'.png'
     img_path = os.path.join(config.drink_image_path,img_name)
     if os.path.isfile(img_path):
         return img_path

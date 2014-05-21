@@ -1,5 +1,6 @@
 #:kivy 1.8.0
 #:import utils scorpion.utils
+#:import textures scorpion.ui.textures
 
 <StartScreen_LiquorView>:
   canvas.before:
@@ -21,10 +22,11 @@
 <StartScreen>:
   canvas.before:
     Color:
-      rgba: 1, 0, 0, 1
+      rgb: 1, 1, 1
     Rectangle:
       pos: self.pos
       size: self.size
+      texture: textures.radial_gradient(size = self.size)
   name: 'startscreen'
   BoxLayout:
     orientation: 'vertical'
@@ -68,6 +70,13 @@
     id: drink_name
 
 <LiquorScreen>:
+  canvas.before:
+    Color:
+      rgb: 1, 1, 1
+    Rectangle:
+      pos: self.pos
+      size: self.size
+      texture: textures.radial_gradient(size = self.size)
   name: 'liquorscreen'
   BoxLayout:
     orientation: 'vertical'
@@ -111,6 +120,13 @@
   width: '5cm'
 
 <MixingScreen>:
+  canvas.before:
+    Color:
+      rgb: 1, 1, 1
+    Rectangle:
+      pos: self.pos
+      size: self.size
+      texture: textures.radial_gradient(size = self.size)
   name: 'mixingscreen'
   BoxLayout:
     orientation: 'vertical'
@@ -119,10 +135,13 @@
       BoxLayout:
         orientation: 'vertical'
         Label:
+          size_hint_y: 0.1
           id: drink_name
         AsyncImage:
+          size_hint_y: 0.7
           id: drink_image
         RstDocument: 
+          size_hint_y: 0.2
           id: drink_descr
       BoxLayout:
         orientation: 'vertical'
@@ -141,6 +160,13 @@
   width: '5cm'
 
 <DrinkSelectScreen>:
+  canvas.before:
+    Color:
+      rgb: 1, 1, 1
+    Rectangle:
+      pos: self.pos
+      size: self.size
+      texture: textures.radial_gradient(size = self.size)
   name: 'drinkselectscreen'
   drink_list: drink_list
   BoxLayout:

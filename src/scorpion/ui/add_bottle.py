@@ -50,7 +50,7 @@ class ListSelectionScreen(Screen):
                               size_y='30')
             tb.item = item
             def enable_done(button): 
-                self.done_disabled = False
+                self.done_disabled = (button.state != 'down')
                 self.selection = button.item
                 print(self.selection)
             tb.bind(on_release=enable_done)
