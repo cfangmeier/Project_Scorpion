@@ -160,6 +160,13 @@ class MainApp(App):
         self.sm.add_widget(LiquorScreen())
         self.sm.add_widget(MixingScreen())
         self.sm.add_widget(DrinkSelectScreen())
+        def set_canvas(inst, value):
+            with self.sm.canvas.before:
+                from kivy.graphics import Color, Rectangle
+                from scorpion.ui.textures import radial_gradient
+                Color(1, 1, 1)
+                Rectangle(texture=radial_gradient(), size=value)
+        self.sm.bind(size=set_canvas)
         return self.sm
     
     def set_screen(self, screen_name):

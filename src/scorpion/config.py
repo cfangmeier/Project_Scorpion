@@ -19,6 +19,7 @@ misc_image_path = path_sep.join([project_root,'data','images','misc'])
 
 local_db = path_sep.join([project_root,'data','db','project_scorpion.sqlite3'])
 xml_path = path_sep.join([project_root,'data','db','default_data.xml'])
+dat_path = path_sep.join([project_root,'data','db','default.dat'])
 scanner_path = "/dev/input/by-id/usb-HID_Keyboard_Device_HID_Keyboard_Device_Keyboard_Device-event-kbd"
 
 #a setup with 16 pucks 0x20

@@ -4,7 +4,6 @@ from kivy.graphics.opengl import glFinish
  
 def radial_gradient(border_color=(1, 1, 0), center_color=(1, 0, 0),
         size=(64, 64)):
-    #glFinish()
     fbo = Fbo(size=size)
     fbo.shader.fs = '''
     $HEADER$
@@ -23,5 +22,4 @@ def radial_gradient(border_color=(1, 1, 0), center_color=(1, 0, 0),
         Color(1, 1, 1)
         Rectangle(size=size)
     fbo.draw()
-    #glFinish()
     return fbo.texture

@@ -1,0 +1,240 @@
+Type:
+  name: Vodka
+  description: Vodka is a distilled beverage composed primarily of water and ethanol, 
+    sometimes with traces of impurities and flavorings. Traditionally, vodka is made by 
+    the distillation of fermented grains or potatoes, though some modern brands use other 
+    substances, such as fruits or sugar.
+Type:
+  name: Gin
+  description: Gin is a spirit which derives its predominant flavour from juniper berries 
+    (Juniperus communis). From its earliest origins in the Middle Ages, gin has evolved over 
+    the course of a millennium from a herbal medicine to an object of commerce in the spirits 
+    industry. Gin was developed on the basis of the older Jenever, and become widely popular 
+    in Great Britain when William of Orange, leader of the Dutch Republic, occupied the British 
+    throne with his wife Mary. Today, the gin category is one of the most popular and widely 
+    distributed range of spirits, and is represented by products of various origins, styles, 
+    and flavour profiles that all revolve around juniper as a common ingredient.
+Type:
+  name: Whisky
+  description: Whisky or whiskey is a type of distilled alcoholic beverage made from fermented 
+    grain mash. Different grains are used for different varieties, including barley, malted barley, 
+    rye, malted rye, wheat, buckwheat and corn. Whisky is typically aged in wooden casks, made 
+    generally of charred white oak.
+Type:
+  name: Bourbon
+  description: Bourbon whiskey is a type of American whiskey: a barrel-aged distilled spirit made 
+    primarily from corn. The name is ultimately derived from the French Bourbon dynasty, although 
+    it is disputed whether the namesake Kentucky county or New Orleans street inspired the whiskey's name. 
+    Bourbon has been distilled since the 18th century. The name "Bourbon" was not applied until the 1820s, 
+    and the Kentucky etymology was not advanced until the 1870s. While the liquor may be made anywhere in 
+    the United States, it is strongly associated with the American South in general, and Kentucky in particular.
+Type:
+  name: Scotch
+  description: Scotch whisky, often simply called Scotch, is malt whisky or grain whisky made in Scotland. 
+  All Scotch whisky was originally made from malted barley. Commercial distilleries began introducing whisky 
+  made from wheat and rye in the late 18th century. Scotch whisky is divided into five distinct categories: 
+  single malt Scotch whisky, single grain Scotch whisky, blended malt Scotch whisky (formerly called "vatted 
+  malt" or "pure malt"), blended grain Scotch whisky, and blended Scotch whisky. 
+Type:
+  name: Rum
+  description: Rum is a distilled alcoholic beverage made from sugarcane byproducts, such as molasses, or 
+    directly from sugarcane juice, by a process of fermentation and distillation. The distillate, a clear 
+    liquid, is then usually aged in oak barrels. Rum can be referred to in Spanish by descriptors such as 
+    ron viejo ("old rum") and ron añejo ("aged rum").
+Type:
+  name: Spiced Rum
+  description: Spiced rums obtain their flavors through the addition of spices and, sometimes, caramel. Most 
+    are darker in color, and based on gold rums. Some are significantly darker, while many cheaper brands are 
+    made from inexpensive white rums and darkened with caramel color. Among the spices added are cinnamon, 
+    rosemary, absinthe/aniseed, or pepper.
+Type:
+  name: Tequila
+  description: Tequila is a regional specific name for a distilled beverage made from the blue agave plant, 
+    primarily in the area surrounding the city of Tequila, 65 km (40 mi) northwest of Guadalajara, and in 
+    the highlands (Los Altos) of the north western Mexican state of Jalisco. Although tequila is a kind of 
+    mezcal, modern tequila differs somewhat in the method of its production, in the use of only blue agave 
+    plants, as well as in its regional specificity.
+Type:
+  name: Vermouth
+  description: Vermouth is an aromatized fortified wine flavored with various botanicals (roots, barks, 
+    flowers, seeds, herbs, spices). The modern versions of the beverage were first produced in the mid to 
+    late 18th century in Turin, Italy.
+Type:
+  name: Amaretto
+  description: Amaretto is a sweet, almond-flavoured, Italian liqueur. It is made from a base of apricot 
+    pits or almonds, sometimes both.
+Type:
+  name: Coffee Liqueur
+  description: Coffee is a great flavor for cocktails and mixed drinks and can be added in a variety of 
+    ways. Whether it be hot coffee, chilled espresso, a coffee liqueur or one of the newer espresso-infused 
+    vodkas, these cocktails all include the great taste of java and are fun to explore. 
+
+
+Brand:
+  name: Johnny Walker
+  country: Scotland
+Brand:
+  name: Jose Cuervo
+  country: Mexico
+Brand:
+  name: McCormick
+  country: United States
+Brand:
+  name: Svedka
+  country: Sweden
+Brand:
+  name: Seagrams
+  country: Canada
+Brand:
+  name: Bacardi
+  country: Cuba
+Brand: 
+  name: Jim Beam
+  country: United States
+Brand:
+  name: Kahlúa
+  country: Mexico
+
+
+Liquor:
+  brand: Johnny Walker
+  name: Blue Label
+  type: Scotch
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0001
+    volume: 750
+    emptyweight: 50
+Liquor:
+  brand: Johnny Walker
+  name: Red Label
+  type: Scotch
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0002
+    volume: 750
+    emptyweight: 50
+Liquor:
+  brand: Seagrams
+  name: Extra Dry Gin
+  type: Gin
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0003
+    volume: 750
+    emptyweight: 50
+Liquor:
+  brand: Gallo
+  name: Extra Dry Vermouth
+  type: Vermouth
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0004
+    volume: 750
+    emptyweight: 50
+Liquor:
+  brand: Bacardi
+  name: Spiced Rum
+  type: Spiced Rum
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0005
+    volume: 750
+    emptyweight: 50
+Liquor:
+  brand: Bacardi
+  name: White Rum
+  type: White Rum
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0006
+    volume: 750
+    emptyweight: 50
+Liquor:
+  brand: Jim Beam
+  name: Black
+  type: Bourbon
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0007
+    volume: 750
+    emptyweight: 50
+Liquor:
+  brand: Kahlúa
+  name: Coffee Liqueur
+  type: Coffee Liqueur
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0008
+    volume: 750
+    emptyweight: 50
+
+Extra:
+  name: Orange Juice
+Extra:
+  name: Lime Juice
+Extra:
+  name: Lemon Juice
+Extra:
+  name: Salt
+Extra:
+  name: Ice
+Extra:
+  name: Cranberry Juice
+Extra:
+  name: Bitters
+Extra:
+  name: Soda Water
+Extra:
+  name: Marachino Cherry
+
+Drink: #source: http://mixthatdrink.com/amaretto-sour/
+  name: Amaretto Sour
+  glasstype: Old Fashined Glass
+  description: The Amaretto Sour belongs to a family of mixed drinks known as – you guessed it – 
+    “sours.” These cocktail recipes are defined by having at least one liquor (or liqueur), lemon 
+    or lime juice and a bit of sweetener. They include classics like the Margarita, Sidecar and 
+    Whiskey Sour. The smooth, sweet taste and mild kick of an Amaretto Sour makes it ideal for 
+    occasional drinkers as well as more dedicated cocktail fans.
+  instructions: @1 Shake the amaretto, lemon juice and teaspoon of granulated sugar in a strainer without ice
+                @2 Strain into a glass over ice
+                @3 Garnish with a maraschino cherry
+  GenLiquorIngredient:
+    type: Amaretto
+    measure: 2 oz
+  ExtraIngredient:
+    name: Lemon Juice
+    measure: 1 oz
+  ExtraIngredient:
+    name: Maraschino Cherry
+    measure: 1
+  ExtraIngredient:
+    name: Ice
+    measure: 0.5 glass
+
+Drink: #source: http://mixthatdrink.com/amaretto-sour/
+  name: Black Russian
+  glasstype: Old Fashioned Glass
+  description: The Black Russian supposedly appeared in Brussels in 1949. It’s a wonderfully simple cocktail – 
+    just vodka and Kahlua over ice. This is one of the easiest recipes for tinkering: try a different coffee 
+    liqueur, or a flavored vodka (vanilla is great), add a splash of cola, use equal amounts of vodka and 
+    liqueur, or you can even add a scoop of chocolate ice cream into this drink.
+  instructions: @1 Pour vodka and Kahlua and Vodka into glass with ice
+                @2 Stir
+  GenLiquorIngredient:
+    type: Vodka
+    measure: 1.5 oz
+  LiquorIngredient:
+    name: Kahlúa|Coffee Liqueur
+    measure: .75 oz
+  ExtraIngredient:
+    name: Ice
+    measure: 0.5 glass

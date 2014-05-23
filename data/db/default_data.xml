@@ -9,6 +9,7 @@
 	<Type name="White Rum" description="It's Rum"></Type>
 	<Type name="Tequila" description="It's Tequila"></Type>
 	<Type name="Vermouth" description="It's Vermouth"></Type>
+	<Type name="Amaretto" description="It's Amaretto"></Type>
 	
 	<Brand name="Johnny Walker" country="Scotland"></Brand>
 	<Brand name="Jose Cuervo" country="Mexico"></Brand>
@@ -19,20 +20,19 @@
 	<Brand name="Jim Beam" country="United States"></Brand>
 	
 	<Liquor name="Blue Label" abv="40" density="1" brand="Johnny Walker" type="Scotch"></Liquor>
-	<LiquorSKU liquor="Johnny Walker|Blue Label" volume="750" bottleweight="50" UPC="0011223344"></LiquorSKU>
-	<LiquorSKU liquor="Johnny Walker|Blue Label" volume="1750" bottleweight="80" UPC="0011223345"></LiquorSKU>
+	<LiquorSKU liquor="Johnny Walker|Blue Label" volume="750" bottleweight="50" UPC="0"></LiquorSKU>
 	<Liquor name="Red Label" abv="40" density="1" brand="Johnny Walker" type="Scotch"></Liquor>
-	<LiquorSKU liquor="Johnny Walker|Red Label" volume="750" bottleweight="50" UPC="0011223346"></LiquorSKU>
+	<LiquorSKU liquor="Johnny Walker|Red Label" volume="750" bottleweight="50" UPC="1"></LiquorSKU>
 	<Liquor name="Extra Dry Gin" abv="40" density="1" brand="Seagrams" type="Gin"></Liquor>
-	<LiquorSKU liquor="Seagrams|Extra Dry Gin" volume="750" bottleweight="50" UPC="0011223347"></LiquorSKU>
+	<LiquorSKU liquor="Seagrams|Extra Dry Gin" volume="750" bottleweight="50" UPC="2"></LiquorSKU>
 	<Liquor name="Dry Vermouth" abv="16" density="1" brand="Seagrams" type="Vermouth"></Liquor>
-	<LiquorSKU liquor="Seagrams|Dry Vermouth" volume="750" bottleweight="50" UPC="0011223348"></LiquorSKU>
+	<LiquorSKU liquor="Seagrams|Dry Vermouth" volume="750" bottleweight="50" UPC="3"></LiquorSKU>
 	<Liquor name="Spiced Rum" abv="40" density="1" brand="Bacardi" type="Spiced Rum"></Liquor>
-	<LiquorSKU liquor="Bacardi|Spiced Rum" volume="750" bottleweight="50" UPC="0011223349"></LiquorSKU>
+	<LiquorSKU liquor="Bacardi|Spiced Rum" volume="750" bottleweight="50" UPC="4"></LiquorSKU>
 	<Liquor name="White Rum" abv="40" density="1" brand="Bacardi" type="White Rum"></Liquor>
-	<LiquorSKU liquor="Bacardi|White Rum" volume="750" bottleweight="50" UPC="0011223350"></LiquorSKU>
+	<LiquorSKU liquor="Bacardi|White Rum" volume="750" bottleweight="50" UPC="5"></LiquorSKU>
 	<Liquor name="Black" abv="40" density="1" brand="Jim Beam" type="Bourbon"></Liquor>
-	<LiquorSKU liquor="Jim Beam|Black" volume="750" bottleweight="50" UPC="0011223351"></LiquorSKU>
+	<LiquorSKU liquor="Jim Beam|Black" volume="750" bottleweight="50" UPC="6"></LiquorSKU>
 	
 	<Extra name="Orange Juice"></Extra>
 	<Extra name="Lime Juice"></Extra>
@@ -41,29 +41,9 @@
 	<Extra name="Cranberry Juice"></Extra>
 	<Extra name="Bitters"></Extra>
 	<Extra name="Soda Water"></Extra>
-<!--
-	<Drink name="Martini" glasstype="Martini Glass" description="Get Drunk" instructions="Mix it up,baby!"></Drink>
-	<LiquorIngredient measure="2 oz" liquor="Seagrams|Extra Dry Gin" drink="Martini"></LiquorIngredient>
-	<LiquorIngredient measure="1 oz" liquor="Seagrams|Dry Vermouth" drink="Martini"></LiquorIngredient>
 	
-	
-	<Drink name="GenMartini" glasstype="Martini glass" description="Get Drunk"
-		instructions="Mix it up,baby!"></Drink>
-	<GenLiquorIngredient measure="2 oz" type="Gin" drink="GenMartini"></GenLiquorIngredient>
-	<GenLiquorIngredient measure="1 oz" type="Vermouth" drink="GenMartini"></GenLiquorIngredient>
-	
-	<Drink name="Screwdriver" glasstype="Your mouth" description="It's like acid." 
-		instructions="Mix all together... **or else**."></Drink>
-	<GenLiquorIngredient measure="1 oz" type="Vodka" drink="Screwdriver"></GenLiquorIngredient>
-	<ExtraIngredient measure="2 oz" extra="Orange Juice" drink="Screwdriver"></ExtraIngredient>
-	
-	<Drink name="Old Fashioned" glasstype="Old Fashioned Glass" description="A tasty classic." instructions="*You* gonna mix that?"></Drink>
-	<GenLiquorIngredient measure="2 oz" type="Bourbon" drink="Old Fashioned"></GenLiquorIngredient>
-	<ExtraIngredient measure = "2 dash" extra="Bitters" drink="Old Fashioned"></ExtraIngredient>
-	<ExtraIngredient measure = "1 dash" extra="Soda Water" drink="Old Fashioned"></ExtraIngredient>
--->
 	<Drink name="Amaretto Sour" glasstype="" description="" instructions=""></Drink>
-	
+	<GenLiquorIngredient drink="" measure="1.5 oz" liquor="Amaretto"></GenLiquorIngredient>
 	<Drink name="Black Russian" glasstype="" description="" instructions=""></Drink>
 	
 	<Drink name="Cosmopolitan" glasstype="" description="" instructions=""></Drink>
@@ -74,6 +54,25 @@
 	
 	<Drink name="Kamikaze" glasstype="" description="" instructions=""></Drink>
 	
+	<Drink name="Long Island Iced Tea" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Manhattan" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Martini" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Mojito" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Mudslide" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Rum and Coke" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Screwdriver" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Singapore Sling" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="Vodka Cranberry" glasstype="" description="" instructions=""></Drink>
+	
+	<Drink name="White Russian" glasstype="" description="" instructions=""></Drink>
 	
 	<LiquorInventory liquorsku="0011223347" volume_left="150" puck_address="0x0"></LiquorInventory>
 	<LiquorInventory liquorsku="0011223348" volume_left="150" puck_address="0x1"></LiquorInventory>
