@@ -1,3 +1,28 @@
+Brand:
+  name: Johnny Walker
+  country: Scotland
+Brand:
+  name: Jose Cuervo
+  country: Mexico
+Brand:
+  name: McCormick
+  country: United States
+Brand:
+  name: Svedka
+  country: Sweden
+Brand:
+  name: Seagrams
+  country: Canada
+Brand:
+  name: Bacardi
+  country: Cuba
+Brand: 
+  name: Jim Beam
+  country: United States
+Brand:
+  name: Kahlúa
+  country: Mexico
+
 Type:
   name: Vodka
   description: Vodka is a distilled beverage composed primarily of water and ethanol, 
@@ -31,10 +56,10 @@ Type:
 Type:
   name: Scotch
   description: Scotch whisky, often simply called Scotch, is malt whisky or grain whisky made in Scotland. 
-  All Scotch whisky was originally made from malted barley. Commercial distilleries began introducing whisky 
-  made from wheat and rye in the late 18th century. Scotch whisky is divided into five distinct categories: 
-  single malt Scotch whisky, single grain Scotch whisky, blended malt Scotch whisky (formerly called "vatted 
-  malt" or "pure malt"), blended grain Scotch whisky, and blended Scotch whisky. 
+    All Scotch whisky was originally made from malted barley. Commercial distilleries began introducing whisky 
+    made from wheat and rye in the late 18th century. Scotch whisky is divided into five distinct categories: 
+    single malt Scotch whisky, single grain Scotch whisky, blended malt Scotch whisky (formerly called "vatted 
+    malt" or "pure malt"), blended grain Scotch whisky, and blended Scotch whisky. 
 Type:
   name: Rum
   description: Rum is a distilled alcoholic beverage made from sugarcane byproducts, such as molasses, or 
@@ -68,33 +93,6 @@ Type:
   description: Coffee is a great flavor for cocktails and mixed drinks and can be added in a variety of 
     ways. Whether it be hot coffee, chilled espresso, a coffee liqueur or one of the newer espresso-infused 
     vodkas, these cocktails all include the great taste of java and are fun to explore. 
-
-
-Brand:
-  name: Johnny Walker
-  country: Scotland
-Brand:
-  name: Jose Cuervo
-  country: Mexico
-Brand:
-  name: McCormick
-  country: United States
-Brand:
-  name: Svedka
-  country: Sweden
-Brand:
-  name: Seagrams
-  country: Canada
-Brand:
-  name: Bacardi
-  country: Cuba
-Brand: 
-  name: Jim Beam
-  country: United States
-Brand:
-  name: Kahlúa
-  country: Mexico
-
 
 Liquor:
   brand: Johnny Walker
