@@ -12,7 +12,7 @@ import sqlalchemy.orm as orm
 
 import scorpion.config as config
 import scorpion.localdb.dbobjects as dbo
-import scorpion.localdb.xmlparser as xmlparser
+import scorpion.localdb.dataparser as dataparser
 
 import scorpion.hal.puck as puck
 #from scorpion.hal.puck import get_available_address, set_leds
@@ -180,7 +180,7 @@ def init_db(reset = False):
     Session = orm.sessionmaker(bind=engine)
     session = Session()
     if reset: 
-        session.add_all(xmlparser.get_objects())
+        session.add_all(dataparser.get_objects())
         session.commit()
 
 def commit_db():

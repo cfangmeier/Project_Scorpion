@@ -3,7 +3,9 @@ Created on May 22, 2014
 
 @author: caleb
 '''
+import datetime
 from collections import namedtuple
+
 from scorpion.config import dat_path
 import scorpion.localdb.dbobjects as dbo
 
@@ -12,6 +14,102 @@ classes = {'Brand','Type','Liquor','LiquorSKU','Extra','Drink',
            'LiquorInventory', 'ExtraInventory'}
 
 DataObject = namedtuple('DataObject',['name','fields','children'])
+
+def build_type(obj):
+    t = dbo.Type()
+    t.name = obj.fields['name']
+    t.description = obj.fields['description']
+    return t
+    
+def build_brand(obj):
+    b = dbo.Brand()
+    b.name = obj.fields['name']
+    b.country = obj.fields['country']
+    return b
+
+def build_liquor(obj, types, brands):
+    l = dbo.Liquor()
+    l.name = obj.fields['name']
+    l.density = float(obj.fields['density'])
+    l.abv = int(obj.fields['abv'])
+    try:
+        l.brand = [b for b in brands if b.name == obj.fields['brand']][0]
+    except IndexError:
+        raise ValueError("Unknown brand {0}".format(obj.fields['brand']))
+    try:
+        l.type= [t for t in types if t.name == obj.fields['type']][0]
+    except IndexError:
+        raise ValueError("Unknown type {0}".format(obj.fields['type']))
+    lskus = []
+    for ls in obj.children:
+        lsku = dbo.LiquorSKU()
+        lsku.volume = ls.fields['volume']
+        lsku.bottleweight = ls.fields['bottleweight']
+        lsku.upc = ls.fields['upc']
+        lsku.liquor = l
+        lskus.append(lsku)
+    return l, lskus
+
+def build_extra(obj):
+    e = dbo.Extra()
+    e.name = obj.fields['name']
+    return e
+
+def build_drink(obj,extras,liquors,types):
+    d = dbo.Drink()
+    d.name = obj.fields['name']
+    d.description = obj.fields['description']
+    d.instructions = obj.fields['instructions']
+    d.glasstype = obj.fields['glasstype']
+    ings = []
+    for i in obj.children:
+        if i.name == "LiquorIngredient":
+            ing = dbo.LiquorIngredient()
+            try:
+                brand,name = i.fields['liquor'].split('|')
+                ing.liquor = [l for l in liquors if l.name==name and l.brand.name==brand][0]
+            except IndexError:
+                raise ValueError("Unknown liquor: {0}".format(i.fields['liquor']))
+        elif i.name == "GenLiquorIngredient":
+            ing = dbo.GenLiquorIngredient()
+            try:
+                ing.type = [t for t in types if t.name==i.fields['type']][0]
+            except IndexError:
+                raise ValueError("Unknown type: {0}".format(i.fields['type']))
+        elif i.name == "ExtraIngredient":
+            ing = dbo.ExtraIngredient()
+            try:
+                ing.extra = [e for e in extras if e.name==i.fields['extra']][0]
+            except IndexError:
+                raise ValueError("Unknown extra: {0}".format(i.fields['extra']))
+        else:
+            raise ValueError("Unknown ingredient type:{0}".format(i.name))
+        m, *u = i.fields['measure'].split()
+        ing.measure = float(m)
+        ing.measure_unit = str.join(' ',u)
+        ing.drink = d
+        ings.append(ing)
+    return d, ings
+
+    
+def build_extrainventory(obj, extras):
+    ei = dbo.ExtraInventory()
+    try:
+        ei.extra = [e for e in extras if e.name == obj.fields['extra']][0]
+    except IndexError:
+        raise ValueError("Unknown Extra {0}".format(obj.fields['extra']))
+    return ei
+    
+def build_liquorinventory(obj, liquorskus):
+    li = dbo.LiquorInventory()
+    try:
+        li.liquorsku = [lsku for lsku in liquorskus if lsku.upc == obj.fields['upc']][0]
+    except IndexError:
+        raise ValueError("Unknown LiquorSKU with UPC {0}".format(obj.fields['upc']))
+    li.volume_left = float(obj.fields['volume_left'])
+    li.puck_address = int(obj.fields['puck_address'], base=16)
+    li.date_added = datetime.datetime.now()
+    return li
 
 def pre_process(text):
     lines = text.splitlines()
@@ -52,123 +150,52 @@ def parse_object(lines, name):
                     i += 1
                 obj.fields[field_name] = field_data
         else :
-            raise ValueError("Improper syntax at \"{1}\""%line )
+            raise ValueError("Improper syntax at {0}".format(line))
     return obj
-
-def build_type(obj):
-    t = dbo.Type()
-    t.name = obj.fields['name']
-    t.description = obj.fields['description']
-    return t
-    
-def build_brand(obj):
-    b = dbo.Brand()
-    b.name = obj.fields['name']
-    b.country = obj.fields['country']
-    return b
-
-def build_liquor(obj):
-    l = dbo.Liquor()
-    l.name = obj.fields['name']
-    l.density = float(obj.fields['density'])
-    l.abv = int(obj.fields['abv'])
-
-def build_liquorsku(attrs):
-    global objects
-    lsku = dbo.LiquorSKU()
-    lsku.bottleweight = float(attrs["bottleweight"])
-    lsku.volume = float(attrs['volume'])
-    lsku.upc = attrs['UPC']
-    (brand,liquor) = attrs['liquor'].split('|')
-    lsku.liquor = [l for l in objects 
-                if type(l) == dbo.Liquor and l.name == liquor and l.brand.name == brand][0]
-    objects.append(lsku)
-
-def build_liquorinventory(attrs):
-    global objects
-    l = dbo.LiquorInventory()
-    for lsku in objects:
-        if type(lsku) != dbo.LiquorSKU: continue
-    l.liquorsku = [lsku for lsku in objects
-                   if type(lsku) == dbo.LiquorSKU and lsku.upc == attrs['liquorsku']][0]
-    l.volume_left = float(attrs['volume_left'])
-    l.puck_address = int(attrs['puck_address'], base=16)
-    l.date_added = datetime.datetime.now()
-    objects.append(l)
-
-def build_drink(attrs):
-    global objects
-    d = dbo.Drink()
-    d.name = attrs['name']
-    d.description = attrs['description']
-    d.instructions = attrs['instructions']
-    d.glasstype = attrs['glasstype']
-    objects.append(d)
-    
-def build_liquoringredient(attrs):
-    global objects
-    li = dbo.LiquorIngredient()
-    (measure, li.measure_unit) = attrs['measure'].split()
-    li.measure = float(measure)
-    li.drink = [d for d in objects if type(d) == dbo.Drink and d.name == attrs['drink']][0]
-    (brand,liquor) = attrs['liquor'].split('|')
-    li.liquor = [l for l in objects 
-                 if type(l) == dbo.Liquor and l.name == liquor and l.brand.name == brand][0]
-    objects.append(li)
-    
-def build_genliquoringredient(attrs):
-    global objects
-    gli = dbo.GenLiquorIngredient()
-    (measure, gli.measure_unit) = attrs['measure'].split()
-    gli.measure = float(measure)
-    gli.drink = [d for d in objects if type(d) == dbo.Drink and d.name == attrs['drink']][0]
-    gli.type = [t for t in objects if type(t) == dbo.Type and t.name == attrs['type']][0]
-    objects.append(gli)
-
-def build_extra(attrs):
-    global objects
-    e = dbo.Extra()
-    e.name = attrs['name']
-    objects.append(e)
-    
-def build_extraingredient(attrs):
-    global objects
-    ei = dbo.ExtraIngredient()
-    (measure, ei.measure_unit) = attrs['measure'].split()
-    ei.measure = float(measure)
-    ei.drink = [d for d in objects if type(d) == dbo.Drink and d.name == attrs['drink']][0]
-    ei.extra = [e for e in objects if type(e) == dbo.Extra and e.name == attrs['extra']][0]
-    objects.append(ei)
-
-def build_extrainventory(attrs):
-    global objects
-    ei = dbo.ExtraInventory()
-    ei.extra = [e for e in objects if type(e) == dbo.Extra and e.name == attrs['extra']]
-    objects.append(ei)
-
 
 def build_objects(root):
     """
     Specialized builder for objects from parse_objects
     """
-    g = globals()
-    builders = {class_: g['build_'+class_.lower()] for class_ in classes}
-    #linkers = {class_: g['link_'+class_.lower()] for class_ in classes}
-    objects = {class_:[] for class_ in classes}
-    for obj in root.children:
-        objects[obj.name].append(builders[obj.name](obj))
         
+    types = [build_type(obj) for obj in root.children if obj.name=="Type"]
+    brands = [build_brand(obj) for obj in root.children if obj.name=="Brand"]
     
-
-def get_objects(text):
-    lines = pre_process(text)
-    root = parse_object(lines,"Root")
-    return build_objects(root)
-            
+    liquors = [];
+    liquorskus=[]
+    for obj in root.children:
+        if obj.name == "Liquor":
+            l, lskus = build_liquor(obj,types,brands)
+            liquors.append(l)
+            liquorskus.extend(lskus)
     
-
-if __name__ == '__main__':
+    extras = [build_extra(obj) for obj in root.children if obj.name=="Extra"]
+    
+    drinks=[];
+    ingredients=[]
+    for obj in root.children:
+        if obj.name == "Drink":
+            d, ings = build_drink(obj,extras,liquors,types)
+            drinks.append(d)
+            ingredients.extend(ings)
+    
+    liquorinventory = [build_liquorinventory(obj,liquorskus) 
+                       for obj in root.children if obj.name=="LiquorInventory"]
+    extrainventory = [build_extrainventory(obj,extras) 
+                      for obj in root.children if obj.name=="ExtraInventory"]
+    
+    objects = []
+    [objects.extend(l) for l in [types,brands,liquors,liquorskus,extras,drinks,
+                                 ingredients,liquorinventory,extrainventory]]
+    
+    return objects
+    
+def get_objects():
     with open(dat_path) as dat_file:
         text = dat_file.read()
-        print(get_objects(text))
-
+        lines = pre_process(text)
+        root = parse_object(lines,"Root")
+        return build_objects(root)
+    
+if __name__ == '__main__':
+    get_objects()

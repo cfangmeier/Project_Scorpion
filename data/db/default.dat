@@ -22,6 +22,9 @@ Brand:
 Brand:
   name: Kahlúa
   country: Mexico
+Brand:
+  name: Gallo
+  country: United States
 
 Type:
   name: Vodka
@@ -72,6 +75,13 @@ Type:
     are darker in color, and based on gold rums. Some are significantly darker, while many cheaper brands are 
     made from inexpensive white rums and darkened with caramel color. Among the spices added are cinnamon, 
     rosemary, absinthe/aniseed, or pepper.
+Type: #Source: http://www.drinksmixer.com/desc10.html
+  name: White Rum
+  description: White rum (also known as "silver" or "light" rum), is a dry light-bodied rum, light in color 
+    and lightly sweet in flavor. It is produced from sugarcane juice and molasses, and normally has a short 
+    distillation period. Unlike other various rums which are aged in charred oak casks, white rum is simply 
+    aged in plain oak casks or stainless steel tanks, so it remains clear. White rum is often the favored 
+    choice of rum for cocktails and other mixed drinks.
 Type:
   name: Tequila
   description: Tequila is a regional specific name for a distilled beverage made from the blue agave plant, 
@@ -103,7 +113,7 @@ Liquor:
   LiquorSKU:
     upc: 0001
     volume: 750
-    emptyweight: 50
+    bottleweight: 50
 Liquor:
   brand: Johnny Walker
   name: Red Label
@@ -113,7 +123,7 @@ Liquor:
   LiquorSKU:
     upc: 0002
     volume: 750
-    emptyweight: 50
+    bottleweight: 50
 Liquor:
   brand: Seagrams
   name: Extra Dry Gin
@@ -123,7 +133,7 @@ Liquor:
   LiquorSKU:
     upc: 0003
     volume: 750
-    emptyweight: 50
+    bottleweight: 50
 Liquor:
   brand: Gallo
   name: Extra Dry Vermouth
@@ -133,7 +143,7 @@ Liquor:
   LiquorSKU:
     upc: 0004
     volume: 750
-    emptyweight: 50
+    bottleweight: 50
 Liquor:
   brand: Bacardi
   name: Spiced Rum
@@ -143,7 +153,7 @@ Liquor:
   LiquorSKU:
     upc: 0005
     volume: 750
-    emptyweight: 50
+    bottleweight: 50
 Liquor:
   brand: Bacardi
   name: White Rum
@@ -153,7 +163,7 @@ Liquor:
   LiquorSKU:
     upc: 0006
     volume: 750
-    emptyweight: 50
+    bottleweight: 50
 Liquor:
   brand: Jim Beam
   name: Black
@@ -163,7 +173,7 @@ Liquor:
   LiquorSKU:
     upc: 0007
     volume: 750
-    emptyweight: 50
+    bottleweight: 50
 Liquor:
   brand: Kahlúa
   name: Coffee Liqueur
@@ -173,7 +183,7 @@ Liquor:
   LiquorSKU:
     upc: 0008
     volume: 750
-    emptyweight: 50
+    bottleweight: 50
 
 Extra:
   name: Orange Juice
@@ -192,7 +202,7 @@ Extra:
 Extra:
   name: Soda Water
 Extra:
-  name: Marachino Cherry
+  name: Maraschino Cherry
 
 Drink: #source: http://mixthatdrink.com/amaretto-sour/
   name: Amaretto Sour
@@ -209,13 +219,13 @@ Drink: #source: http://mixthatdrink.com/amaretto-sour/
     type: Amaretto
     measure: 2 oz
   ExtraIngredient:
-    name: Lemon Juice
+    extra: Lemon Juice
     measure: 1 oz
   ExtraIngredient:
-    name: Maraschino Cherry
+    extra: Maraschino Cherry
     measure: 1
   ExtraIngredient:
-    name: Ice
+    extra: Ice
     measure: 0.5 glass
 
 Drink: #source: http://mixthatdrink.com/amaretto-sour/
@@ -231,8 +241,8 @@ Drink: #source: http://mixthatdrink.com/amaretto-sour/
     type: Vodka
     measure: 1.5 oz
   LiquorIngredient:
-    name: Kahlúa|Coffee Liqueur
+    liquor: Kahlúa|Coffee Liqueur
     measure: .75 oz
   ExtraIngredient:
-    name: Ice
+    extra: Ice
     measure: 0.5 glass
