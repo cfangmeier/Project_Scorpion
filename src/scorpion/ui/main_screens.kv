@@ -119,24 +119,42 @@
         AsyncImage:
           size_hint_y: 0.7
           id: drink_image
-        RstDocument: 
-          size_hint_y: 0.2
-          id: drink_descr
       BoxLayout:
         orientation: 'vertical'
         RstDocument:
           id: drink_instr
-        BoxLayout:
-          id: drink_ingr_list
-          orientation: 'horizontal'
+          background_color: 1,1,1,0
+        ScrollView:
+          do_scroll_y: False
+          GridLayout:
+            id: drink_ingr_list
+            padding: 20
+            spacing: 10
+            rows: 1
+            size_hint_x: None
+            width: self.minimum_width
     Button:
       size_hint_y: 0.1
       text: 'Back to start'
       on_release: app.root.current = 'startscreen'
 
 <DrinkSelectScreen_DrinkView>:
+  canvas.before:
+    Color: 
+      rgba: 0.5, 0.2, 0.5, 1
+    BorderImage:
+      source: utils.get_misc_image_path("round.png")
+      pos: self.pos
+      size: self.size
+  orientation: 'vertical'
   size_hint_x: None
   width: '5cm'
+  AsyncImage:
+    id: display_image
+  Label:
+    id: display_name
+    size_hint_y: 0.2
+
 
 <DrinkSelectScreen>:
   name: 'drinkselectscreen'
@@ -145,6 +163,7 @@
     orientation: 'vertical'
     ScrollView:
       do_scroll_y: False
+      size_hint_y: 0.3
       GridLayout:
         id: drink_list
         padding: 20

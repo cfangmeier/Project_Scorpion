@@ -1,3 +1,6 @@
+######################################################
+###BRANDS
+######################################################
 Brand:
   name: Johnny Walker
   country: Scotland
@@ -25,85 +28,45 @@ Brand:
 Brand:
   name: Gallo
   country: United States
-
+Brand:
+  name: Cointreau
+  country: France
+######################################################
+###TYPES
+######################################################
 Type:
   name: Vodka
-  description: Vodka is a distilled beverage composed primarily of water and ethanol, 
-    sometimes with traces of impurities and flavorings. Traditionally, vodka is made by 
-    the distillation of fermented grains or potatoes, though some modern brands use other 
-    substances, such as fruits or sugar.
+Type:
+  name: Citron Vodka
 Type:
   name: Gin
-  description: Gin is a spirit which derives its predominant flavour from juniper berries 
-    (Juniperus communis). From its earliest origins in the Middle Ages, gin has evolved over 
-    the course of a millennium from a herbal medicine to an object of commerce in the spirits 
-    industry. Gin was developed on the basis of the older Jenever, and become widely popular 
-    in Great Britain when William of Orange, leader of the Dutch Republic, occupied the British 
-    throne with his wife Mary. Today, the gin category is one of the most popular and widely 
-    distributed range of spirits, and is represented by products of various origins, styles, 
-    and flavour profiles that all revolve around juniper as a common ingredient.
 Type:
   name: Whisky
-  description: Whisky or whiskey is a type of distilled alcoholic beverage made from fermented 
-    grain mash. Different grains are used for different varieties, including barley, malted barley, 
-    rye, malted rye, wheat, buckwheat and corn. Whisky is typically aged in wooden casks, made 
-    generally of charred white oak.
 Type:
   name: Bourbon
-  description: Bourbon whiskey is a type of American whiskey: a barrel-aged distilled spirit made 
-    primarily from corn. The name is ultimately derived from the French Bourbon dynasty, although 
-    it is disputed whether the namesake Kentucky county or New Orleans street inspired the whiskey's name. 
-    Bourbon has been distilled since the 18th century. The name "Bourbon" was not applied until the 1820s, 
-    and the Kentucky etymology was not advanced until the 1870s. While the liquor may be made anywhere in 
-    the United States, it is strongly associated with the American South in general, and Kentucky in particular.
 Type:
   name: Scotch
-  description: Scotch whisky, often simply called Scotch, is malt whisky or grain whisky made in Scotland. 
-    All Scotch whisky was originally made from malted barley. Commercial distilleries began introducing whisky 
-    made from wheat and rye in the late 18th century. Scotch whisky is divided into five distinct categories: 
-    single malt Scotch whisky, single grain Scotch whisky, blended malt Scotch whisky (formerly called "vatted 
-    malt" or "pure malt"), blended grain Scotch whisky, and blended Scotch whisky. 
 Type:
   name: Rum
-  description: Rum is a distilled alcoholic beverage made from sugarcane byproducts, such as molasses, or 
-    directly from sugarcane juice, by a process of fermentation and distillation. The distillate, a clear 
-    liquid, is then usually aged in oak barrels. Rum can be referred to in Spanish by descriptors such as 
-    ron viejo ("old rum") and ron añejo ("aged rum").
 Type:
   name: Spiced Rum
-  description: Spiced rums obtain their flavors through the addition of spices and, sometimes, caramel. Most 
-    are darker in color, and based on gold rums. Some are significantly darker, while many cheaper brands are 
-    made from inexpensive white rums and darkened with caramel color. Among the spices added are cinnamon, 
-    rosemary, absinthe/aniseed, or pepper.
-Type: #Source: http://www.drinksmixer.com/desc10.html
+Type:
   name: White Rum
-  description: White rum (also known as "silver" or "light" rum), is a dry light-bodied rum, light in color 
-    and lightly sweet in flavor. It is produced from sugarcane juice and molasses, and normally has a short 
-    distillation period. Unlike other various rums which are aged in charred oak casks, white rum is simply 
-    aged in plain oak casks or stainless steel tanks, so it remains clear. White rum is often the favored 
-    choice of rum for cocktails and other mixed drinks.
+Type:
+  name: Dark Rum
 Type:
   name: Tequila
-  description: Tequila is a regional specific name for a distilled beverage made from the blue agave plant, 
-    primarily in the area surrounding the city of Tequila, 65 km (40 mi) northwest of Guadalajara, and in 
-    the highlands (Los Altos) of the north western Mexican state of Jalisco. Although tequila is a kind of 
-    mezcal, modern tequila differs somewhat in the method of its production, in the use of only blue agave 
-    plants, as well as in its regional specificity.
 Type:
   name: Vermouth
-  description: Vermouth is an aromatized fortified wine flavored with various botanicals (roots, barks, 
-    flowers, seeds, herbs, spices). The modern versions of the beverage were first produced in the mid to 
-    late 18th century in Turin, Italy.
 Type:
   name: Amaretto
-  description: Amaretto is a sweet, almond-flavoured, Italian liqueur. It is made from a base of apricot 
-    pits or almonds, sometimes both.
 Type:
   name: Coffee Liqueur
-  description: Coffee is a great flavor for cocktails and mixed drinks and can be added in a variety of 
-    ways. Whether it be hot coffee, chilled espresso, a coffee liqueur or one of the newer espresso-infused 
-    vodkas, these cocktails all include the great taste of java and are fun to explore. 
-
+Type:
+  name: Triple Sec
+######################################################
+###LIQUORS
+######################################################
 Liquor:
   brand: Johnny Walker
   name: Blue Label
@@ -184,17 +147,33 @@ Liquor:
     upc: 0008
     volume: 750
     bottleweight: 50
-
+Liquor:
+  brand: Cointreau
+  name: L'Esprit D'Orange
+  type: Triple Sec
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0009
+    volume: 750
+    bottleweight: 50
+######################################################
+###EXTRAS
+######################################################
 Extra:
   name: Orange Juice
 Extra:
+  name: Orange Slice
+Extra:
   name: Lime Juice
+Extra:
+  name: Lime Wedge
+Extra:
+  name: Lime Slice
 Extra:
   name: Lemon Juice
 Extra:
   name: Salt
-Extra:
-  name: Ice
 Extra:
   name: Cranberry Juice
 Extra:
@@ -203,16 +182,20 @@ Extra:
   name: Soda Water
 Extra:
   name: Maraschino Cherry
-
+Extra:
+  name: Ginger Beer
+Extra:
+  name: Tonic Water
+Extra:
+  name: Cola
+######################################################
+###DRINKS
+######################################################
 Drink: #source: http://mixthatdrink.com/amaretto-sour/
   name: Amaretto Sour
   glasstype: Old Fashined Glass
-  description: The Amaretto Sour belongs to a family of mixed drinks known as – you guessed it – 
-    “sours.” These cocktail recipes are defined by having at least one liquor (or liqueur), lemon 
-    or lime juice and a bit of sweetener. They include classics like the Margarita, Sidecar and 
-    Whiskey Sour. The smooth, sweet taste and mild kick of an Amaretto Sour makes it ideal for 
-    occasional drinkers as well as more dedicated cocktail fans.
-  instructions: @1 Shake the amaretto, lemon juice and teaspoon of granulated sugar in a strainer without ice
+  instructions: @1 Shake the amaretto, lemon juice and teaspoon of 
+                   granulated sugar in a strainer without ice
                 @2 Strain into a glass over ice
                 @3 Garnish with a maraschino cherry
   GenLiquorIngredient:
@@ -224,17 +207,9 @@ Drink: #source: http://mixthatdrink.com/amaretto-sour/
   ExtraIngredient:
     extra: Maraschino Cherry
     measure: 1
-  ExtraIngredient:
-    extra: Ice
-    measure: 0.5 glass
-
 Drink: #source: http://mixthatdrink.com/amaretto-sour/
   name: Black Russian
   glasstype: Old Fashioned Glass
-  description: The Black Russian supposedly appeared in Brussels in 1949. It’s a wonderfully simple cocktail – 
-    just vodka and Kahlua over ice. This is one of the easiest recipes for tinkering: try a different coffee 
-    liqueur, or a flavored vodka (vanilla is great), add a splash of cola, use equal amounts of vodka and 
-    liqueur, or you can even add a scoop of chocolate ice cream into this drink.
   instructions: @1 Pour vodka and Kahlua and Vodka into glass with ice
                 @2 Stir
   GenLiquorIngredient:
@@ -243,6 +218,105 @@ Drink: #source: http://mixthatdrink.com/amaretto-sour/
   LiquorIngredient:
     liquor: Kahlúa|Coffee Liqueur
     measure: .75 oz
+Drink: #source: http://mixthatdrink.com/cosmopolitan/
+  name: Cosmopolitan
+  glasstype: martini glass
+  instructions: @1 Shake all ingredients with ice
+                @2 Strain into chilled martini glass
+                @3 Garnish with an Orange Slice
+  GenLiquorIngredient:
+    type: Citron Vodka
+    measure: 2 oz
+  LiquorIngredient:
+    liquor: Cointreau|L'Esprit D'Orange
+    measure: .5 oz
   ExtraIngredient:
-    extra: Ice
-    measure: 0.5 glass
+    extra: Lime Juice
+    measure: 0.5 oz
+  ExtraIngredient:
+    extra: Cranberry Juice
+    measure: 1 oz
+  ExtraIngredient:
+    extra: Orange Slice
+    measure: 1
+Drink: #source: wikipedia
+  name: Dark and Stormy
+  glasstype: Old Fashioned Glass
+  instructions: @1 Fill old fashioned glass with ice
+                @2 Add rum to glass
+                @3 Top with ginger beer
+                @4 garnish with a maraschino cherry
+  GenLiquorIngredient:
+    type: Dark Rum
+    measure: 1.5 oz
+  ExtraIngredient:
+    extra: Ginger Beer
+    measure: 2.5 oz
+  ExtraIngredient:
+    extra: Maraschino Cherry
+    measure: 2
+Drink:
+  name: Gin and Tonic
+  glasstype: Highball Glass
+  instructions: @1 Fill a highball glass three-quarters with ice
+                @2 Pour in Gin and Tonic Water
+                @3 Stir
+                @4 Squeeze a lime wedge into glass
+                @5 Garnish with a slice or wheel of lime
+  GenLiquorIngredient:
+    type: Gin
+    measure: 2 oz
+  ExtraIngredient:
+    extra: Tonic Water
+    measure: 5 oz
+  ExtraIngredient:
+    extra: Lime Wedge
+    measure: 1
+  ExtraIngredient:
+    extra: Lime Slice
+    measure: 1
+Drink:
+  name: Kamikaze
+  glasstype: Highball Glass
+  instructions: @1 Shake all ingredients together with ice
+                @2 Strain into glass
+                @3 Garnish with slice of lime
+  GenLiquorIngredient:
+    type: Vodka
+    measure: 2 oz
+  GenLiquorIngredient:
+    type: Triple Sec
+    measure: 2 oz
+  ExtraIngredient:
+    extra: Lime Juice
+    measure: 2 oz
+  ExtraIngredient:
+    extra: Lime Slice
+    measure: 1
+Drink:
+  name: Long Island Iced Tea
+  glasstype: Highball Glass
+  instructions: @1 Shake all ingredients together with ice
+                @2 Pour mixture, including ice, into a highball glass
+  GenLiquorIngredient:
+    type: Tequila
+    measure: .5 oz
+  GenLiquorIngredient:
+    type: Vodka
+    measure: .5 oz
+  GenLiquorIngredient:
+    type: White Rum
+    measure: .5 oz
+  GenLiquorIngredient:
+    type: Triple Sec
+    measure: .5 oz
+  GenLiquorIngredient:
+    type: Gin
+    measure: .5 oz
+  ExtraIngredient:
+    extra: Lemon Juice
+    measure: .5 oz
+  ExtraIngredient:
+    extra: Cola
+    measure: 1 oz
+  

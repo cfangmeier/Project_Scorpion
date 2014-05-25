@@ -22,7 +22,6 @@ class Type(base):
     
     id = Column(Integer, primary_key = True)
     name = Column(String, nullable = False)
-    description = Column(String, nullable = False)
     
 
 class Liquor(base):
@@ -64,7 +63,6 @@ class Drink(base):
     id = Column(Integer, primary_key = True)
     name = Column(String, nullable = False)
     glasstype = Column(String, nullable = False)
-    description = Column(String, nullable = False)
     instructions = Column(String, nullable = False)
     
     def __init__(self):

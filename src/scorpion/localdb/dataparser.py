@@ -18,7 +18,6 @@ DataObject = namedtuple('DataObject',['name','fields','children'])
 def build_type(obj):
     t = dbo.Type()
     t.name = obj.fields['name']
-    t.description = obj.fields['description']
     return t
     
 def build_brand(obj):
@@ -58,7 +57,6 @@ def build_extra(obj):
 def build_drink(obj,extras,liquors,types):
     d = dbo.Drink()
     d.name = obj.fields['name']
-    d.description = obj.fields['description']
     d.instructions = obj.fields['instructions']
     d.glasstype = obj.fields['glasstype']
     ings = []
@@ -114,8 +112,8 @@ def build_liquorinventory(obj, liquorskus):
 def pre_process(text):
     lines = text.splitlines()
     #Remove empty lines and comments
-    lines = [line for line in lines if line.strip() != ""]
     lines = [line.split('#')[0].rstrip() for line in lines]
+    lines = [line for line in lines if line.strip() != ""]
     return lines
     
 

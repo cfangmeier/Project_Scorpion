@@ -111,7 +111,6 @@ class MixingScreen(Screen):
     
     def update(self, inst, value):
         self.ids.drink_name.text = self.drink.name
-        self.ids.drink_descr.text = self.drink.description
         self.ids.drink_instr.text = self.drink.instructions
         self.ids.drink_image.source = utils.get_drink_image_path(self.drink)
         
@@ -122,8 +121,15 @@ class MixingScreen(Screen):
             self.ids.drink_ingr_list.add_widget(msiv)
     
 
-class DrinkSelectScreen_DrinkView(Button):
-    drink = None
+class DrinkSelectScreen_DrinkView(ButtonBehavior, BoxLayout):
+    drink = ObjectProperty(None)
+    def __init__(self,drink,**kwargs):
+        super().__init__(**kwargs)
+        self.bind(drink=self.update)
+        self.drink = drink
+    def update(self, inst, value):
+        self.ids.display_name.text = self.drink.name
+        self.ids.display_image.source = utils.get_drink_image_path(self.drink)
     
     def on_release(self, *args, **kwargs):
         super().on_release(*args, **kwargs)
@@ -139,9 +145,7 @@ class DrinkSelectScreen(Screen):
         super().on_pre_enter(*args, **kwargs)
         self.drink_list.clear_widgets()
         for drink in db.get_drinks():
-            dssdv = DrinkSelectScreen_DrinkView()
-            dssdv.text = drink.name
-            dssdv.drink = drink
+            dssdv = DrinkSelectScreen_DrinkView(drink)
             self.drink_list.add_widget(dssdv)
 
 
