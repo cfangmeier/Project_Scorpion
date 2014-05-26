@@ -99,7 +99,6 @@ class MixingScreen_IngrView(Button):
         super().__init__(*args, **kwargs)
         self.bind(ingredient=self.update)
     def update(self, *args):
-        print('mixing: ',args)
         self.text = str(self.ingredient)
 
 class MixingScreen(Screen):

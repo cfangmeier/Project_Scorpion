@@ -31,6 +31,9 @@ Brand:
 Brand:
   name: Cointreau
   country: France
+Brand:
+  name:  Bénédictine
+  country: France
 ######################################################
 ###TYPES
 ######################################################
@@ -42,6 +45,8 @@ Type:
   name: Gin
 Type:
   name: Whisky
+Type:
+  name: Rye Whiskey
 Type:
   name: Bourbon
 Type:
@@ -57,13 +62,21 @@ Type:
 Type:
   name: Tequila
 Type:
-  name: Vermouth
+  name: Dry Vermouth
+Type:
+  name: Sweet Vermouth
 Type:
   name: Amaretto
 Type:
   name: Coffee Liqueur
 Type:
+  name: Cherry Liqueur
+Type:
   name: Triple Sec
+Type:
+  name: Irish Cream
+Type:
+  name: Herbal Liqueur
 ######################################################
 ###LIQUORS
 ######################################################
@@ -99,8 +112,8 @@ Liquor:
     bottleweight: 50
 Liquor:
   brand: Gallo
-  name: Extra Dry Vermouth
-  type: Vermouth
+  name: Dry Vermouth
+  type: Dry Vermouth
   density: 0.95
   abv: 40
   LiquorSKU:
@@ -137,6 +150,10 @@ Liquor:
     upc: 0007
     volume: 750
     bottleweight: 50
+  LiquorSKU:
+    upc: 00071
+    volume: 1750
+    bottleweight: 150
 Liquor:
   brand: Kahlúa
   name: Coffee Liqueur
@@ -157,6 +174,16 @@ Liquor:
     upc: 0009
     volume: 750
     bottleweight: 50
+Liquor:
+  brand:  Bénédictine
+  name: D.O.M.
+  type: Herbal Liqueur
+  density: 0.95
+  abv: 40
+  LiquorSKU:
+    upc: 0010
+    volume: 750
+    bottleweight: 65
 ######################################################
 ###EXTRAS
 ######################################################
@@ -173,6 +200,8 @@ Extra:
 Extra:
   name: Lemon Juice
 Extra:
+  name: Pineapple Juice
+Extra:
   name: Salt
 Extra:
   name: Cranberry Juice
@@ -181,17 +210,31 @@ Extra:
 Extra:
   name: Soda Water
 Extra:
-  name: Maraschino Cherry
-Extra:
   name: Ginger Beer
 Extra:
   name: Tonic Water
 Extra:
   name: Cola
+Extra:
+  name: Maraschino Cherry
+Extra:
+  name: Olive
+Extra:
+  name: Sugar
+Extra:
+  name: Mint
+Extra:
+  name: Angostura Bitters
+Extra:
+  name: Grenadine
+Extra:
+  name: Cream
+Extra:
+  name: Milk
 ######################################################
 ###DRINKS
 ######################################################
-Drink: #source: http://mixthatdrink.com/amaretto-sour/
+Drink:
   name: Amaretto Sour
   glasstype: Old Fashined Glass
   instructions: @1 Shake the amaretto, lemon juice and teaspoon of 
@@ -207,7 +250,7 @@ Drink: #source: http://mixthatdrink.com/amaretto-sour/
   ExtraIngredient:
     extra: Maraschino Cherry
     measure: 1
-Drink: #source: http://mixthatdrink.com/amaretto-sour/
+Drink:
   name: Black Russian
   glasstype: Old Fashioned Glass
   instructions: @1 Pour vodka and Kahlua and Vodka into glass with ice
@@ -218,7 +261,7 @@ Drink: #source: http://mixthatdrink.com/amaretto-sour/
   LiquorIngredient:
     liquor: Kahlúa|Coffee Liqueur
     measure: .75 oz
-Drink: #source: http://mixthatdrink.com/cosmopolitan/
+Drink:
   name: Cosmopolitan
   glasstype: martini glass
   instructions: @1 Shake all ingredients with ice
@@ -239,7 +282,7 @@ Drink: #source: http://mixthatdrink.com/cosmopolitan/
   ExtraIngredient:
     extra: Orange Slice
     measure: 1
-Drink: #source: wikipedia
+Drink:
   name: Dark and Stormy
   glasstype: Old Fashioned Glass
   instructions: @1 Fill old fashioned glass with ice
@@ -319,4 +362,156 @@ Drink:
   ExtraIngredient:
     extra: Cola
     measure: 1 oz
-  
+Drink:
+  name: Manhattan
+  glasstype: Martini Glass
+  instructions: @1 Add whiskey, vermouth, and bitters to a mixing glass with ice
+                @2 Stir
+                @3 Strain into a martini glass
+                @4 garnish with marashino cherry
+  GenLiquorIngredient:
+    type: Rye Whiskey
+    measure: 2.5 oz
+  GenLiquorIngredient:
+    type: Sweet Vermouth
+    measure: 1 oz
+  ExtraIngredient:
+    extra: Angostura Bitters
+    measure: 1 dash
+  ExtraIngredient:
+    extra: Maraschino Cherry
+    measure: 1
+Drink:
+  name: Martini
+  glasstype: Martini Glass
+  instructions: @1 Add Gin and vermouth to a mixer filled with ice
+                @2 Shake
+                @3 Strain into a martini glass
+                @4 Garnish with an olive
+  GenLiquorIngredient:
+    type: Gin
+    measure: 2 oz
+  GenLiquorIngredient:
+    type: Dry Vermouth
+    measure: 1 oz
+  ExtraIngredient:
+    extra: Olive
+    measure: 1
+Drink:
+  name: Mojito
+  glasstype: Collins Glass
+  instructions: @1 Muddle mint leaves with sugar and lime juice
+                @2 Add rum and soda water and ice
+                @3 Stir lightly
+                @4 Garnish with remaining mint leaves and lime slice
+  GenLiquorIngredient:
+    type: White Rum
+    measure: 2 oz 
+  ExtraIngredient:
+    extra: Lime Juice
+    measure: 1.5 oz
+  ExtraIngredient:
+    extra: Mint
+    measure: 6 leaves
+  ExtraIngredient:
+    extra: Sugar
+    measure: 2 tsp
+  ExtraIngredient:
+    extra: Soda Water
+    measure: 1 dash
+  ExtraIngredient:
+    extra: Lime Slice
+    measure: 1
+Drink:
+  name: Mudslide
+  glasstype: Old Fashioned Glass
+  instructions: @1 Fill glass with ice
+                @2 Add ingredients
+                @3 Stir
+  GenLiquorIngredient:
+    type: Irish Cream
+    measure: 1.5 oz
+  GenLiquorIngredient:
+    type: Coffee Liqueur
+    measure: .5 oz
+Drink:
+  name: Rum and Coke
+  glasstype: Old Fashioned Glass
+  instructions: @1 Fill glass with ice
+                @2 Add ingredients to glass
+                @3 Stir lightly
+  GenLiquorIngredient:
+    type: Spiced Rum
+    measure: 2 oz
+  ExtraIngredient:
+    extra: Cola
+    measure: 2 oz
+Drink:
+  name: ScrewDriver
+  glasstype: Highball Glass
+  instructions: @1 Fill glass with ice
+                @2 Add ingredients to glass
+                @3 Stir lightly
+  GenLiquorIngredient:
+    type: Vodka
+    measure: 2 oz
+  ExtraIngredient:
+    extra: Orange Juice
+    measure: 2 oz
+Drink:
+  name: Singapore Sling
+  glasstype: Collins Glass
+  instructions: @1 Add all ingredients to a shaker with ice
+                @2 Shake well
+                @3 Strain into collins glass
+  GenLiquorIngredient:
+    type: Gin
+    measure: 1.5 oz
+  LiquorIngredient:
+    liquor:  Bénédictine|D.O.M.
+    measure: .5 oz
+  LiquorIngredient:
+    liquor: Cointreau|L'Esprit D'Orange
+    measure: .5 oz
+  ExtraIngredient:
+    extra: Lime Juice
+    measure: .75 oz
+  GenLiquorIngredient:
+    type: Cherry Liqueur
+    measure: 1 oz
+  ExtraIngredient:
+    extra: Grenadine
+    measure: 1 oz
+  ExtraIngredient:
+    extra: Angostura Bitters
+    measure: 2 dashes
+  ExtraIngredient:
+    extra: Pineapple Juice
+    measure: 4 oz
+Drink:
+  name: Vodka Cranberry
+  glasstype: Old Fashioned Glass
+  instructions: @1 Fill glass with ice
+                @2 Add ingredients and stir
+  GenLiquorIngredient:
+    type: Vodka
+    measure: 2 oz
+  ExtraIngredient:
+    extra: Cranberry Juice
+    measure: 2 oz
+Drink:
+  name: White Russian
+  glasstype: Old Fashioned Glass
+  instructions: @1 Fill glass with ice
+                @2 Add Coffee Liqueur and Vodka
+                @3 Float cream on top
+                @4 Mix gently
+  GenLiquorIngredient:
+    type: Vodka
+    measure: 2 oz
+  GenLiquorIngredient:
+    type: Coffee Liqueur
+    measure: 1 oz
+  ExtraIngredient:
+    extra: Cream
+    measure: 1 oz
