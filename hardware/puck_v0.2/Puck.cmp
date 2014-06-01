@@ -1,0 +1,157 @@
+Cmp-Mod V01 Created by CvPcb (2012-apr-16-27)-stable date = Tue 04 Feb 2014 07:10:33 PM CST
+
+BeginCmp
+TimeStamp = /52D7610A;
+Reference = C1;
+ValeurCmp = 1.0uF;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA5872;
+Reference = C2;
+ValeurCmp = 0.47uF;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F17F82;
+Reference = D1;
+ValeurCmp = LED_WT;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA6194;
+Reference = D2;
+ValeurCmp = LED_BL;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA61A3;
+Reference = D3;
+ValeurCmp = LED_RD;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA61B2;
+Reference = D4;
+ValeurCmp = LED_GR;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA4B8E;
+Reference = P1;
+ValeurCmp = SCALE;
+IdModule  = PIN_ARRAY_4x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52D454DE;
+Reference = P2;
+ValeurCmp = RSPI_CONN;
+IdModule  = PIN_ARRAY_4x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F18EF7;
+Reference = P3;
+ValeurCmp = 5V_LED;
+IdModule  = PIN_ARRAY_1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA5631;
+Reference = R1;
+ValeurCmp = R;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA5854;
+Reference = R2;
+ValeurCmp = 1K;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA5863;
+Reference = R3;
+ValeurCmp = 1K;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA663A;
+Reference = R4;
+ValeurCmp = 100K;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F18069;
+Reference = R5;
+ValeurCmp = 10K;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F18064;
+Reference = R6;
+ValeurCmp = 10K;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F18059;
+Reference = R7;
+ValeurCmp = 10K;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA6306;
+Reference = R8;
+ValeurCmp = 10K;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA6626;
+Reference = SW1;
+ValeurCmp = SW_PUSH;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /52AA4F30;
+Reference = U1;
+ValeurCmp = INA126;
+IdModule  = DIP-8__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /52891ED4;
+Reference = U2;
+ValeurCmp = AD7813;
+IdModule  = DIP-16__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /528919C2;
+Reference = U3;
+ValeurCmp = MCP23017;
+IdModule  = DIP-28__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F17CD5;
+Reference = U4;
+ValeurCmp = ULN2068B;
+IdModule  = DIP-16__300;
+EndCmp
+
+EndListe
